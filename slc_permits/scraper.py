@@ -85,6 +85,35 @@ class AccelaClient:
             log.info("Saved debug snapshot %s.{png,html}", stem)
         except Exception as exc:  # diagnostics must never mask the real error
             log.warning("Could not save debug snapshot: %s", exc)
+        log.info("Page at failure:\n%s", self.describe_page())
+
+    def describe_page(self, max_text: int = 2500) -> str:
+        """Text outline of the page (frames, form controls, visible text) for the run log.
+
+        Snapshots can be hard to get at, but the log is always there. Field
+        values are never included, so credentials can't leak into it.
+        """
+        lines = [f"URL: {self.page.url}"]
+        try:
+            lines.append(f"Title: {self.page.title()}")
+        except Exception:
+            pass
+        for frame in self.page.frames:
+            try:
+                controls = frame.locator("input:not([type=hidden]), button, select, a[id*='btn' i], a[id*='login' i]").evaluate_all(
+                    """els => els.filter(e => e.offsetParent !== null).slice(0, 40).map(e => [
+                        e.tagName.toLowerCase(), e.type || '', e.id || '', e.name || '',
+                        (e.tagName === 'INPUT' && !['submit', 'button'].includes(e.type)) ? '' : (e.innerText || e.value || '').trim().slice(0, 40)
+                    ].join(' | '))"""
+                )
+                text = re.sub(r"\n\s*\n+", "\n", frame.locator("body").inner_text(timeout=3000)).strip()
+            except Exception as exc:
+                lines.append(f"-- frame {frame.url}: unreadable ({exc.__class__.__name__})")
+                continue
+            lines.append(f"-- frame {frame.url}")
+            lines += [f"   control: {c}" for c in controls]
+            lines.append("   text: " + text[:max_text].replace("\n", "\n         "))
+        return "\n".join(lines)
 
     # --- login -------------------------------------------------------------
 
@@ -121,7 +150,11 @@ class AccelaClient:
 
         frame.locator(user_sel).first.fill(self.cfg.username)
         frame.locator("input[type='password']").first.fill(self.cfg.password)
-        button = next((s for s in LOGIN_BUTTONS if frame.locator(s).count()), None)
+        button = next(
+            (s for s in LOGIN_BUTTONS if frame.locator(s).count() and frame.locator(s).first.is_visible()),
+            None,
+        )
+        log.info("Login form in frame %s; username field %r; submit via %r", frame.url, user_sel, button or "Enter key")
         if button:
             frame.locator(button).first.click()
         else:
