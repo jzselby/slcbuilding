@@ -38,7 +38,9 @@ RECORDS.append({"number": "BLD2026-09999", "date": date(2026, 8, 15), "type": TY
 
 
 def _page(title: str, body: str, logged_in: bool) -> bytes:
-    account = '<a href="/Logout.aspx">Logout</a>' if logged_in else '<a href="/Login.aspx">Login</a>'
+    # Mirrors SLC's header, where an icon ligature runs into the link text ("lock_openLogout").
+    account = ('<a id="ctl00_HeaderNavigation_btnLogout" href="/Logout.aspx"><i>lock_open</i>Logout</a>'
+               if logged_in else '<a href="/Login.aspx">Login</a>')
     return f"""<!doctype html><html><head><title>{title}</title></head>
 <body><div id="header">{account}</div><div id="ctl00_PlaceHolderMain">{body}</div></body></html>""".encode()
 

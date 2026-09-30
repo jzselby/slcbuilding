@@ -51,7 +51,10 @@ LOGIN_BUTTONS = (
     "button:has-text('Log In')",
     "button:has-text('Login')",
 )
-LOGGED_IN_TEXT = re.compile(r"\b(Logout|Log Out|Sign Out)\b", re.I)
+# No word boundaries: SLC's header renders an icon ligature straight into the
+# link text ("lock_openLogout").
+LOGGED_IN_TEXT = re.compile(r"Logout|Log Out|Sign Out|Logged in as", re.I)
+LOGOUT_LINK = "[id$='btnLogout']"
 DETAIL_EXPANDERS = re.compile(r"^\s*(More Details|Additional Information|Application Information)\s*$", re.I)
 
 
@@ -174,7 +177,9 @@ class AccelaClient:
         while time.monotonic() < deadline:
             for frame in self.page.frames:
                 try:
-                    if LOGGED_IN_TEXT.search(frame.locator("body").inner_text(timeout=2000)):
+                    if frame.locator(LOGOUT_LINK).count() or LOGGED_IN_TEXT.search(
+                        frame.locator("body").inner_text(timeout=2000)
+                    ):
                         return True
                 except Exception:
                     continue
