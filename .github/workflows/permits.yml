@@ -8,10 +8,17 @@ on:
     inputs:
       days_back:
         description: "Search records opened in the last N days"
-        default: "3"
-      type_contains:
-        description: "Only record types containing this text; comma-separate several (blank = all types)"
+        default: "14"
+      building_types:
+        description: "Building record types containing any of these (comma-separated; blank = all)"
         default: "Commercial,Commericial"
+      planning_types:
+        description: "Planning record types containing any of these (comma-separated; blank = all)"
+        default: ""
+      dry_run:
+        description: "Dry run: list what would be added, without writing the sheet or marking anything seen"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -44,12 +51,15 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
-          DAYS_BACK: ${{ inputs.days_back || '3' }}
+          DAYS_BACK: ${{ inputs.days_back || '14' }}
           # Scheduled runs have no inputs. SLC spells one type "Commericial Demolition".
-          TYPE_CONTAINS: ${{ github.event_name == 'schedule' && 'Commercial,Commericial' || inputs.type_contains }}
+          BUILDING_TYPES: ${{ github.event_name == 'schedule' && 'Commercial,Commericial' || inputs.building_types }}
+          PLANNING_TYPES: ${{ github.event_name == 'schedule' && '' || inputs.planning_types }}
+          DRY_RUN: ${{ inputs.dry_run }}
         run: |
-          args=(--days-back "$DAYS_BACK")
-          if [ -n "$TYPE_CONTAINS" ]; then args+=(--type-contains "$TYPE_CONTAINS"); else args+=(--all-types); fi
+          args=(--days-back "$DAYS_BACK" --modules Building,Planning
+                --types "Building=$BUILDING_TYPES" --types "Planning=$PLANNING_TYPES")
+          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run --no-details --no-summary); fi
           python -m slc_permits "${args[@]}"
 
       - name: Upload debug snapshots
@@ -61,6 +71,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: Commit report and seen-permit list
+        if: ${{ !inputs.dry_run }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

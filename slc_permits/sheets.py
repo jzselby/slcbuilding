@@ -18,7 +18,7 @@ PERMITS_TAB = "Permits"
 DIGESTS_TAB = "Daily digests"
 PERMIT_HEADERS = [
     "First seen", "Record", "Date opened", "Record type", "Address", "Scope",
-    "Job value", "Applicant", "Contractor", "Status", "Notable", "Portal description",
+    "Job value", "Applicant", "Contractor", "Status", "Notable", "Portal description", "Module",
 ]
 DIGEST_HEADERS = ["Run date", "Window", "New records", "Summary"]
 # Google Sheets' per-cell character limit.
@@ -56,17 +56,38 @@ def permit_row(rec: dict, run_date: date) -> list:
         text(rec.get("status")),
         {True: "Yes", False: ""}.get(rec.get("notable"), ""),
         text(rec.get("description") or rec.get("project_name")),
+        text(rec.get("module")),
     ]
+
+
+def _extend_headers(ws: gspread.Worksheet, headers: list[str]) -> None:
+    """Add columns introduced since the tab was created, keeping existing rows aligned."""
+    current = ws.row_values(1)
+    if current == headers or current != headers[: len(current)]:
+        return
+    added = headers[len(current):]
+    if ws.col_count < len(headers):
+        ws.add_cols(len(headers) - ws.col_count)
+    ws.update([headers], "A1")
+    log.info("Added %s column(s) to %r", ", ".join(added), ws.title)
+    if "Module" in added:
+        # Before the Module column existed, only the Building tab was searched.
+        rows = len(ws.col_values(1))
+        if rows > 1:
+            col = gspread.utils.rowcol_to_a1(1, headers.index("Module") + 1).rstrip("1")
+            ws.update([["Building"]] * (rows - 1), f"{col}2")
 
 
 def _worksheet(sh: gspread.Spreadsheet, title: str, headers: list[str]) -> gspread.Worksheet:
     try:
-        return sh.worksheet(title)
+        ws = sh.worksheet(title)
+        _extend_headers(ws, headers)
+        return ws
     except gspread.WorksheetNotFound:
         pass
     # A brand-new spreadsheet has one empty "Sheet1"; take it over instead of leaving it blank.
     sheets = sh.worksheets()
-    if len(sheets) == 1 and not sheets[0].get_all_values():
+    if len(sheets) == 1 and not any(any(row) for row in sheets[0].get_all_values()):
         ws = sheets[0]
         ws.update_title(title)
     else:

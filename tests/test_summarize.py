@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from datetime import date
 from types import SimpleNamespace
 
@@ -14,11 +15,12 @@ DIGEST = Digest(
 
 
 def fake_client(response, calls):
-    def parse(**kwargs):
+    @contextmanager
+    def stream(**kwargs):
         calls.append(kwargs)
-        return response
+        yield SimpleNamespace(get_final_message=lambda: response)
 
-    return lambda: SimpleNamespace(beta=SimpleNamespace(messages=SimpleNamespace(parse=parse)))
+    return lambda: SimpleNamespace(beta=SimpleNamespace(messages=SimpleNamespace(stream=stream)))
 
 
 def test_analyze_request_and_notes(monkeypatch):

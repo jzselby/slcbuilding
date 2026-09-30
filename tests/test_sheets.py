@@ -8,10 +8,20 @@ from slc_permits import sheets
 
 
 class FakeWorksheet:
-    def __init__(self, title):
+    def __init__(self, title, cols=26):
         self.title = title
         self.values = []
         self.frozen = 0
+        self.col_count = cols
+
+    def row_values(self, n):
+        return self.values[n - 1] if len(self.values) >= n else []
+
+    def col_values(self, n):
+        return [row[n - 1] if len(row) >= n else "" for row in self.values]
+
+    def add_cols(self, n):
+        self.col_count += n
 
     def get_all_values(self):
         return self.values
@@ -20,8 +30,14 @@ class FakeWorksheet:
         self.title = title
 
     def update(self, values, cell):
-        assert cell == "A1"
-        self.values[:len(values)] = values
+        col, row = ord(cell[0]) - ord("A"), int(cell[1:]) - 1
+        assert col + max(len(v) for v in values) <= self.col_count, "exceeds grid limits"
+        for i, v in enumerate(values):
+            while len(self.values) <= row + i:
+                self.values.append([])
+            target = self.values[row + i]
+            target.extend([""] * (col + len(v) - len(target)))
+            target[col:col + len(v)] = v
 
     def format(self, rng, fmt):
         pass
@@ -76,7 +92,7 @@ RECORD = {
     "record_number": "BLD2026-00001", "detail_url": 'http://x/CapDetail.aspx?id="1"', "date": "09/02/2026",
     "record_type": "Commercial Alteration", "address": "1 Main St", "scope": "Office remodel",
     "job_value": 125000.0, "contractor": "Acme", "status": "In Review", "notable": True,
-    "description": "-demo interior walls",
+    "description": "-demo interior walls", "module": "Planning",
 }
 
 
@@ -95,6 +111,7 @@ def test_publish_sets_up_tabs_and_appends(spreadsheet):
     assert row[6] == 125000.0
     assert row[10] == "Yes"
     assert row[11] == "'-demo interior walls"  # kept as text, not parsed as a formula
+    assert row[12] == "Planning"
 
     digests = spreadsheet.worksheet("Daily digests")
     assert digests.values == [sheets.DIGEST_HEADERS, ["2026-09-30", "09/27/2026 – 09/30/2026", 1, "summary text"]]
@@ -111,3 +128,15 @@ def test_text_escapes_formula_prefixes():
     assert sheets.text("+1") == "'+1"
     assert sheets.text("plain") == "plain"
     assert sheets.text(None) == ""
+
+
+def test_existing_tab_gains_module_column(spreadsheet):
+    old_headers = sheets.PERMIT_HEADERS[:-1]
+    ws = FakeWorksheet("Permits", cols=len(old_headers))
+    ws.values = [list(old_headers), ["2026-09-30", "BLD-1"] + [""] * 10, ["2026-09-30", "BLD-2"] + [""] * 10]
+    spreadsheet.sheets = [ws]
+
+    sheets.publish("id", "{}", [RECORD], date(2026, 10, 1), "w", None)
+
+    assert ws.values[0] == sheets.PERMIT_HEADERS
+    assert [row[12] for row in ws.values[1:]] == ["Building", "Building", "Planning"]

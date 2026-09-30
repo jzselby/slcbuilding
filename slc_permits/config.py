@@ -12,7 +12,8 @@ DEFAULT_BASE_URL = "https://aca-prod.accela.com/SLCREF"
 @dataclass
 class Config:
     base_url: str = DEFAULT_BASE_URL
-    module: str = "Building"
+    # Portal tabs ("modules") to search.
+    modules: tuple[str, ...] = ("Building", "Planning")
     username: str | None = None
     password: str | None = None
     headless: bool = True
@@ -25,7 +26,7 @@ class Config:
     google_sheet_id: str | None = None
     google_service_account_json: str | None = None
     # Safety cap on result pages walked per search (ACA shows 10 rows per page).
-    max_pages: int = 100
+    max_pages: int = 200
     # Milliseconds to wait for ACA's AJAX postbacks to finish.
     timeout_ms: int = 60_000
 
@@ -33,16 +34,15 @@ class Config:
     def login_url(self) -> str:
         return f"{self.base_url}/Login.aspx"
 
-    @property
-    def search_url(self) -> str:
-        return f"{self.base_url}/Cap/CapHome.aspx?module={self.module}&TabName={self.module}"
+    def search_url(self, module: str) -> str:
+        return f"{self.base_url}/Cap/CapHome.aspx?module={module}&TabName={module}"
 
     @classmethod
     def from_env(cls) -> "Config":
         env = os.environ
         return cls(
             base_url=env.get("ACCELA_BASE_URL", DEFAULT_BASE_URL).rstrip("/"),
-            module=env.get("ACCELA_MODULE", "Building"),
+            modules=tuple(m.strip() for m in env.get("ACCELA_MODULES", "Building,Planning").split(",") if m.strip()),
             username=env.get("ACCELA_USERNAME") or None,
             password=env.get("ACCELA_PASSWORD") or None,
             headless=env.get("HEADLESS", "1") != "0",
@@ -53,6 +53,6 @@ class Config:
             summary_model=env.get("SUMMARY_MODEL", "claude-opus-5-5"),
             google_sheet_id=env.get("GOOGLE_SHEET_ID") or None,
             google_service_account_json=env.get("GOOGLE_SERVICE_ACCOUNT_JSON") or None,
-            max_pages=int(env.get("ACCELA_MAX_PAGES", "100")),
+            max_pages=int(env.get("ACCELA_MAX_PAGES", "200")),
             timeout_ms=int(env.get("ACCELA_TIMEOUT_MS", "60000")),
         )

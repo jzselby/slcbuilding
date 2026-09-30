@@ -20,8 +20,11 @@ PAGE_SIZE = 10
 BASE_DAY = date(2026, 9, 1)
 
 TYPES = ["Residential New Construction", "Commercial Alteration", "Demolition"]
+PLANNING_TYPES = ["Site Plan Review", "Zoning Map Amendment"]
+MODULE_TYPES = {"Building": TYPES, "Planning": PLANNING_TYPES}
 RECORDS = [
     {
+        "module": "Building",
         "number": f"BLD2026-{i:05d}",
         "date": BASE_DAY + timedelta(days=i % 5),
         "type": TYPES[i % 3],
@@ -33,8 +36,21 @@ RECORDS = [
     for i in range(23)
 ]
 # One record alone on 2026-08-15 exercises the single-hit redirect.
-RECORDS.append({"number": "BLD2026-09999", "date": date(2026, 8, 15), "type": TYPES[0],
+RECORDS.append({"module": "Building", "number": "BLD2026-09999", "date": date(2026, 8, 15), "type": TYPES[0],
                 "address": "1 Solo St", "description": "Lone record", "status": "Issued", "value": 1})
+RECORDS += [
+    {
+        "module": "Planning",
+        "number": f"PLNSUB2026-{i:05d}",
+        "date": BASE_DAY + timedelta(days=i),
+        "type": PLANNING_TYPES[i % 2],
+        "address": f"{500 + i} W North Temple, Salt Lake City UT 84116",
+        "description": f"Planning proposal #{i}",
+        "status": "Under Review",
+        "value": 0,
+    }
+    for i in range(4)
+]
 
 
 def _page(title: str, body: str, logged_in: bool) -> bytes:
@@ -50,8 +66,9 @@ def _parse_mdY(value: str) -> date:
     return date(y, m, d)
 
 
-def matching(start: date, end: date, rtype: str) -> list[dict]:
-    return [r for r in RECORDS if start <= r["date"] <= end and (not rtype or r["type"] == rtype)]
+def matching(start: date, end: date, rtype: str, module: str = "Building") -> list[dict]:
+    return [r for r in RECORDS if r["module"] == module and start <= r["date"] <= end
+            and (not rtype or r["type"] == rtype)]
 
 
 def grid_html(rows: list[dict], page: int) -> str:
@@ -94,6 +111,7 @@ def empty_grid(table_id: str) -> str:
 # Sys.WebForms.PageRequestManager reports when a postback is in flight.
 SEARCH_PAGE = """
 <h2>Records</h2>{my_records}
+<input type="hidden" id="module" value="{module}">
 <label><input type="checkbox" id="ctl00_PlaceHolderMain_chkSearch" checked> Search my records only</label>
 <table><tr><td>Start Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate" class="watermark"></td>
 <td>End Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSEndDate"></td>
@@ -108,6 +126,7 @@ async function loadPage(p) {{
   window.__busy = true;
   const q = new URLSearchParams({{
     mine: document.getElementById('ctl00_PlaceHolderMain_chkSearch').checked ? '1' : '',
+    module: document.getElementById('module').value,
     start: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate').value,
     end: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_txtGSEndDate').value,
     type: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_ddlGSPermitType').value,
@@ -150,12 +169,15 @@ class Handler(BaseHTTPRequestHandler):
         elif url.path == "/Default.aspx":
             self._send(_page("Home", "<h1>Welcome</h1>", logged_in))
         elif url.path == "/Cap/CapHome.aspx":
-            options = "".join(f'<option value="{html.escape(t)}">{html.escape(t)}</option>' for t in TYPES)
+            module = qs.get("module", "Building")
+            options = "".join(f'<option value="{html.escape(t)}">{html.escape(t)}</option>'
+                              for t in MODULE_TYPES.get(module, []))
             my_records = empty_grid("ctl00_PlaceHolderMain_dgvMyPermitList_gdvPermitList") if logged_in else ""
-            self._send(_page("Search", SEARCH_PAGE.format(options=options, my_records=my_records), logged_in))
+            self._send(_page("Search", SEARCH_PAGE.format(options=options, my_records=my_records, module=html.escape(module)), logged_in))
         elif url.path == "/Cap/Results":
             try:
-                rows = matching(_parse_mdY(qs["start"]), _parse_mdY(qs["end"]), qs.get("type", ""))
+                rows = matching(_parse_mdY(qs["start"]), _parse_mdY(qs["end"]), qs.get("type", ""),
+                                qs.get("module", "Building"))
             except (KeyError, ValueError):
                 self._send(b'<span class="ACA_Error">Invalid date</span>')
                 return

@@ -106,7 +106,7 @@ def run_env(site, tmp_path, monkeypatch):
 
 def test_end_to_end_only_reports_new(run_env):
     tmp_path = run_env
-    assert main(["--start", "2026-09-01", "--end", "2026-09-02", "--all-types"]) == 0
+    assert main(["--start", "2026-09-01", "--end", "2026-09-02", "--all-types", "--modules", "Building"]) == 0
     first_batch = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 2), "")}
     store = PermitStore(tmp_path / "data" / "permits.jsonl")
     assert set(store.records) == first_batch
@@ -116,31 +116,40 @@ def test_end_to_end_only_reports_new(run_env):
     assert f"**{len(first_batch)} new record(s).**" in report
 
     # Overlapping window: only the records not seen before are new.
-    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details", "--all-types"]) == 0
+    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details", "--all-types", "--modules", "Building"]) == 0
     report = (tmp_path / "reports" / "latest.md").read_text()
     assert f"**{23 - len(first_batch)} new record(s).**" in report
     assert "BLD2026-00000" not in report  # 09/01, reported in the first run
     assert len(PermitStore(tmp_path / "data" / "permits.jsonl")) == 23
 
 
-def test_type_contains_accepts_commas():
+def test_type_filters_per_module():
     from slc_permits.__main__ import parse_args
-    assert parse_args([]).type_contains == ["Commercial", "Commericial"]
-    assert parse_args(["--type-contains", "Commercial, Demolition", "--type-contains", "Pool"]).type_contains == [
-        "Commercial", "Demolition", "Pool"]
+    assert parse_args([]).filters == {"Building": ["Commercial", "Commericial"]}
+    args = parse_args(["--types", "Building=Commercial, Sign", "--types", "Planning=Site Plan"])
+    assert args.filters == {"Building": ["Commercial", "Sign"], "Planning": ["Site Plan"]}
+    assert parse_args(["--types", "Building="]).filters == {}  # blank keeps every Building type
+    assert parse_args(["--types", "Building=x", "--all-types"]).filters == {}
+    assert parse_args(["--modules", "Planning, Building"]).modules == ["Planning", "Building"]
 
 
-def test_default_keeps_only_commercial(run_env):
+def test_default_is_commercial_building_plus_all_planning(run_env):
     assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details"]) == 0
     store = PermitStore(run_env / "data" / "permits.jsonl")
-    expected = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 5), "Commercial Alteration")}
-    assert set(store.records) == expected
-    assert {r["record_type"] for r in store.records.values()} == {"Commercial Alteration"}
+    building = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 5), "Commercial Alteration")}
+    planning = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 5), "", "Planning")}
+    assert len(planning) == 4
+    assert set(store.records) == building | planning
+    assert {r["module"] for r in store.records.values() if r["record_number"] in planning} == {"Planning"}
+    assert {r["record_type"] for r in store.records.values() if r["module"] == "Building"} == {"Commercial Alteration"}
+    report = (run_env / "reports" / "latest.md").read_text()
+    assert "### Planning: Site Plan Review" in report
 
 
 def test_dry_run_records_nothing(run_env):
     assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details", "--dry-run"]) == 0
     assert len(PermitStore(run_env / "data" / "permits.jsonl")) == 0
+    assert not (run_env / "reports").exists()  # a dry run must not overwrite the day's report
 
 
 def test_report_without_records():

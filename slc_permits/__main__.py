@@ -1,7 +1,9 @@
-"""Search SLC's Accela portal for new commercial permits, summarize them, and log them to a Google Sheet.
+"""Search SLC's Accela portal for new commercial permits and planning applications,
+summarize them, and log them to a Google Sheet.
 
-    python -m slc_permits                         # last 3 days, commercial record types
-    python -m slc_permits --days-back 14 --dry-run
+    python -m slc_permits                                  # last 14 days: commercial Building + all Planning
+    python -m slc_permits --modules Planning --dry-run --no-details --no-summary
+    python -m slc_permits --types "Planning=Site Plan,Design Review"
     python -m slc_permits --all-types --start 2026-09-01 --end 2026-09-15
 """
 
@@ -25,22 +27,23 @@ from .summarize import analyze, apply_notes, build_report
 
 log = logging.getLogger("slc_permits")
 SLC_TZ = ZoneInfo("America/Denver")
-# SLC's portal spells one type "Commericial Demolition".
-DEFAULT_TYPES = ["Commercial", "Commericial"]
+# Record-type filters per module; a module without one keeps every type.
+# SLC's portal spells one Building type "Commericial Demolition".
+DEFAULT_TYPES = {"Building": ["Commercial", "Commericial"]}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(prog="slc_permits", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--days-back", type=int, default=3,
-                   help="search records opened in the last N days (default 3; overlap is fine, repeats are skipped)")
+    p.add_argument("--days-back", type=int, default=14,
+                   help="search records opened in the last N days (default 14; repeats are skipped)")
     p.add_argument("--start", type=date.fromisoformat, help="start date YYYY-MM-DD (overrides --days-back)")
     p.add_argument("--end", type=date.fromisoformat, help="end date YYYY-MM-DD (default today)")
-    p.add_argument("--type-contains", action="append", metavar="TEXT",
-                   help="keep records whose Record Type contains TEXT; repeat or comma-separate for several "
-                        f"(default: {','.join(DEFAULT_TYPES)})")
-    p.add_argument("--all-types", action="store_true", help="keep every record type")
-    p.add_argument("--record-type", metavar="TEXT",
-                   help="also narrow the portal search itself to the first Record Type option containing TEXT")
+    p.add_argument("--modules", metavar="A,B",
+                   help="portal tabs to search, comma-separated (default: ACCELA_MODULES or Building,Planning)")
+    p.add_argument("--types", action="append", metavar="MODULE=TEXT[,TEXT]",
+                   help="keep that module's records whose Record Type contains any TEXT; 'MODULE=' keeps all. "
+                        "Repeatable. Default: " + "; ".join(f"{m}={','.join(t)}" for m, t in DEFAULT_TYPES.items()))
+    p.add_argument("--all-types", action="store_true", help="keep every record type in every module")
     p.add_argument("--no-details", action="store_true", help="skip opening each new record's detail page")
     p.add_argument("--no-summary", action="store_true", help="skip the Claude summary")
     p.add_argument("--no-sheet", action="store_true", help="don't write to the Google Sheet")
@@ -48,21 +51,28 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--headful", action="store_true", help="show the browser window")
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args(argv)
-    if args.type_contains is None:
-        args.type_contains = DEFAULT_TYPES
-    else:
-        args.type_contains = [t.strip() for v in args.type_contains for t in v.split(",") if t.strip()]
+
+    filters = {m: list(t) for m, t in DEFAULT_TYPES.items()}
+    for spec in args.types or []:
+        module, sep, texts = spec.partition("=")
+        if not sep or not module.strip():
+            p.error(f"--types expects MODULE=TEXT[,TEXT], got {spec!r}")
+        filters[module.strip()] = [t.strip() for t in texts.split(",") if t.strip()]
+    args.filters = {} if args.all_types else {m: t for m, t in filters.items() if t}
+    if args.modules is not None:
+        args.modules = [m.strip() for m in args.modules.split(",") if m.strip()]
     return args
 
 
-def keep_types(records: list[dict], needles: list[str] | None) -> list[dict]:
+def keep_types(module: str, records: list[dict], needles: list[str] | None) -> list[dict]:
     types = Counter(r.get("record_type") or "(none)" for r in records)
-    log.info("Record types in window: %s", ", ".join(f"{t} ({n})" for t, n in types.most_common()) or "none")
+    log.info("%s record types in window: %s", module,
+             ", ".join(f"{t} ({n})" for t, n in types.most_common()) or "none")
     if not needles:
         return records
     lowered = [n.lower() for n in needles]
     kept = [r for r in records if any(n in (r.get("record_type") or "").lower() for n in lowered)]
-    log.info("%d of %d records match %s", len(kept), len(records), " or ".join(repr(n) for n in needles))
+    log.info("%s: %d of %d records match %s", module, len(kept), len(records), " or ".join(repr(n) for n in needles))
     return kept
 
 
@@ -71,6 +81,8 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
                         format="%(asctime)s %(levelname)s %(name)s: %(message)s")
     cfg = Config.from_env()
+    if args.modules:
+        cfg.modules = tuple(args.modules)
     if args.headful:
         cfg.headless = False
 
@@ -96,8 +108,10 @@ def main(argv: list[str] | None = None) -> int:
         client = AccelaClient(page, cfg)
         try:
             client.login()
-            found = client.search(start, end, args.record_type)
-            wanted = keep_types(found, None if args.all_types else args.type_contains)
+            wanted = []
+            for module in cfg.modules:
+                found = client.search(start, end, module=module)
+                wanted += keep_types(module, found, args.filters.get(module))
             new = store.new_only(wanted)
             log.info("%d new", len(new))
             if not args.no_details:
@@ -123,11 +137,16 @@ def main(argv: list[str] | None = None) -> int:
     apply_notes(new, digest)
 
     report = build_report(new, start, end, digest)
-    cfg.reports_dir.mkdir(parents=True, exist_ok=True)
-    report_path = cfg.reports_dir / f"{today.isoformat()}.md"
-    report_path.write_text(report, encoding="utf-8")
-    (cfg.reports_dir / "latest.md").write_text(report, encoding="utf-8")
-    log.info("Wrote %s", report_path)
+    if args.dry_run:
+        log.info("Dry run: %d record(s) would be added:\n%s", len(new),
+                 "\n".join(f"  {r['module']}: {r['record_number']} {r.get('record_type', '')} | {r.get('address', '')}"
+                           for r in new))
+    else:
+        cfg.reports_dir.mkdir(parents=True, exist_ok=True)
+        report_path = cfg.reports_dir / f"{today.isoformat()}.md"
+        report_path.write_text(report, encoding="utf-8")
+        (cfg.reports_dir / "latest.md").write_text(report, encoding="utf-8")
+        log.info("Wrote %s", report_path)
 
     # Show the digest on the GitHub Actions run page.
     if summary_file := os.environ.get("GITHUB_STEP_SUMMARY"):

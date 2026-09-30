@@ -261,14 +261,22 @@ class AccelaClient:
         ).filter(has_text=re.compile(r"^\s*Next\b", re.I))
         return link.first if link.count() else None
 
-    def search(self, start: date, end: date, record_type: str | None = None) -> list[dict]:
-        log.info("Searching %s records opened %s to %s", self.cfg.module, aca_date(start), aca_date(end))
-        self.page.goto(self.cfg.search_url, wait_until="load")
+    def search(self, start: date, end: date, record_type: str | None = None, module: str = "Building") -> list[dict]:
+        """Records opened between start and end in one portal tab, each tagged with its module."""
+        records = self._search(start, end, record_type, module)
+        for rec in records:
+            rec["module"] = module
+        return records
+
+    def _search(self, start: date, end: date, record_type: str | None, module: str) -> list[dict]:
+        log.info("Searching %s records opened %s to %s", module, aca_date(start), aca_date(end))
+        url = self.cfg.search_url(module)
+        self.page.goto(url, wait_until="load")
         try:
             self.page.wait_for_selector(START_DATE, state="visible")
         except PlaywrightTimeout:
             self.save_debug("search-form-missing")
-            raise ScrapeError(f"Search form not found at {self.cfg.search_url}")
+            raise ScrapeError(f"Search form not found at {url}")
 
         # Logged-in users get a "Search my records only" box; we want everyone's records.
         my_only = self.page.locator(MY_RECORDS_ONLY)

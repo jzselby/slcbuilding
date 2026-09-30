@@ -2,7 +2,7 @@
 
 Searches Salt Lake City's Accela Citizen Access portal
 (<https://aca-prod.accela.com/SLCREF>) for newly opened **commercial** building
-records and skips ones it has already reported. It opens each new record's
+records and **Planning** applications, and skips ones it has already reported. It opens each new record's
 detail page, then logs each permit as a row in a Google Sheet. Claude adds a
 plain-English scope, job value, applicant, contractor, and a "notable" flag.
 Claude also writes a short digest of each run to a second tab.
@@ -21,12 +21,13 @@ slc_permits/
 ## How a run works
 
 1. Log in with `ACCELA_USERNAME` / `ACCELA_PASSWORD`. If they aren't set, it searches anonymously.
-2. Search Building records opened in the last `--days-back` days (default 3). The windows overlap
-   on purpose, so records the city back-dates are still caught.
-3. Keep records whose **Record Type** contains "Commercial". This catches every commercial
-   subtype, where the portal's type dropdown only allows one. The log lists every record type
-   it saw in the window, so you can check that nothing commercial is labeled differently. Add
-   more with `--type-contains`.
+2. Search the **Building** and **Planning** tabs for records opened in the last `--days-back`
+   days (default 14). The windows overlap on purpose, so records the city back-dates are still
+   caught.
+3. Filter each tab by **Record Type**. Building keeps types containing "Commercial" (or SLC's
+   misspelling "Commericial"). This catches every commercial subtype, where the portal's type
+   dropdown only allows one. Planning keeps every type unless you give it a filter. The log
+   lists every record type seen in each tab, so you can tune the filters with `--types`.
 4. Drop records already in `data/permits.jsonl`. Open each new record's detail page and expand
    "More Details" to get the job value, contractor, and so on.
 5. Claude returns a digest plus structured notes for each permit. A job value read directly off
@@ -38,8 +39,8 @@ slc_permits/
 
 **Permits** tab: one row per new permit.
 
-| First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description |
-|---|---|---|---|---|---|---|---|---|---|---|---|
+| First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description | Module |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
 "Record" links to the permit's page on the portal. **Daily digests** tab: one row per run,
 with the date window, the count of new permits, and Claude's summary. The run creates both
@@ -71,7 +72,8 @@ The daily job writes to the sheet as a Google Cloud **service account**, a robot
 
 3. Under **Actions → SLC commercial permit digest**, click **Run workflow** to test it.
    After that it runs daily at 7:48am Mountain. A manual run lets you change the look-back
-   window or the type filter. Leave the type blank for all types.
+   window or either tab's type filter (blank keeps all types). Tick **dry run** to see in the
+   log what would be added, without writing the sheet or marking anything as seen.
 
 Each run also commits `reports/` and `data/permits.jsonl` and shows the digest on the run's
 summary page. If a run fails, download the `debug-snapshots` artifact, which has a screenshot
@@ -87,16 +89,17 @@ export ACCELA_USERNAME='you@example.com' ACCELA_PASSWORD='...'
 export ANTHROPIC_API_KEY='sk-ant-...'
 export GOOGLE_SHEET_ID='...' GOOGLE_SERVICE_ACCOUNT_JSON="$(cat key.json)"
 
-python -m slc_permits                              # last 3 days, commercial only
-python -m slc_permits --days-back 14 --dry-run     # try it: no sheet writes, nothing marked seen
-python -m slc_permits --all-types --no-sheet       # every record type, report file only
+python -m slc_permits                              # last 14 days: commercial Building + all Planning
+python -m slc_permits --dry-run --no-details       # try it: no sheet writes, nothing marked seen
+python -m slc_permits --types "Planning=Site Plan,Zoning"   # narrow Planning to some types
+python -m slc_permits --modules Building --all-types --no-sheet   # one tab, every type, report only
 python -m slc_permits --headful -v                 # watch the browser while it runs
 ```
 
 The first real run treats everything in the window as new. To backfill, do one run with
 a larger `--days-back`.
 
-Other settings (environment variables): `ACCELA_MODULE` (default `Building`),
+Other settings (environment variables): `ACCELA_MODULES` (default `Building,Planning`),
 `SUMMARY_MODEL` (default `claude-opus-5-5`), `ACCELA_TIMEOUT_MS`,
 `ACCELA_MAX_PAGES`, `CHROMIUM_EXECUTABLE`, and `HEADLESS=0`.
 
