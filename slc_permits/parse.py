@@ -15,6 +15,8 @@ HEADER_ALIASES = {
     "date": "date",
     "record number": "record_number",
     "permit number": "record_number",
+    "petition number": "record_number",  # Planning tab
+    "petition type": "record_type",
     "record type": "record_type",
     "permit type": "record_type",
     "address": "address",
@@ -39,6 +41,10 @@ def _field_name(header: str) -> str | None:
     if key in IGNORED_HEADERS:
         return None
     return HEADER_ALIASES.get(key) or re.sub(r"[^a-z0-9]+", "_", key).strip("_")
+
+
+# Planning's grid puts the address in a last column with no header.
+ADDRESS_LIKE = re.compile(r"\bUT\b|^\d+ [NSEW]\b", re.I)
 
 
 def _is_data_row(row: Tag) -> bool:
@@ -68,8 +74,11 @@ def parse_results(html: str, page_url: str) -> list[dict]:
         cells = row.find_all("td", recursive=False)
         record: dict = {}
         for name, cell in zip(headers, cells):
+            value = _clean(cell.get_text(" "))
             if name:
-                record[name] = _clean(cell.get_text(" "))
+                record[name] = value
+            elif value and "address" not in record and ADDRESS_LIKE.search(value):
+                record["address"] = value
         link = row.find("a", href=re.compile(r"CapDetail\.aspx", re.I))
         if link:
             record["detail_url"] = urljoin(page_url, link["href"])

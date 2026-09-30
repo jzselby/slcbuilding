@@ -142,6 +142,10 @@ def test_default_is_commercial_building_plus_all_planning(run_env):
     assert set(store.records) == building | planning
     assert {r["module"] for r in store.records.values() if r["record_number"] in planning} == {"Planning"}
     assert {r["record_type"] for r in store.records.values() if r["module"] == "Building"} == {"Commercial Alteration"}
+    first_planning = store.records["PLNSUB2026-00000"]
+    assert first_planning["record_type"] == "Site Plan Review"  # from the "Petition Type" column
+    assert first_planning["address"].startswith("500 W North Temple")  # from the unlabeled column
+    assert "detail_url" not in store.records["PLNSUB2026-00001"]  # listed without a link, still kept
     report = (run_env / "reports" / "latest.md").read_text()
     assert "### Planning: Site Plan Review" in report
 

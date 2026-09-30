@@ -71,34 +71,55 @@ def matching(start: date, end: date, rtype: str, module: str = "Building") -> li
             and (not rtype or r["type"] == rtype)]
 
 
+def _building_row(r: dict, cls: str) -> str:
+    return (
+        f'<tr class="{cls}"><td><input type="checkbox"></td><td><span>{r["date"]:%m/%d/%Y}</span></td>'
+        f'<td><a href="/Cap/CapDetail.aspx?Module=Building&amp;capID1={r["number"]}">'
+        f'<strong><span>{r["number"]}</span></strong></a></td>'
+        f'<td>{html.escape(r["type"])}</td><td>{html.escape(r["address"])}</td>'
+        f'<td>{html.escape(r["description"])}</td><td></td><td>{r["status"]}</td>'
+        f'<td><a href="#">Pay Fees</a></td></tr>'
+    )
+
+
+def _planning_row(r: dict, cls: str, n: int) -> str:
+    # Like SLC's Planning grid: "Petition" headers, the address in a last column with
+    # no header, and some record numbers without a detail link.
+    number = (f'<a href="/Cap/CapDetail.aspx?Module=Planning&amp;capID1={r["number"]}">{r["number"]}</a>'
+              if n % 2 == 0 else r["number"])
+    return (
+        f'<tr class="{cls}"><td></td><td>{r["date"]:%m/%d/%Y}</td><td>{number}</td>'
+        f'<td>{html.escape(r["type"])}</td><td></td><td>{r["status"]}</td><td></td><td></td>'
+        f'<td>{html.escape(r["address"])}</td></tr>'
+    )
+
+
 def grid_html(rows: list[dict], page: int) -> str:
     pages = max(1, -(-len(rows) // PAGE_SIZE))
     chunk = rows[(page - 1) * PAGE_SIZE: page * PAGE_SIZE]
+    planning = bool(chunk) and chunk[0]["module"] == "Planning"
     trs = []
     for n, r in enumerate(chunk):
         cls = "ACA_TabRow_Odd" if n % 2 == 0 else "ACA_TabRow_Even"
-        trs.append(
-            f'<tr class="{cls}"><td><input type="checkbox"></td><td><span>{r["date"]:%m/%d/%Y}</span></td>'
-            f'<td><a href="/Cap/CapDetail.aspx?Module=Building&amp;capID1={r["number"]}">'
-            f'<strong><span>{r["number"]}</span></strong></a></td>'
-            f'<td>{html.escape(r["type"])}</td><td>{html.escape(r["address"])}</td>'
-            f'<td>{html.escape(r["description"])}</td><td></td><td>{r["status"]}</td>'
-            f'<td><a href="#">Pay Fees</a></td></tr>'
-        )
+        trs.append(_planning_row(r, cls, n) if planning else _building_row(r, cls))
     pager = []
     if page > 1:
         pager.append(f'<a href="javascript:void(0)" onclick="loadPage({page - 1})">&lt; Prev</a>')
     pager.append(f"<span>{page}</span>")
     if page < pages:
         pager.append(f'<a href="javascript:void(0)" onclick="loadPage({page + 1})">Next &gt;</a>')
+    header = PLANNING_GRID_HEADER if planning else GRID_HEADER
     return f"""<table id="ctl00_PlaceHolderMain_dgvPermitList_gdvPermitList">
-{GRID_HEADER}
+<tr><td>Showing {(page - 1) * PAGE_SIZE + 1}-{(page - 1) * PAGE_SIZE + len(chunk)} of {len(rows)}</td></tr>
+{header}
 {''.join(trs)}
 <tr class="ACA_Table_Pages"><td colspan="9">{' '.join(pager)}</td></tr></table>"""
 
 
 GRID_HEADER = """<tr class="ACA_TabRow_Header"><th></th><th>Date</th><th>Record Number</th><th>Record Type</th>
 <th>Address</th><th>Description</th><th>Project Name</th><th>Status</th><th>Action</th></tr>"""
+PLANNING_GRID_HEADER = """<tr class="ACA_TabRow_Header"><th></th><th>Date</th><th>Petition Number</th>
+<th>Petition Type</th><th>Project Name</th><th>Status</th><th>Action</th><th>Short Notes</th><th></th></tr>"""
 
 
 def empty_grid(table_id: str) -> str:
