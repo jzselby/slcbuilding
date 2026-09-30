@@ -1,17 +1,19 @@
-# SLC building permit digest
+# SLC commercial permit digest
 
 Searches Salt Lake City's Accela Citizen Access portal
-(<https://aca-prod.accela.com/SLCREF>) for newly opened building records, skips
-ones it has already reported, opens each new record's detail page, and writes
-a Markdown digest. Claude writes the summary at the top. A full table of the
-new records goes below it.
+(<https://aca-prod.accela.com/SLCREF>) for newly opened **commercial** building
+records and skips ones it has already reported. It opens each new record's
+detail page, then logs each permit as a row in a Google Sheet. Claude adds a
+plain-English scope, job value, applicant, contractor, and a "notable" flag.
+Claude also writes a short digest of each run to a second tab.
 
 ```
 slc_permits/
   scraper.py    Playwright: login, search by date range, walk result pages, open detail pages
-  parse.py      ACA HTML -> records (grid rows, detail-page text)
+  parse.py      ACA HTML -> records (grid rows, detail-page text, job value)
+  summarize.py  Claude: digest + structured per-permit notes; Markdown report
+  sheets.py     append rows to the Google Sheet
   store.py      data/permits.jsonl: every record already reported
-  summarize.py  Claude summary + deterministic records table
   __main__.py   CLI
 .github/workflows/permits.yml   daily scheduled run
 ```
@@ -19,13 +21,61 @@ slc_permits/
 ## How a run works
 
 1. Log in with `ACCELA_USERNAME` / `ACCELA_PASSWORD`. If they aren't set, it searches anonymously.
-2. Open `Cap/CapHome.aspx?module=Building` and search records opened in the last
-   `--days-back` days (default 3). The windows overlap on purpose, so records the
-   city back-dates are still caught. Repeats are filtered against `data/permits.jsonl`.
-3. Click through every results page. Open each new record's detail page and expand
-   "More Details" to capture job value, contractor, and so on.
-4. Write `reports/YYYY-MM-DD.md` and `reports/latest.md`, then append the new records
-   to `data/permits.jsonl`.
+2. Search Building records opened in the last `--days-back` days (default 3). The windows overlap
+   on purpose, so records the city back-dates are still caught.
+3. Keep records whose **Record Type** contains "Commercial". This catches every commercial
+   subtype, where the portal's type dropdown only allows one. The log lists every record type
+   it saw in the window, so you can check that nothing commercial is labeled differently. Add
+   more with `--type-contains`.
+4. Drop records already in `data/permits.jsonl`. Open each new record's detail page and expand
+   "More Details" to get the job value, contractor, and so on.
+5. Claude returns a digest plus structured notes for each permit. A job value read directly off
+   the page takes precedence over Claude's.
+6. Append rows to the sheet, write `reports/YYYY-MM-DD.md`, and record the permits as seen.
+   If the sheet write fails, nothing is recorded, so the next run retries those permits.
+
+### The sheet
+
+**Permits** tab: one row per new permit.
+
+| First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+
+"Record" links to the permit's page on the portal. **Daily digests** tab: one row per run,
+with the date window, the count of new permits, and Claude's summary. The run creates both
+tabs, with frozen, bold header rows.
+
+## Set up the Google Sheet
+
+The daily job writes to the sheet as a Google Cloud **service account**, a robot Google account:
+
+1. In the [Google Cloud console](https://console.cloud.google.com/), create or pick a project,
+   then enable the **Google Sheets API** (APIs & Services → Library).
+2. Under APIs & Services → Credentials, choose **Create credentials → Service account**. Open
+   it, then under **Keys → Add key → JSON**, download the key file.
+3. Open the sheet, click **Share**, and add the service account's email
+   (`…@….iam.gserviceaccount.com`, from the key file) as an **Editor**.
+4. The sheet ID is the long string in its URL: `docs.google.com/spreadsheets/d/<ID>/edit`.
+
+## Run it daily on GitHub Actions
+
+1. Merge this into the default branch. Scheduled workflows only run from there.
+2. Under **Settings → Secrets and variables → Actions**, add these secrets:
+
+   | Secret | Value |
+   |---|---|
+   | `ACCELA_USERNAME`, `ACCELA_PASSWORD` | your Accela login |
+   | `ANTHROPIC_API_KEY` | for the Claude notes and digest (without it, rows still get written, minus those columns) |
+   | `GOOGLE_SHEET_ID` | the sheet ID from above |
+   | `GOOGLE_SERVICE_ACCOUNT_JSON` | the entire contents of the downloaded key file |
+
+3. Under **Actions → SLC commercial permit digest**, click **Run workflow** to test it.
+   After that it runs daily at 7:48am Mountain. A manual run lets you change the look-back
+   window or the type filter. Leave the type blank for all types.
+
+Each run also commits `reports/` and `data/permits.jsonl` and shows the digest on the run's
+summary page. If a run fails, download the `debug-snapshots` artifact, which has a screenshot
+and the HTML of the page where it stopped.
 
 ## Run it locally
 
@@ -33,35 +83,22 @@ slc_permits/
 pip install -r requirements.txt
 python -m playwright install chromium
 
-export ACCELA_USERNAME='you@example.com'
-export ACCELA_PASSWORD='...'
-export ANTHROPIC_API_KEY='sk-ant-...'   # optional; without it you get the table only
+export ACCELA_USERNAME='you@example.com' ACCELA_PASSWORD='...'
+export ANTHROPIC_API_KEY='sk-ant-...'
+export GOOGLE_SHEET_ID='...' GOOGLE_SERVICE_ACCOUNT_JSON="$(cat key.json)"
 
-python -m slc_permits                          # last 3 days, all Building records
-python -m slc_permits --days-back 14 --dry-run # look back further without marking anything seen
-python -m slc_permits --record-type Commercial # only record types containing "Commercial"
-python -m slc_permits --headful -v             # watch the browser while it runs
+python -m slc_permits                              # last 3 days, commercial only
+python -m slc_permits --days-back 14 --dry-run     # try it: no sheet writes, nothing marked seen
+python -m slc_permits --all-types --no-sheet       # every record type, report file only
+python -m slc_permits --headful -v                 # watch the browser while it runs
 ```
 
-The first run reports everything in the window as new. Use `--dry-run` to try
-it without writing to `data/permits.jsonl`.
+The first real run treats everything in the window as new. To backfill, do one run with
+a larger `--days-back`.
 
 Other settings (environment variables): `ACCELA_MODULE` (default `Building`),
 `SUMMARY_MODEL` (default `claude-opus-5-5`), `ACCELA_TIMEOUT_MS`,
 `ACCELA_MAX_PAGES`, `CHROMIUM_EXECUTABLE`, and `HEADLESS=0`.
-
-## Run it daily on GitHub Actions
-
-1. Merge this into the default branch. Scheduled workflows only run from there.
-2. Under **Settings → Secrets and variables → Actions**, add `ACCELA_USERNAME`,
-   `ACCELA_PASSWORD`, and `ANTHROPIC_API_KEY`.
-3. Under **Actions → SLC permit digest**, click **Run workflow** to test it.
-   After that it runs daily at 7:48am Mountain.
-
-Each run commits the new report and the updated `data/permits.jsonl`. It also
-shows the digest on the run's summary page. If a run fails, download the
-`debug-snapshots` artifact, which has a screenshot and the HTML of the page
-where it stopped.
 
 ## If the portal changes
 
@@ -75,7 +112,8 @@ the constants at the top of `slc_permits/scraper.py`.
 
 `tests/mock_aca.py` is a small local imitation of the portal: login, AJAX
 search, a paged grid, the jump straight to the record when there's only one
-result, and collapsed detail sections. The scraper runs against it end to end:
+result, and collapsed detail sections. The scraper runs against it end to end.
+Claude and Google Sheets are faked.
 
 ```bash
 pip install pytest

@@ -108,3 +108,14 @@ def parse_detail_record_number(html: str) -> str | None:
         return _clean(label.get_text(" ")) or None
     match = re.search(r"Record\s+([A-Z]{2,}[\w-]*\d)\s*:", soup.get_text(" "))
     return match.group(1) if match else None
+
+
+def parse_job_value(detail_text: str) -> float | None:
+    """Declared job value from detail-page text ("Job Value: $1,250,000.00")."""
+    match = re.search(r"Job Value\s*:?\s*\$?\s*([\d,]+(?:\.\d+)?)", detail_text, re.I)
+    if not match:
+        return None
+    try:
+        return float(match.group(1).replace(",", ""))
+    except ValueError:
+        return None

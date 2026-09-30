@@ -1,4 +1,4 @@
-name: SLC permit digest
+name: SLC commercial permit digest
 
 on:
   schedule:
@@ -9,9 +9,9 @@ on:
       days_back:
         description: "Search records opened in the last N days"
         default: "3"
-      record_type:
-        description: "Only record types containing this text (blank = all)"
-        default: ""
+      type_contains:
+        description: "Only record types containing this text (blank = all types)"
+        default: "Commercial"
 
 permissions:
   contents: write
@@ -42,11 +42,14 @@ jobs:
           ACCELA_USERNAME: ${{ secrets.ACCELA_USERNAME }}
           ACCELA_PASSWORD: ${{ secrets.ACCELA_PASSWORD }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           DAYS_BACK: ${{ inputs.days_back || '3' }}
-          RECORD_TYPE: ${{ inputs.record_type }}
+          # Scheduled runs have no inputs, so they use the Commercial default.
+          TYPE_CONTAINS: ${{ github.event_name == 'schedule' && 'Commercial' || inputs.type_contains }}
         run: |
           args=(--days-back "$DAYS_BACK")
-          if [ -n "$RECORD_TYPE" ]; then args+=(--record-type "$RECORD_TYPE"); fi
+          if [ -n "$TYPE_CONTAINS" ]; then args+=(--type-contains "$TYPE_CONTAINS"); else args+=(--all-types); fi
           python -m slc_permits "${args[@]}"
 
       - name: Upload debug snapshots

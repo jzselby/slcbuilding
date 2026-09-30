@@ -83,38 +83,56 @@ def test_bad_password_fails_with_snapshot(client, cfg):
     assert list(Path(cfg.debug_dir).glob("*login-failed.png"))
 
 
-def test_end_to_end_only_reports_new(site, tmp_path, monkeypatch):
+@pytest.fixture
+def run_env(site, tmp_path, monkeypatch):
     monkeypatch.setenv("ACCELA_BASE_URL", site.url)
     monkeypatch.setenv("ACCELA_USERNAME", USER)
     monkeypatch.setenv("ACCELA_PASSWORD", PASSWORD)
     monkeypatch.setenv("PERMITS_DATA_DIR", str(tmp_path / "data"))
     monkeypatch.setenv("PERMITS_REPORTS_DIR", str(tmp_path / "reports"))
-    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-    monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)
-    monkeypatch.delenv("GITHUB_STEP_SUMMARY", raising=False)
+    for var in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "GITHUB_STEP_SUMMARY", "GOOGLE_SHEET_ID"):
+        monkeypatch.delenv(var, raising=False)
+    return tmp_path
 
-    assert main(["--start", "2026-09-01", "--end", "2026-09-02"]) == 0
+
+def test_end_to_end_only_reports_new(run_env):
+    tmp_path = run_env
+    assert main(["--start", "2026-09-01", "--end", "2026-09-02", "--all-types"]) == 0
     first_batch = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 2), "")}
     store = PermitStore(tmp_path / "data" / "permits.jsonl")
     assert set(store.records) == first_batch
     assert all("detail_text" not in r for r in store.records.values())
+    assert store.records["BLD2026-00000"]["job_value"] == 25_000.0  # read off the detail page
     report = (tmp_path / "reports" / "latest.md").read_text()
     assert f"**{len(first_batch)} new record(s).**" in report
 
     # Overlapping window: only the records not seen before are new.
-    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details"]) == 0
+    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details", "--all-types"]) == 0
     report = (tmp_path / "reports" / "latest.md").read_text()
     assert f"**{23 - len(first_batch)} new record(s).**" in report
     assert "BLD2026-00000" not in report  # 09/01, reported in the first run
     assert len(PermitStore(tmp_path / "data" / "permits.jsonl")) == 23
 
 
+def test_default_keeps_only_commercial(run_env):
+    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details"]) == 0
+    store = PermitStore(run_env / "data" / "permits.jsonl")
+    expected = {r["number"] for r in matching(date(2026, 9, 1), date(2026, 9, 5), "Commercial Alteration")}
+    assert set(store.records) == expected
+    assert {r["record_type"] for r in store.records.values()} == {"Commercial Alteration"}
+
+
+def test_dry_run_records_nothing(run_env):
+    assert main(["--start", "2026-09-01", "--end", "2026-09-05", "--no-details", "--dry-run"]) == 0
+    assert len(PermitStore(run_env / "data" / "permits.jsonl")) == 0
+
+
 def test_report_without_records():
-    assert "No new records" in build_report([], date(2026, 9, 1), date(2026, 9, 2), "m", use_llm=False)
+    assert "No new records" in build_report([], date(2026, 9, 1), date(2026, 9, 2))
 
 
 def test_report_table_escapes_pipes():
     rec = {"record_number": "B-1", "record_type": "Demo", "description": "a | b", "detail_url": "http://x/1"}
-    report = build_report([rec], date(2026, 9, 1), date(2026, 9, 2), "m", use_llm=False)
+    report = build_report([rec], date(2026, 9, 1), date(2026, 9, 2))
     assert "a \\| b" in report
     assert "[B-1](http://x/1)" in report

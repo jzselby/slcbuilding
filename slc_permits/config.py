@@ -22,6 +22,8 @@ class Config:
     reports_dir: Path = Path("reports")
     debug_dir: Path = Path("debug")
     summary_model: str = "claude-opus-5-5"
+    google_sheet_id: str | None = None
+    google_service_account_json: str | None = None
     # Safety cap on result pages walked per search (ACA shows 10 rows per page).
     max_pages: int = 100
     # Milliseconds to wait for ACA's AJAX postbacks to finish.
@@ -49,6 +51,8 @@ class Config:
             reports_dir=Path(env.get("PERMITS_REPORTS_DIR", "reports")),
             debug_dir=Path(env.get("PERMITS_DEBUG_DIR", "debug")),
             summary_model=env.get("SUMMARY_MODEL", "claude-opus-5-5"),
+            google_sheet_id=env.get("GOOGLE_SHEET_ID") or None,
+            google_service_account_json=env.get("GOOGLE_SERVICE_ACCOUNT_JSON") or None,
             max_pages=int(env.get("ACCELA_MAX_PAGES", "100")),
             timeout_ms=int(env.get("ACCELA_TIMEOUT_MS", "60000")),
         )
