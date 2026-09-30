@@ -1,128 +1,248 @@
-# New SLC commercial permits: Sep 27 – Sep 30, 2026
+# New SLC commercial permits and planning applications: Sep 16 – Sep 30, 2026
 
-**31 new record(s).**
-
-## Highlights
-- **BLD2026-08056 - 450 W 700 S (Granary Lofts):** $1,240,000 electrical permit for a 47-unit apartment loft building over a concrete parking structure. It is tied to building permit BLD2025-09869 and is already at Inspections.
-- **BLD2026-08043 - 150 E Social Hall Ave, Suite 1 (Lynk):** $490,000 electrical, fire alarm and lighting tenant improvement by Champion Electric. Companion plumbing permit BLD2026-08030 covers the office remodel; both reference BLD2026-06927.
-- **BLD2026-08025 - 1116 S Richards St (The Hive on 11th):** Plumbing for a multifamily podium building with parking and professional space on the lower two levels and residential units on the top three.
-- **BLD2026-07967 - 60 E South Temple St:** $250,000 level-2 alteration to a 9th-floor corridor in a 26-story, 453,310 sq ft building.
-- **BLD2026-08003 - 5552 W 700 S (Torus Finishing Line System):** Industrial powder-coating finishing line with booths, curing ovens and a conveyorized wash system in an 8,400 sq ft work area. Status is Need Info.
-- **BLD2026-07976 - 1125 S Redwood Rd (Gold Cross Demo):** $30,000 interior demolition of walls, ceilings, bathrooms and flooring across 15,761 sq ft of a 20,760 sq ft building.
-- **BLD2026-07965 - 451 S State St:** $50,000 new detached 400 sq ft accessory storage building. The city has flagged the application to verify the address.
-
-## By the numbers
-31 records. Declared job values appear on 16 of them and total about $2.63M.
-
-| Record type | Count |
-|---|---|
-| Commercial Building Permit | 9 |
-| Commercial Electrical | 8 |
-| Commercial Plumbing | 4 |
-| Commercial Fire Sprinkler | 3 |
-| Commercial Mechanical | 3 |
-| Commercial Roofing | 2 |
-| Commercial SolarPV | 1 |
-| Commercial Accessory Building | 1 |
-
-| Status | Count |
-|---|---|
-| In For Review | 7 |
-| Inspections | 7 |
-| Prescreen | 4 |
-| Need Info | 4 |
-| Blank / not stated | 9 (6 of them are 26TMP temporary records) |
-
-## Themes
-- **451 S State St cluster:** Four records share this address:
-  - two overlapping reroof filings (26TMP-021398, 26TMP-021392);
-  - a plumbing fixture replacement (26TMP-021476);
-  - the accessory building (BLD2026-07965).
-- **Repeat addresses downtown:**
-  - 60 E South Temple has two level-2 alterations: the 9th-floor corridor and a 15th-floor spec suite (BLD2026-07981).
-  - 150 E Social Hall has two trade permits for the Lynk TI.
-  - 56 S and 178 S Rio Grande St have an interior demo and a $150,000 Children's Miracle Network office TI.
-- **West-side industrial activity:**
-  - conveyor electrical at 720 S 4400 W;
-  - a new sprinkler system for Tire World Bldg 1 at 810 S 4190 W;
-  - a Transpak TI sprinkler revision at 1795 S 5350 W;
-  - the powder-coat line at 5552 W 700 S;
-  - warehouse HVAC for FlexETC at 1415 S 700 W.
-- **Multifamily follow-on trade permits:** Granary Lofts and The Hive on 11th are both advancing to trade permits. An 18-unit apartment walkway repair (Martin Manor) was also filed.
-- **Other:**
-  - a 56.4 kWDC rooftop solar array for Citizens West ($159,990);
-  - a T-Mobile antenna removal;
-  - a test record (26TMP-021628) at 349 S 200 E.
+**148 new record(s).**
 
 ## All new records
 
-### Commercial Accessory Building (1)
+### Building: Commercial Building Permit (33)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-07965](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BAB&capID2=00000&capID3=00121&agencyCode=SLCREF&IsToShowInspection=) | 09/27/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Construction of a new 400 sq ft, 12-ft-tall detached accessory storage building at the rear of a commercial property. | $50,000 | Need Info |
+| 26TMP-021201 | 09/24/2026 | 6338 W 700 N, SALT LAKE CITY UT 84116 |  |  |  |
+| [BLD2026-07629](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07502&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 560 E SOUTH TEMPLE ST, NA, Salt Lake City UT 84102-0000 | Replacing metal Stair stringers and treads on two exterior stairs that serve as general use as well as fire escapes. The existing stringers and treads are poured in place pan style but will be replaced with precast concrete treads. They have heavy corrosion and loss of metal in many areas. The landings are in general good condition and will remain in place |  | Prescreen |
+| [BLD2026-07631](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07508&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 854 S STATE ST, Salt Lake City UT 84111-4222 | Interior remodel of an existing commercial space that was divided into two separate suites. The scope includes re-opening an existing rear garage door/opening, updating and reconditioning existing lighting, interior painting, and new flooring. No structural changes are proposed. |  | In For Review |
+| [BLD2026-07632](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07510&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 170 N APOLLO RD, E, SALT LAKE CITY UT 84116 | This is an application for tenant improvements for unite E within a 7 unit industrial buildings |  | In For Review |
+| [BLD2026-07637](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07515&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1414 S GLADIOLA ST, 400, Salt Lake City UT 84104-0000 | Pallet Racking for NuvoH20 |  | Inspections |
+| [BLD2026-07640](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07518&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1197 N 6880 W, Salt Lake City UT 84116- | INSTALLATION OF NEW INTERIOR STORAGE RACKING WITHIN AN EXISTING WAREHOUSE BUILDING |  | Inspections |
+| [BLD2026-07641](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07519&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 55 N 300 W, 300, Salt Lake City UT 84103-1109 | **This project needs an electrical and mechanical permit** Consists of remodel to an existing office space, SOW consists of sub-dividing an open office space, adding sound control storefronts and the creating a new conference room within the existing lobby. All other areas Remain As-is |  | In For Review |
+| [BLD2026-07671](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07545&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 170 N APOLLO RD, F, SALT LAKE CITY UT 84116 | This is for a Tenant Office space build out in a newly completed flex space building |  | Need Info |
+| [BLD2026-07677](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07553&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 369 S ORANGE ST, Salt Lake City UT 84104-3544 | Remove existing precast panels and replace with concrete tilt panels, new concrete ramp and stair with ACM sheet metal canopy with lights, new metal framed electrical and sprinkler rooms, |  | In For Review |
+| [BLD2026-07703](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07577&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 215 W SOUTH TEMPLE ST, Salt Lake City UT 84101-1333 | This is a proposed modification to an existing rooftop Verizon Wireless cell site on the hotel. The project would entail the removal and replacement of the (12) antennas at the site and replacing them with (12) new antennas at the existing antenna locations. We will also be replacing (18) Remote Radio Heads with (3) new models. |  | Inspections |
+| [BLD2026-07720](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07588&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 15 W SOUTH TEMPLE ST, Salt Lake City UT 84101-1511 | VOIDED FOR WRONG PERMIT TYPE//PLEASE APPLY FOR AN ELECTRICAL PERMIT///adding low voltage cabling |  | Void |
+| [BLD2026-07722](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07590&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 136 E SOUTH TEMPLE ST, 102, Salt Lake City UT 84111-1104 | ***EXPEDITED***Tenant improvement for a donut and coffee shop cafe, including interior remodeling, food preparation and service areas, commercial kitchen equipment, coffee equipment, customer seating, lighting, plumbing, electrical, and related improvements. |  | In For Review |
+| [BLD2026-07729](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07594&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 650 S MAIN ST, 110 & 210, Salt Lake City UT 84101-2750 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//INTERIOR ALTERATIONS ON FLOOR 1 & FLOOR 2 FOR AREA AS SHOWN (TENANT PARTIAL FLOOR) |  | Need Info |
+| [BLD2026-07736](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07597&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 2750 W 900 S, Salt Lake City UT 84104-4503 | A spec TI inside of a shell building for a future potential tenant. There is no tenant planned for this space in a shell warehouse. |  | In For Review |
+| [BLD2026-07737](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07598&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 2720 W 900 S, Salt Lake City UT 84104-4503 | A spec TI inside an empty shell warehouse for a future tenant. No tenant exists at this time and is available for leasing. |  | In For Review |
+| [BLD2026-07742](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07600&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Upgrades to the existing SLCWRF Digester Complex including the addition of a phosphorus recovery system, new electrical room, and overall building declassification. |  | Need Info |
+| [BLD2026-07764](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07620&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1930 N 2200 W, 5, Salt Lake City UT 84116-0000 | I am representing the landlord for this unit, where our tenant went out of business and tore out hydrogen tanks and other equipment when they left without pulling a permit. We failed an inspection because of this and were told to pull an interior demo permit in order to resolve the situation. |  | Inspections |
+| [BLD2026-07768](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07621&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1350 S 4400 W, 100, SALT LAKE CITY UT 84104 | Tenant Improvement Office Space: Approximately 1,200 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Need Info |
+| [BLD2026-07769](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07622&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1350 S 4400 W, SALT LAKE CITY UT 84104 | Tenant Improvement Office Space: Approximately 800 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Prescreen |
+| [BLD2026-07770](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07623&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 965 S 4400 W, 100, Salt Lake City UT 84104-0000 | Tenant Improvement Office Space: Approximately 1,800 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Prescreen |
+| [BLD2026-07772](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07625&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 965 S 4400 W, 400, Salt Lake City UT 84104-0000 | Tenant Improvement Office Space: Approximately 1,200 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Prescreen |
+| [BLD2026-07773](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07626&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 965 S 4400 W, 400, Salt Lake City UT 84104-0000 | Tenant Improvement Office Space: Approximately 1,500 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Prescreen |
+| [BLD2026-07774](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07628&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 965 S 4400 W, 100, Salt Lake City UT 84104-0000 | Tenant Improvement Office Space: Approximately 1,200 SF of office space will be added within the existing building. The office area will occupy the first unit space of the existing building. |  | Prescreen |
+| [BLD2026-07791](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07633&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 607 E 200 S, Salt Lake City UT 84102-2110 | Relocation Laundry to Main Floor, Expanding bathroom to adding showers and additional toilet and sinks, converting existing bathroom to ADA associable. Replacing shower room sink replacing men restroom urinals and sinks. adding a drinking fountain to dinning room. Creating additional bedroom and Hallway |  | In For Review |
+| [BLD2026-07798](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07641&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 780 W 800 S, 210, Salt Lake City UT 84104-1416 | removing existing conference rooms, offices, work area to create a new reception/display area for visitors to Welfare Square. |  | In For Review |
+| [BLD2026-07799](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07644&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 784 W 700 S, 210, Salt Lake City UT 84104- | Removing 2 conference rooms and creating a new tour path visitor display area and reception desk. |  | In For Review |
+| [BLD2026-07808](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07650&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 3823 W 1200 N, Salt Lake City UT 84116-0 | VOIDED FOR WRONG PERMIT TYPE//PLEASE APPLY FOR A FIRE SPRINKLER PERMIT///Replace existing Fire Suppression System which utilizes PFOS with a water-only system. Remove equipment and piping that was used in PFOS system and replace with new piping. |  | Void |
+| [BLD2026-07809](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07651&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 6195 W 300 S, 101, Salt Lake City UT 84104-0000 | THE TENANT WILL INSTALL A PORTABLE CONVEYOR SYSTEM FOR THE EXISITNG SHIPPING WAREHOUSE USE. NO CHANGE TO OR ADDITION OF THE EXTERIOR BUILDING FOOTPRINT |  | In For Review |
+| [BLD2026-07869](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07711&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 350 W 800 S, A, SALT LAKE CITY UT 84101 | Tenant interior upfit to an existing full-service restaurant on the ground floor of an existing building. Exterior signage under a separate permit application. |  | Prescreen |
+| [BLD2026-07879](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07725&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 805 S 900 W, Salt Lake City UT 84104-1456 | PLEASE PAY PLAN CHECK FEE///REMODEL OF AN EXISTING LITTLE CAESARS PIZZA STORE, LIMITED PRIMARILY TO THE EXISTING LOBBY/CUSTOMER SERVICE AREA, IN ACCORDANCE WITH THE “ELEVATION 8” DESIGN STANDARDS AND CONSTRUCTION DOCUMENTS. WORK INCLUDES SELECTIVE DEMOLITION; REMOVAL AND RELOCATION OF EXISTING EQUIPMENT, MENU SCREENS, AND ASSOCIATED INFRASTRUCTURE; INSTALLATION OF NEW ARCHITECTURAL FINISHES, PIZZA PORTAL SURROUND, MILLWORK, TILE, WALL FINISHES, AND PARTITIONS AS APPLICABLE; MODIFICATIONS TO SUSPENDED CEILING SYSTEMS; RELOCATION OF HVAC DIFFUSERS AND CEILING DEVICES; INSTALLATION AND RELOCATION OF LED LIGHTING AND ELECTRICAL DEVICES; AND ELECTRICAL ROUGH-IN, RECEPTACLES, BRANCH CIRCUITS, POWER/DATA CONNECTIONS, AND FINAL CONNECTIONS FOR NEW AND RELOCATED EQUIPMENT. ALL WORK SHALL BE COORDINATED WITH EXISTING BUILDING SYSTEMS AND OPERATIONS, WITH AFFECTED SURFACES PATCHED AND RESTORED AS REQUIRED. CONTRACTOR SHALL VERIFY FIELD CONDITIONS AND DIMENSIONS PRIOR TO CONSTRUCTION AND COORDINATE ARCHITECTURAL, ELECTRICAL, MECHANICAL, AND EQUIPMENT INSTALLATIONS. WORK SHALL COMPLY WITH APPLICABLE LOCAL BUILDING CODES AND ADA REQUIREMENTS. |  | Need Info |
+| [BLD2026-07883](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07729&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 56 S RIO GRANDE ST, Salt Lake City UT 84101-0000 | PLEASE PAY PLAN CHECK FEE///INTERIOR LAB REMODEL with office space, NO MODIFICATIONS TO EXITING AND OCCUPANT COUNT |  | In For Review |
+| [BLD2026-07888](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07736&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 4325 W COMMERCIAL WAY, H, Salt Lake City UT 84104-0000 | PLEASE PAY BALANCE DUE// SEPARATE ELECTRICAL PERMIT REQUIRED// Remodel existing office space |  | In For Review |
+| [BLD2026-07890](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07737&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 210 E 400 S, Salt Lake City UT 84111-3107 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//The project consists of a tenant improvement/ renovation of the Old Salt Lake City Main Library. The project includes the renovation of the three above-grade floors, to house Youth Services staff and programming on the 1st and 2nd floors, and staff from multiple divisions on the 3rd floor. The majority of the work takes place on the 2nd floor (Youth Services offices, programming, classrooms) and the 3rd floor (SLC employee offices/ support spaces). |  | Need Info |
 
-### Commercial Building Permit (9)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-07967](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07803&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 60 E SOUTH TEMPLE ST, Salt Lake City UT 00000-0000 | Level-2 alteration to a 1,326 sq ft 9th-floor common corridor in a 26-story office building. | $250,000 | In For Review |
-| [BLD2026-07976](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07817&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 1125 S REDWOOD RD, Salt Lake City UT 84104-3706 | Interior demolition of walls, ceilings, bathrooms and flooring over 15,761 sq ft of the Gold Cross building. | $30,000 | In For Review |
-| [BLD2026-07981](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07826&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 60 E SOUTH TEMPLE ST, 1550, Salt Lake City UT 00000-0000 | Level-2 alteration of 15th-floor Suite 1550 as a spec suite for a future tenant. |  | Need Info |
-| [BLD2026-07985](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07827&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 56 S RIO GRANDE ST, Salt Lake City UT 84101-0000 | Interior demolition only of a 10,000 sq ft single-story space for Nuton. | $500 | Inspections |
-| [BLD2026-07996](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07837&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 178 S RIO GRANDE ST, 400, Salt Lake City UT 84101-0000 | Tenant improvement adding seven enclosed offices, a work room, millwork and finish updates in the Children's Miracle Network office space (16,224 sq ft work area). | $150,000 | Need Info |
-| [BLD2026-08003](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07851&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 5552 W 700 S, Salt Lake City UT 84104-0000 | Installation of an automatic powder-coating finishing line with booths, curing ovens, conveyorized wash system and exhaust within an existing 8,400 sq ft industrial work area. |  | Need Info |
-| [BLD2026-08009](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07858&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 369 S ORANGE ST, 400, Salt Lake City UT 84104-3544 | Temporary demising wall to separate suites during tilt-up wall repairs, to be removed afterward. | $110,000 | Prescreen |
-| [BLD2026-08052](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07886&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 1900 S DOUGLAS ST, Salt Lake City UT 84105-3635 | Removal and replacement of the exterior concrete walkway at the 18-unit, three-story Martin Manor Apartments. | $12,800 |  |
-| [BLD2026-08067](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07895&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 1630 S GLADIOLA ST, Salt Lake City UT 00000-0000 | Removal of T-Mobile antennas and related equipment. | $15,000 | Prescreen |
-
-### Commercial Electrical (8)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-07971](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01608&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 349 S 200 E, ., Salt Lake City UT 84111-2811 | Electrical remodel at Plaza 349. | $2,500 | Inspections |
-| [BLD2026-07982](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01613&agencyCode=SLCREF&IsToShowInspection=) | 09/28/2026 | 3921 W TERMINAL DR, Salt Lake City UT 84116-0000 | New sub-panel and power for service bay lifts, tire equipment and a security gate at the Avis remote service site. |  | Inspections |
-| [BLD2026-07999](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01617&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 1541 S 300 W, Salt Lake City UT 84115-5139 | Electrical service upgrade, code cleanup and three-phase converters for equipment at Idle Hands Roasting. | $5,000 | In For Review |
-| [BLD2026-08024](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01622&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 1405 E 2100 S, Salt Lake City UT 84105-3724 | Replacement of a 200-amp meter panel service at Vongole Pasta. | $4,500 | Inspections |
-| [BLD2026-08043](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01626&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 150 E SOCIAL HALL AVE, 1, Salt Lake City UT 84111-1504 | Electrical, fire alarm and lighting work for the Lynk tenant improvement in Suite 1. | $490,000 | In For Review |
-| [BLD2026-08047](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01627&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 720 S 4400 W, Salt Lake City UT 84104-0000 | New 480V three-phase electrical circuit to redo a warehouse conveyor system. | $15,640 | Prescreen |
-| [BLD2026-08056](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01629&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 450 W 700 S, Salt Lake City UT 84101-2226 | New electrical work for Granary Lofts, a 47-unit apartment loft building over a concrete parking structure. | $1,240,000 | Inspections |
-| [BLD2026-08072](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01633&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 7744 W 700 N, SALT LAKE CITY UT | Low-voltage installation for the UT 18 project, associated with building permit BLD2026-04848. | $98,153 |  |
-
-### Commercial Fire Sprinkler (3)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-021552 | 09/29/2026 | Salt Lake City UT 84104-4940 | Addition of 17 sprinklers covering 1,175 sq ft in a previously unprotected compressor room at First Quality. |  |  |
-| [BLD2026-08031](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00337&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 810 S 4190 W, Bldg 1, Salt Lake City UT 84104-4497 | New wet/dry fire sprinkler system for the 8,000 sq ft Tire World Building 1, linked to a new warehouse building permit. |  | In For Review |
-| [BLD2026-08036](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00338&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 1795 S 5350 W, Salt Lake City UT 84104-0000 | Relocation of existing sprinkler heads, adding heads as necessary, to accommodate new ceilings in the 1,424 sq ft Transpak tenant improvement. |  | In For Review |
-
-### Commercial Mechanical (3)
+### Building: Commercial Driveway (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-021628 | 09/29/2026 | 349 S 200 E, test, Salt Lake City UT 84111-2811 | Test record labeled 'Test for fees' with no actual work described. |  |  |
-| 26TMP-021725 | 09/30/2026 | 209 E 500 S, Salt Lake City UT 84111-3203 | Replacement of an existing cooling tower and associated piping. |  |  |
-| [BLD2026-07998](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01444&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 1415 S 700 W, Salt Lake City UT 84104-1614 | Installation of four swamp coolers, relief fans, eight gas unit heaters with gas lines, and bathroom exhaust fans in warehouse units for FlexETC. |  | Inspections |
+| [BLD2026-07680](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BDW&capID2=00000&capID3=00041&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 5822 W AMELIA EARHART DR, Salt Lake City UT 84116 United States | Remove 59 10’x10’ squares on north side of fire station and re pour. Remove 11 10’x10’ squares on the south side and re pour. |  | Prescreen |
 
-### Commercial Plumbing (4)
+### Building: Commercial Electrical (29)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-021476 | 09/28/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Replacement of existing plumbing fixtures in a commercial tenant space. |  |  |
-| [BLD2026-08025](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01173&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 1116 S RICHARDS ST, Salt Lake City UT 84101-3111 | Plumbing, drainage, sewer and water systems for The Hive on 11th, a multifamily podium building with parking and professional space on the lower two levels and residential units above. |  | Inspections |
-| [BLD2026-08030](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01175&agencyCode=SLCREF&IsToShowInspection=) | 09/29/2026 | 150 E SOCIAL HALL AVE, Salt Lake City UT 84111-1504 | Plumbing fixture installation for the Lynk Engineering office remodel. |  | In For Review |
-| [BLD2026-08057](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01179&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 1207 S STATE ST, Salt Lake City UT 84111-0000 | Plumbing for bathroom remodels in the U-Haul and Good Pie Pizzeria spaces. |  |  |
+| 26TMP-021275 | 09/25/2026 | 264 S 5750 W, Salt Lake City UT 84104-0000 |  |  |  |
+| [BLD2026-07626](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01539&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 535 S 200 E, Salt Lake City UT 84111-3639 | Installation of new elevator at Wasatch Manor and associated electrical work. |  | In For Review |
+| [BLD2026-07638](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01540&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 645 S STATE ST, Salt Lake City UT 84111-3819 | Electrical for CELL TOWER SEE ATTACHED PLANS |  | Inspections |
+| [BLD2026-07643](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01541&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 2690 S 700 E, Salt Lake City UT 84106-1727 | Hook up electrical to (4) signs. |  | Inspections |
+| [BLD2026-07694](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01551&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 1465 S STATE ST, 5, Salt Lake City UT 84115-5423 | New power line for outlets for pedicure chairs and manicure tables, replace old light fixtures to LED |  | Inspections |
+| [BLD2026-07704](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01555&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 57 S 600 E, Salt Lake City UT 84102-1006 | Service upgrade. |  | Inspections |
+| [BLD2026-07719](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01557&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07723](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01558&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 954 S 4400 W, Salt Lake City UT 84104- | VOID PER APPLICANT EMAIL REQUEST Installing a Torus Battery Energy System |  | Void |
+| [BLD2026-07727](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01559&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 906 S 4400 W, Salt Lake City UT 84104- | Installation a Torus Battery Energy Storage system |  | In For Review |
+| [BLD2026-07728](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01560&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 954 S 4400 W, Salt Lake City UT 84104- | Installing a Torus battery energy system |  | In For Review |
+| [BLD2026-07730](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01561&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 906 S 4400 W, Salt Lake City UT 84104- | Installing a Torus energy storage system |  | In For Review |
+| [BLD2026-07731](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01562&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 50 S MAIN ST, 265, Salt Lake City UT 84101-0000 | Remodel |  | Inspections |
+| [BLD2026-07732](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01563&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 848 S 4400 W, Salt Lake City UT 84104- | Installing a Torus Battery energy system |  | In For Review |
+| [BLD2026-07734](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01565&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07743](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01567&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | ELECTRICAL JOB VALUATION NEEDED PLEASE EMAIL slcpermits@slc.gov Scope includes construction of a new phosphorus recovery system, new electrical room and overall building declassification of existing digester complex. |  | Need Info |
+| [BLD2026-07778](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01574&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1406 S 1100 E, Salt Lake City UT 84105-2435 | Electrical Permit for the Oveson Office Elevator Addition |  | Inspections |
+| [BLD2026-07780](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01575&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1260 E STRINGHAM AVE, 175, Salt Lake City UT 84106-0000 | Small office TI |  | Inspections |
+| [BLD2026-07781](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01576&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1408 S 1100 E, Salt Lake City UT 84102-1508 | Electrical for Tenant Improvement |  | Inspections |
+| [BLD2026-07807](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01579&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1873 S 1700 E, Salt Lake City UT 84108-2969 | SET A COMCAST MTER BASE |  | Closed |
+| [BLD2026-07824](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01582&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1979 S 4130 W, Salt Lake City UT 84104-0000 | Electrical in new offices |  | Inspections |
+| [BLD2026-07834](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01583&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1795 S 5350 W, 1795, Salt Lake City UT 84104-0000 | Remodel of existing office and warehouse space for new tenant. |  | Inspections |
+| [BLD2026-07878](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01591&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 950 N 2200 W, Salt Lake City UT 84116-0000 | Electrical work for work stations. |  | Inspections |
+| [BLD2026-07906](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01593&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 758 W 1500 N, Salt Lake City UT 84116 United States | Update outdated electrical to current code |  | Inspections |
+| [BLD2026-07923](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01599&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 215 W SOUTH TEMPLE ST, Salt Lake City UT 84101-1333 | This is a proposed modification to an existing rooftop Verizon Wireless cell site on the hotel. The project would entail the removal and replacement of the (12) antennas at the site and replacing them with (12) new antennas at the existing antenna locations. We will also be replacing (18) Remote Radio Heads with (3) new models. |  | Inspections |
+| [BLD2026-07924](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01600&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 602 E 500 S, D109, Salt Lake City UT 84102-2809 | Electrical Improvements for Salt & Straw Tenant. |  | Inspections |
+| [BLD2026-07928](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01601&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 257 E 2ND AVE, Salt Lake City UT 84103-2465 | VOID DUPLICATE PERMIT WIRE BATHROOMS, BEDROOMS, KITCHENS AND HARDWIRE ALARMS |  | Void |
+| [BLD2026-07945](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01603&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 2350 W BRIDGER RD, Salt Lake City UT 84104-4247 | Reinstall warehouse lighting and branch circuits upon repair of the roof collapse |  | Closed |
+| [BLD2026-07948](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01604&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 795 S 6400 W, Salt Lake City UT 84104- | New electrical |  | Inspections |
+| [BLD2026-07949](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01605&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 795 S 6400 W, Salt Lake City UT 84104- | New electrical |  | Inspections |
 
-### Commercial Roofing (2)
+### Building: Commercial Fencing (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-021392 | 09/27/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Tear-off and replacement of the existing roof on a commercial office building. |  |  |
-| 26TMP-021398 | 09/27/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Tear-off of the existing roof and installation of new TPO membrane roofing on a commercial building. |  |  |
+| 26TMP-020603 | 09/17/2026 | 1381 S 2100 E, Salt Lake City UT 84108-2272 |  |  |  |
+| [BLD2026-07938](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFC&capID2=00000&capID3=00150&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 209 S DOUGLAS ST, Salt Lake City UT 84102-2610 | Scope of Work Tear out and remove approximately 150 linear feet of existing fencing and dispose of all materials. Install approximately 47 linear feet of 6-foot high cedar board-on-board privacy fence with top cap and top AND bottom trim using plate-mounted PostMaster steel posts where required. Install approximately 99 linear feet of 6-foot high cedar board-on-board privacy fence with top cap and top and bottom trim using in-ground PostMaster steel posts set in concrete. This includes a small fence section behind the tree in the southeast corner of the property to close the existing gap in the fence line. Furnish and install one (1) 4.5-foot wide single walkthrough gate. Furnish and install one (1) 3-foot wide single walkthrough gate mounted to the existing cinder block wall. Clad all exposed PostMaster steel posts with cedar to maintain the appearance of a traditional wood fence. Perform standard jobsite cleanup and haul away debris generated by Stand Strong Fencing’s work. |  | In For Review |
 
-### Commercial SolarPV (1)
+### Building: Commercial Fire Alarm (13)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08053](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=07887&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 535 W 300 N, Salt Lake City UT 84116-0000 | Installation of a 56.4 kWDC / 50 kWAC ballasted rooftop solar PV system (94 modules) at Citizens West. | $159,990 | Prescreen |
+| [BLD2026-07665](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00268&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 48 W 700 S, Salt Lake City UT 84101- | Fire Alarm System |  | In For Review |
+| [BLD2026-07692](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00269&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 502 W 300 S, Salt Lake City UT 84101-1118 | Installing a new fire alarm system to cover the tenant space |  | In For Review |
+| [BLD2026-07740](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00270&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 1990 W NORTH TEMPLE ST, Salt Lake City UT 84116 United States | 4969A |  | In For Review |
+| [BLD2026-07832](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00271&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1743 S 5500 W, Salt Lake City UT 84104-0000 | Modification to existing Fire alarm system for tenant office remodel |  | In For Review |
+| [BLD2026-07835](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00272&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 5552 W 700 S, Salt Lake City UT 84104-0000 | Addition to existing fire alarm system for tenant improvement in existing shell building. |  | In For Review |
+| [BLD2026-07844](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00273&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 475 S 300 E, Salt Lake City UT 84111-0000 | Fire fighter fire panel communication upgrade |  | In For Review |
+| [BLD2026-07889](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00274&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 513 W 600 S, Salt Lake City UT 84101-2215 | Extending the existing emergency voice evacuation system to the core and shell |  | In For Review |
+| [BLD2026-07891](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00275&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 650 S 500 W, Salt Lake City UT 84101-0000 | Extend the existing emergency voice evacuation system |  | In For Review |
+| [BLD2026-07916](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00276&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 149 W PIERPONT AVE, Salt Lake City UT 84101-1902 | PLEASE UPLOAD DOCUMENTS FOR REVIEW/// Replace Fire alarm system with like for like components. |  | Need Info |
+| [BLD2026-07933](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00277&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 343 W PIERPONT AVE, Salt Lake City UT 84101-1712 | VOID DUPLICATE PERMIT Install horn strobes for waterflow monitoring |  | Void |
+| [BLD2026-07946](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00278&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 410 S 900 E, Salt Lake City UT 84102-2915 | SCOPE OF WORK IS TO INSTALL AN AUDIBLE AND VISIBLE FIRE ALARM SYSTEM THAT PROVIDES NOTIFICATION COVERAGE FOR ALL OCCUPIED SPACES. TO PROVIDE SAFETY WITH LOW FREQUENCY SOUNDER BASER'S WITHIN ALL UNITS FOR OCCUPANCY. FIRE ALARM SYSTEM SHALL BE MONITORED BY AN OFF-PREMISE MONITORING STATION VIA DIGITAL ALARM COMMUNICATION DEVICES TRANSMITTED BY COPPER POTS PHONE LINES OR CELLULAR SIGNAL. FIRE ALARM SYSTEM SHALL BE DESIGN BUILT TO MEET ALL APPLICABLE CODES AND STANDARDS SET FORTH BY THE NATIONAL FIRE PROTECTION AGENCY, UTAH STATE FIRE MARSHAL, AND LOCAL AUTHORITY HAVING JURISDICTION. |  | In For Review |
+| [BLD2026-07950](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00279&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 4870 W 2100 S, Salt Lake City UT 84104-0000 | Tenant improvement for kitchen & cafe area, on existing fire alarm voice notification system. |  | In For Review |
+| [BLD2026-07962](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00280&agencyCode=SLCREF&IsToShowInspection=) | 09/26/2026 | 299 S MAIN ST, 22 North, Salt Lake City UT 84111-2203 | PLEASE UPLOAD DOCUMENTS FOR REVIEW/// Upgrade existing fire alarm notification devices |  | Need Info |
+
+### Building: Commercial Fire Sprinkler (13)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [BLD2026-07633](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00324&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 175 S MAIN ST, Salt Lake City UT 84111-1916 | VOID PER REQUEST TI |  | Void |
+| [BLD2026-07634](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00325&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 175 S MAIN ST, Salt Lake City UT 84111-1916 | VOID PER REQUEST TI |  | Void |
+| [BLD2026-07667](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00326&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 5525 W 1730 S, 202, Salt Lake City UT 84104-0000 | Demolition of interior portion of an existing warehouse space. |  | In For Review |
+| [BLD2026-07675](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00327&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 15 W SOUTH TEMPLE ST, 800, Salt Lake City UT 84101-1511 | Add and relocate sprinklers to accommodate new wall layout. |  | In For Review |
+| [BLD2026-07683](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00328&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 201 S MAIN ST, 210, Salt Lake City UT 84111-2215 | Fire sprinkler modification for tenant improvement |  | In For Review |
+| [BLD2026-07690](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00329&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 237 S 1000 E, Salt Lake City UT 84102-2403 | INSTALLATION OF ANSUL R-102 HOOD FIRE SUPPRESSION SYSTEM |  | Inspections |
+| [BLD2026-07706](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00330&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 609 N 2360 W, Salt Lake City UT 00 United States | PLEASE PAY FEES FOR PERMIT ISSUANCE 609 N 2360 West is the correct address. Please update to correct address on your end. New Construction Group 2 Hangar protected by a closed head Foam-Water system. Including Office and Support areas and an Ambulance Drop area protected by a Wet System. |  | In For Review |
+| [BLD2026-07789](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00331&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 301 W SOUTH TEMPLE ST, INVALI, Salt Lake City UT 84101-0000 | Installation of pre-engineered hood fire suppression system on ventless donut fryer. |  | Inspections |
+| [BLD2026-07790](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00332&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 384 N WRIGHT BROTHERS DR, Salt Lake City UT 84116 United States | TI |  | In For Review |
+| [BLD2026-07837](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00333&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 602 E 500 S, D-101, Salt Lake City UT 84102-2809 | Install fire sprinkler for new TI |  | In For Review |
+| [BLD2026-07884](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00334&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 1075 N WARM SPRINGS RD, Salt Lake City UT 84116-1777 | An new office building. |  | In For Review |
+| [BLD2026-07908](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00335&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 2145 E 2100 S, Salt Lake City UT 84109-1128 | INSTALLATION OF CAPTIVEAIRE TANK FIRE SUPPRESSION SYSTEM |  | In For Review |
+| [BLD2026-07929](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00336&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 334 W 800 S, Salt Lake City UT 84101-2610 | New fire sprinkler system installation |  | In For Review |
+
+### Building: Commercial Mechanical (19)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-020677 | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commerical Office TI |  |  |
+| 26TMP-020721 | 09/22/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | Scope includes construction of a new phosphorus recovery system, new electrical room and overall building declassification of existing digester complex. |  |  |
+| [BLD2026-07620](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01371&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1864 S 3730 W, Salt Lake City UT 84104-4970 | New building. Provide all labor, materials and equipment per the HVAC mechanical contract. |  | Inspections |
+| [BLD2026-07623](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01372&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 241 S 1200 E, Salt Lake City UT 84102-2655 | 4 apartment remodel take over. Redo 2nd floor duct system and add dryer/bath fans/ range hood on all apartments |  | Inspections |
+| [BLD2026-07630](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01376&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 250 E 200 S, Salt Lake City UT 84111-2013 | Replace (3) 3000 MBH boilers and associated piping. |  | Inspections |
+| [BLD2026-07635](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01377&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 836 E 800 S, Salt Lake City UT 84102-3602 | Tenant Improvement of space to add restaurant. |  | Inspections |
+| [BLD2026-07691](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01384&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 1465 S STATE ST, Salt Lake City UT 84115-5423 | remodel the space for Nail Salon, above ground plumbing for pedicure, exhaust vent system for manicure, change new light fixtures to LED |  | Inspections |
+| [BLD2026-07721](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01391&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07735](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01393&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07738](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01394&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 4870 W 2100 S, Salt Lake City UT 84104-0000 | New installation of commercial HVAC equipment. |  | Inspections |
+| [BLD2026-07763](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01401&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 535 W 300 N, Salt Lake City UT 84116-0000 | 3-ton mini-split and ductwork installation for Coffee shop |  | Inspections |
+| [BLD2026-07775](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01403&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1979 S 4130 W, Salt Lake City UT 84104-0000 | Extend Ductwork into new addition of building |  | Inspections |
+| [BLD2026-07782](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01405&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1408 S 1100 E, Salt Lake City UT 84102-1508 | Edward Jones Tenant Improvement HVAC |  | Inspections |
+| [BLD2026-07793](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01406&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 3701 W TERMINAL DR, SALT LAKE CITY UT | BLD2026-04068 |  | Inspections |
+| [BLD2026-07810](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01409&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 1260 E STRINGHAM AVE, Salt Lake City UT 84106-0000 | Rework of existing VRF system. Addition of 2 VRF fan coil units. |  |  |
+| [BLD2026-07830](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01416&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1795 S 5350 W, Salt Lake City UT 84104-0000 | Remodel |  | Inspections |
+| [BLD2026-07875](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01425&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 1116 S RICHARDS ST, Salt Lake City UT 84101-3111 | HVAC installation for a new 7-story, 169-unit affordable multifamily building (Hive on 11th). Mechanical sub-permit under main building permit BLD2025-10385. Contractor: MultiFamily HVAC LLC, subcontract to Bonneville Builders. |  | Inspections |
+| [BLD2026-07926](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01436&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 257 E 2ND AVE, 1 and 2, Salt Lake City UT 84103-2465 | VOID DUPLICATE bathroom fans for unit 1 and 2 |  | Void |
+| [BLD2026-07955](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01439&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | FEE SCHEDULES EMAILED TO APPLICANT NEEDED AS WELL AS CONTRACTOR LICENSE INFORMATION Scope includes construction of a new phosphorus recovery system, new electrical room and overall building declassification of existing digester complex. |  | Need Info |
+
+### Building: Commercial Plumbing (18)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-020722 | 09/24/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | Scope includes construction of a new phosphorus recovery system, new electrical room and overall building declassification of existing digester complex. |  |  |
+| [BLD2026-07636](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01109&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1864 S 3730 W, Salt Lake City UT 84104-4970 | Plumbing in new building |  | Inspections |
+| [BLD2026-07642](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01110&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 460 W 500 S, Salt Lake City UT 84101-2205 | Tenant improvement of central corridor - plumbing |  | Inspections |
+| [BLD2026-07651](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01113&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 2350 W BRIDGER RD, Salt Lake City UT 84104-4247 | installing roof drains |  | Inspections |
+| [BLD2026-07724](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01122&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07739](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01124&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Commercial Office TI |  | Inspections |
+| [BLD2026-07755](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01127&agencyCode=SLCREF&IsToShowInspection=) | 09/19/2026 | 60 E SOUTH TEMPLE ST, 500, Salt Lake City UT 00000-0000 | Tenant improvement, 5th floor. Demo existing sink, electric water cooler and abandoned waste and vent lines per PD105; cap at nearest main. Install new domestic cold water in type L copper and new waste and vent in sch 40 PVC, with hangers and insulation. Install (10) fixtures: (1) electric water cooler, (3) below-counter electric water heaters, (1) ADA kitchen sink, (1) food waste disposal, (1) hot water faucet, (1) filtered beverage faucet, (2) sinks with faucets. Work per drawings P001, P002, PD105 and P105, conformance set dated 8/27/26. 2021 IPC. |  | Inspections |
+| [BLD2026-07828](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01139&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1795 S 5350 W, 1795, Salt Lake City UT 84104-0000 | Remodel of office space |  | Inspections |
+| [BLD2026-07836](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01140&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 132 N REDWOOD RD, Salt Lake City UT 84116-3112 | Installing new underground plumbing and making point of connections with new grease trap recently installed under a different permit number. |  | In For Review |
+| [BLD2026-07850](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01142&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 451 S STATE St, Salt Lake City UT 84111-3104 | test |  | In For Review |
+| [BLD2026-07854](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01144&agencyCode=SLCREF&IsToShowInspection=) | 09/22/2026 | 1260 E STRINGHAM AVE, Salt Lake City UT 84106-0000 | Installation of owner provided plumbing fixtures. Addition of 2 water heaters |  | Inspections |
+| [BLD2026-07871](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01146&agencyCode=SLCREF&IsToShowInspection=) | 09/23/2026 | 369 N 2370 W, Salt Lake City UT 84116-2948 | Construction of 34,000 sq ft hangar including reception, office interior, garage, and service areas. Plumbing only. |  | Inspections |
+| [BLD2026-07913](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01152&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | VOID |  | Void |
+| [BLD2026-07917](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01153&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 602 E 500 S, Salt Lake City UT 84102-2809 | Commercial Plumbing in an Existing Building |  | Inspections |
+| [BLD2026-07927](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01155&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 257 E 2ND AVE, Salt Lake City UT 84103-2465 | VOID DUPLICATE AD A SECOND BATHROOM IN UNITS 1 AND 2 REPLACED WATER HEATER TANKLESS |  | Void |
+| [BLD2026-07941](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01158&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 1406 S 1100 E, Salt Lake City UT 84105-2435 | we are roughing in 2 toilets and 2 lavs (half baths) and floor drains and kitchen sink. They are adding two bathrooms to the house. we are doing a water heater later in the project |  | Inspections |
+| [BLD2026-07954](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01160&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 1365 W 2300 N, Salt Lake City UT 0 United States | FEE SCHEDULES EMAILED TO APPLICANT NEEDED AS WELL AS CONTRACTOR LICENSE INFORMATION Scope includes construction of a new phosphorus recovery system, new electrical room and overall building declassification of existing digester complex. |  | Need Info |
+| [BLD2026-07959](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01161&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 1450 S WEST TEMPLE ST, Salt Lake City UT 84115-5221 | replace water heater in unit J 102 |  | Inspections |
+
+### Building: Commercial Roofing (3)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-021373 | 09/26/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Reroof of existing commercial building - tear off and replace membrane roofing |  |  |
+| 26TMP-021387 | 09/26/2026 | 451 S STATE ST, Salt Lake City UT 84111-3104 | Tear off and replace existing roof on commercial building |  |  |
+| [BLD2026-07652](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BRF&capID2=00000&capID3=00388&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 41 S RIO GRANDE ST, Salt Lake City UT 84101-0000 | Install new 60 mil Everguard Slate Grey TPO Roof. Rhinobond. 1/2" HD ISO |  | Inspections |
+
+### Building: Commercial SolarPV (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-021024 | 09/23/2026 | 1600 S 300 E, Salt Lake City UT 84115-0000 | dfg |  |  |
+
+### Building: Commericial Demolition (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [BLD2026-07914](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BDM&capID2=00000&capID3=00125&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 1125 S REDWOOD RD, Salt Lake City UT 84104-3706 | WRONG PERMIT TYPE//PLEASE APPLY FOR A COMMERCIAL BUILDING PERMIT///Tenant Improvement |  | Void |
+
+### Planning: Historic Landmark Commission - New Construction (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-021485 | 09/28/2026 | 1880 E YALE AVE, Salt Lake City UT 84108-1838 |  |  |  |
+
+### Planning: Planning Commission - Design Review (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [PLNPCM2026-00796](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07562&agencyCode=SLCREF&IsToShowInspection=) | 09/17/2026 | 439 E 900 S, Salt Lake City UT 84111-4303 | Front patio |  | Active |
+
+### Planning: Planning Commission - Zoning Amendment (3)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [PLNPCM2026-00805](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07636&agencyCode=SLCREF&IsToShowInspection=) | 09/21/2026 | 3500 N 2200 W, SALT LAKE CITY UT | Partial rezone from M-1A to RMF-30 and RMF-45 plus Development Agreement |  | Prescreen |
+| [PLNPCM2026-00820](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07774&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 16 W 800 S, Salt Lake City UT 84101-2913 |  |  | Prescreen |
+| [PLNPCM2026-00821](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07777&agencyCode=SLCREF&IsToShowInspection=) | 09/25/2026 | 16 W 800 S, Salt Lake City UT 84101-2913 |  |  | Prescreen |
+
+### Planning: Subdivision and Condominium - Consolidation (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [PLNSUB2026-00793](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07533&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1599 S MAJOR ST, 2, SALT LAKE CITY UT 84115 |  |  | VOID |
+
+### Planning: Subdivision and Condominium - Final Plat Approval (6)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-020464 | 09/16/2026 | 375 E CLEVELAND AVE, Salt Lake City UT 84115-1572 |  |  |  |
+| [PLNSUB2026-00799](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07579&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 6780 W NORTH TEMPLE ST, Salt Lake City UT 84116-0000 | Crossroads Port Phase 1 |  | Active |
+| [PLNSUB2026-00801](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07599&agencyCode=SLCREF&IsToShowInspection=) | 09/18/2026 | 1624 W CALIFORNIA AVE, Salt Lake City UT 84104-3403 |  |  | Prescreen |
+| [PLNSUB2026-00817](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07730&agencyCode=SLCREF&IsToShowInspection=) | 09/24/2026 | 1599 S MAJOR ST, 2, SALT LAKE CITY UT 84115 | 1599 Major Street Townhomes Final Plat |  | Prescreen |
+| [PLNSUB2026-00840](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07878&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 99 W SOUTH TEMPLE ST, 1601, Salt Lake City UT 84101-4748 |  |  | Pending |
+| [PLNSUB2026-00841](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07893&agencyCode=SLCREF&IsToShowInspection=) | 09/30/2026 | 851 N 6880 W, Salt Lake City UT 84116- |  |  | Pending |
+
+### Planning: Subdivision and Condominium - Lot Line Adjustment (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-020372 | 09/24/2026 | 310 S 500 W, Salt Lake City UT 84101-1130 |  |  |  |
+
+### Planning: Subdivision and Condominium - Preliminary Subdiv (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| 26TMP-021564 | 09/29/2026 | 1990 S 500 E, Salt Lake City UT 84105-2955 |  |  |  |
+
+### Planning: Zoning Administration - Determination Non-Conform Use (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [PLNZAD2026-00794](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=07535&agencyCode=SLCREF&IsToShowInspection=) | 09/16/2026 | 1261 S REDWOOD RD, Salt Lake City UT 84104-3708 |  |  | Active |
