@@ -70,3 +70,20 @@ def test_parse_job_value():
     assert parse_job_value("Job Value:\n$1,250,000.00\nApplicant") == 1_250_000.0
     assert parse_job_value("Job Value\n$0.00") == 0.0
     assert parse_job_value("No valuation listed") is None
+
+
+def test_long_detail_pages_are_trimmed_and_batched(monkeypatch):
+    calls = []
+    response = SimpleNamespace(stop_reason="end_turn", usage=None, parsed_output=Digest(
+        summary_markdown="part", permits=[]))
+    monkeypatch.setattr(summarize.anthropic, "Anthropic", fake_client(response, calls))
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+    monkeypatch.setattr(summarize, "MAX_PAYLOAD_CHARS", 20_000)
+    records = [{"record_number": f"R{i}", "detail_text": "x" * 50_000} for i in range(5)]
+
+    digest = summarize.analyze(records, date(2026, 9, 1), date(2026, 9, 2), "m")
+
+    assert len(calls) == 2  # ~6k chars per record after trimming: 3 fit in 20k, then 2
+    assert all("x" * 6_001 not in c["messages"][0]["content"] for c in calls)
+    assert digest.summary_markdown.startswith("### Part 1 of 2")
+    assert len(records[0]["detail_text"]) == 50_000  # caller's records untouched

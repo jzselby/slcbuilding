@@ -67,6 +67,34 @@ class Digest(BaseModel):
         return {p.record_number: p for p in self.permits}
 
 
+# Detail pages run ~30k characters, mostly portal boilerplate below the record's
+# key facts; Claude gets the start of each. Job value is parsed from the full page.
+DETAIL_CHARS = 6_000
+# Records per Claude request are capped by payload size (~4 chars/token) so a
+# large backfill is split well under the 1M-token context window.
+MAX_PAYLOAD_CHARS = 1_200_000
+
+
+def _for_prompt(rec: dict) -> dict:
+    rec = dict(rec)
+    if len(rec.get("detail_text") or "") > DETAIL_CHARS:
+        rec["detail_text"] = rec["detail_text"][:DETAIL_CHARS] + " [...]"
+    return rec
+
+
+def _batches(records: list[dict]) -> list[list[dict]]:
+    batches: list[list[dict]] = [[]]
+    size = 0
+    for rec in records:
+        n = len(json.dumps(rec))
+        if batches[-1] and size + n > MAX_PAYLOAD_CHARS:
+            batches.append([])
+            size = 0
+        batches[-1].append(rec)
+        size += n
+    return batches
+
+
 def analyze(records: list[dict], start: date, end: date, model: str) -> Digest | None:
     """Ask Claude for a digest plus structured per-permit notes; None if unavailable."""
     if not records:
@@ -76,6 +104,25 @@ def analyze(records: list[dict], start: date, end: date, model: str) -> Digest |
         return None
 
     client = anthropic.Anthropic()
+    batches = _batches([_for_prompt(r) for r in records])
+    digests = []
+    for i, batch in enumerate(batches, 1):
+        if len(batches) > 1:
+            log.info("Claude request %d of %d (%d records)", i, len(batches), len(batch))
+        digest = _analyze_batch(client, batch, start, end, model)
+        if digest is not None:
+            digests.append(digest)
+    if not digests:
+        return None
+    if len(digests) == 1:
+        return digests[0]
+    summary = "\n\n".join(f"### Part {i} of {len(digests)}\n\n{d.summary_markdown.strip()}"
+                           for i, d in enumerate(digests, 1))
+    return Digest(summary_markdown=summary, permits=[p for d in digests for p in d.permits])
+
+
+def _analyze_batch(client: anthropic.Anthropic, records: list[dict], start: date, end: date,
+                   model: str) -> Digest | None:
     payload = json.dumps(records, indent=1, sort_keys=True)
     prompt = (
         f"New Salt Lake City records opened {start:%B %d, %Y} "
@@ -106,6 +153,9 @@ def analyze(records: list[dict], start: date, end: date, model: str) -> Digest |
         log.error("Anthropic API error %s: %s; continuing without a summary", exc.status_code, exc.message)
         return None
 
+    usage = getattr(response, "usage", None)
+    if usage is not None:
+        log.info("Claude usage: %s input tokens, %s output tokens", usage.input_tokens, usage.output_tokens)
     if response.stop_reason == "refusal":
         log.warning("Summary request was declined; continuing without a summary")
         return None

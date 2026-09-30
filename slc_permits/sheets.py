@@ -112,9 +112,27 @@ def publish(
 
     permits = _worksheet(sh, PERMITS_TAB, PERMIT_HEADERS)
     if records:
-        rows = [permit_row(r, run_date) for r in sorted(records, key=lambda r: r["record_number"])]
-        permits.append_rows(rows, value_input_option="USER_ENTERED", table_range="A1")
-        log.info("Appended %d rows to %r", len(rows), PERMITS_TAB)
+        # Records already in the sheet (e.g. a re-run to fill in Claude's notes) are
+        # updated in place, keeping their "First seen" date; the rest are appended.
+        first_seen = permits.col_values(1)
+        existing = {number: i + 1 for i, number in enumerate(permits.col_values(2)) if i > 0 and number}
+        updates, appends = [], []
+        for rec in sorted(records, key=lambda r: r["record_number"]):
+            row = permit_row(rec, run_date)
+            line = existing.get(rec["record_number"])
+            if line is None:
+                appends.append(row)
+                continue
+            if line <= len(first_seen) and first_seen[line - 1]:
+                row[0] = first_seen[line - 1]
+            end_col = gspread.utils.rowcol_to_a1(line, len(row))
+            updates.append({"range": f"A{line}:{end_col}", "values": [row]})
+        if updates:
+            permits.batch_update(updates, value_input_option="USER_ENTERED")
+            log.info("Updated %d existing rows in %r", len(updates), PERMITS_TAB)
+        if appends:
+            permits.append_rows(appends, value_input_option="USER_ENTERED", table_range="A1")
+            log.info("Appended %d rows to %r", len(appends), PERMITS_TAB)
 
     digests = _worksheet(sh, DIGESTS_TAB, DIGEST_HEADERS)
     digests.append_rows(

@@ -30,7 +30,7 @@ class FakeWorksheet:
         self.title = title
 
     def update(self, values, cell):
-        col, row = ord(cell[0]) - ord("A"), int(cell[1:]) - 1
+        col, row = ord(cell[0]) - ord("A"), int(cell[1:]) - 1  # single-letter columns suffice here
         assert col + max(len(v) for v in values) <= self.col_count, "exceeds grid limits"
         for i, v in enumerate(values):
             while len(self.values) <= row + i:
@@ -44,6 +44,11 @@ class FakeWorksheet:
 
     def freeze(self, rows):
         self.frozen = rows
+
+    def batch_update(self, data, value_input_option):
+        assert value_input_option == "USER_ENTERED"
+        for item in data:
+            self.update(item["values"], item["range"].split(":")[0])
 
     def append_rows(self, rows, value_input_option, table_range):
         assert value_input_option == "USER_ENTERED"
@@ -140,3 +145,19 @@ def test_existing_tab_gains_module_column(spreadsheet):
 
     assert ws.values[0] == sheets.PERMIT_HEADERS
     assert [row[12] for row in ws.values[1:]] == ["Building", "Building", "Planning"]
+
+
+def test_rerun_updates_rows_in_place(spreadsheet):
+    sheets.publish("id", "{}", [dict(RECORD, scope="")], date(2026, 9, 30), "w", None)
+    permits = spreadsheet.worksheet("Permits")
+    # The sheet shows the HYPERLINK's label, so col B reads back as the record number.
+    permits.values[1][1] = RECORD["record_number"]
+
+    other = dict(RECORD, record_number="BLD2026-00002")
+    sheets.publish("id", "{}", [dict(RECORD, scope="Office remodel, now with notes"), other],
+                   date(2026, 10, 1), "w", None)
+
+    assert len(permits.values) == 3  # header, updated row, one new row
+    assert permits.values[1][0] == "2026-09-30"  # first-seen date kept
+    assert permits.values[1][5] == "Office remodel, now with notes"
+    assert permits.values[2][1].endswith('"BLD2026-00002")')
