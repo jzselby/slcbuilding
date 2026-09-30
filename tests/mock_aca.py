@@ -186,11 +186,17 @@ class Handler(BaseHTTPRequestHandler):
         qs = {k: v[0] for k, v in parse_qs(url.query).items()}
         logged_in = self._logged_in()
         if url.path == "/Login.aspx":
-            body = """<form method="post" action="/Login.aspx">
-<input id="ctl00_PlaceHolderMain_LoginBox_txtUserId" name="user">
-<input id="ctl00_PlaceHolderMain_LoginBox_txtPassword" name="pw" type="password">
-<input id="ctl00_PlaceHolderMain_LoginBox_btnLogin" type="submit" value="Sign In"></form>"""
+            # Like SLC: the login box is an Angular panel in an iframe.
+            body = '<iframe src="/AngularUI/CommunityView/login-panel?inLegacyUI=true"></iframe>'
             self._send(_page("Login", body, logged_in))
+        elif url.path == "/AngularUI/CommunityView/login-panel":
+            # The panel draws its form a moment after loading.
+            self._send(b"""<!doctype html><html><body><div id="panel"></div><script>
+setTimeout(() => { document.getElementById('panel').innerHTML =
+  '<form method="post" action="/Login.aspx" target="_top">' +
+  '<input id="username" name="user"><input id="passwordRequired" name="pw" type="password">' +
+  '<button type="submit">Sign In</button></form>'; }, 800);
+</script></body></html>""")
         elif url.path == "/Default.aspx":
             self._send(_page("Home", "<h1>Welcome</h1>", logged_in))
         elif url.path == "/Cap/CapHome.aspx":

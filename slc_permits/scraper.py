@@ -143,8 +143,13 @@ class AccelaClient:
         log.info("Logging in as %s", self.cfg.username)
         self.page.goto(self.cfg.login_url, wait_until="load")
 
-        # Newer ACA versions render the login box inside an iframe.
+        # SLC renders the login box inside an iframe (an Angular panel) a moment
+        # after the page loads, so give it time to appear.
+        deadline = time.monotonic() + 20
         found = self._find_in_frames(("input[type='password']",))
+        while not found and time.monotonic() < deadline:
+            time.sleep(0.5)
+            found = self._find_in_frames(("input[type='password']",))
         if not found:
             self.save_debug("login-form-missing")
             raise ScrapeError("Could not find a password field on the login page")
