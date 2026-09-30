@@ -1,0 +1,70 @@
+name: SLC permit digest
+
+on:
+  schedule:
+    # Daily at 13:48 UTC = 7:48am MDT / 6:48am MST.
+    - cron: "48 13 * * *"
+  workflow_dispatch:
+    inputs:
+      days_back:
+        description: "Search records opened in the last N days"
+        default: "3"
+      record_type:
+        description: "Only record types containing this text (blank = all)"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: permit-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Search and summarize
+        env:
+          ACCELA_USERNAME: ${{ secrets.ACCELA_USERNAME }}
+          ACCELA_PASSWORD: ${{ secrets.ACCELA_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DAYS_BACK: ${{ inputs.days_back || '3' }}
+          RECORD_TYPE: ${{ inputs.record_type }}
+        run: |
+          args=(--days-back "$DAYS_BACK")
+          if [ -n "$RECORD_TYPE" ]; then args+=(--record-type "$RECORD_TYPE"); fi
+          python -m slc_permits "${args[@]}"
+
+      - name: Upload debug snapshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-snapshots
+          path: debug/
+          if-no-files-found: ignore
+
+      - name: Commit report and seen-permit list
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ reports/
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "Permit digest $(TZ=America/Denver date +%F)"
+            git push
+          fi
