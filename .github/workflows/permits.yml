@@ -15,6 +15,9 @@ on:
       planning_types:
         description: "Planning record types containing any of these (comma-separated; blank = all)"
         default: ""
+      planning_skip:
+        description: "...except Planning types containing any of these (comma-separated; blank = skip none)"
+        default: "Minor Alteration,Zoning Verification Letter"
       dry_run:
         description: "Dry run: list what would be added, without writing the sheet or marking anything seen"
         type: boolean
@@ -55,10 +58,12 @@ jobs:
           # Scheduled runs have no inputs. SLC spells one type "Commericial Demolition".
           BUILDING_TYPES: ${{ github.event_name == 'schedule' && 'Commercial,Commericial' || inputs.building_types }}
           PLANNING_TYPES: ${{ github.event_name == 'schedule' && '' || inputs.planning_types }}
+          PLANNING_SKIP: ${{ github.event_name == 'schedule' && 'Minor Alteration,Zoning Verification Letter' || inputs.planning_skip }}
           DRY_RUN: ${{ inputs.dry_run }}
         run: |
           args=(--days-back "$DAYS_BACK" --modules Building,Planning
-                --types "Building=$BUILDING_TYPES" --types "Planning=$PLANNING_TYPES")
+                --types "Building=$BUILDING_TYPES" --types "Planning=$PLANNING_TYPES"
+                --skip-types "Planning=$PLANNING_SKIP")
           if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run --no-details --no-summary); fi
           python -m slc_permits "${args[@]}"
 

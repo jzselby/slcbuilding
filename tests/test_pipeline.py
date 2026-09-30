@@ -131,6 +131,20 @@ def test_type_filters_per_module():
     assert parse_args(["--types", "Building="]).filters == {}  # blank keeps every Building type
     assert parse_args(["--types", "Building=x", "--all-types"]).filters == {}
     assert parse_args(["--modules", "Planning, Building"]).modules == ["Planning", "Building"]
+    assert parse_args([]).skips == {"Planning": ["Minor Alteration", "Zoning Verification Letter"]}
+    assert parse_args(["--skip-types", "Planning="]).skips == {}
+    assert parse_args(["--skip-types", "Planning=x", "--all-types"]).skips == {}
+
+
+def test_keep_types_include_and_skip():
+    from slc_permits.__main__ import keep_types
+    recs = [{"record_type": t} for t in (
+        "Historic Landmark Commission - Minor Alteration", "Planning Commission - Zoning Amendment",
+        "Zoning Administration - Zoning Verification Letter", "Subdivision and Condominium - Final Plat Approval")]
+    kept = keep_types("Planning", recs, None, ["Minor Alteration", "Zoning Verification Letter"])
+    assert [r["record_type"] for r in kept] == [
+        "Planning Commission - Zoning Amendment", "Subdivision and Condominium - Final Plat Approval"]
+    assert keep_types("Planning", recs, ["Planning Commission"], None) == [recs[1]]
 
 
 def test_default_is_commercial_building_plus_all_planning(run_env):

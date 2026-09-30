@@ -30,6 +30,9 @@ SLC_TZ = ZoneInfo("America/Denver")
 # Record-type filters per module; a module without one keeps every type.
 # SLC's portal spells one Building type "Commericial Demolition".
 DEFAULT_TYPES = {"Building": ["Commercial", "Commericial"]}
+# Record types to drop even when they pass the filter above. Planning's minor
+# historic-district alterations and zoning letters are mostly routine.
+DEFAULT_SKIP = {"Planning": ["Minor Alteration", "Zoning Verification Letter"]}
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -43,6 +46,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--types", action="append", metavar="MODULE=TEXT[,TEXT]",
                    help="keep that module's records whose Record Type contains any TEXT; 'MODULE=' keeps all. "
                         "Repeatable. Default: " + "; ".join(f"{m}={','.join(t)}" for m, t in DEFAULT_TYPES.items()))
+    p.add_argument("--skip-types", action="append", metavar="MODULE=TEXT[,TEXT]",
+                   help="drop that module's records whose Record Type contains any TEXT; 'MODULE=' drops none. "
+                        "Repeatable. Default: " + "; ".join(f"{m}={','.join(t)}" for m, t in DEFAULT_SKIP.items()))
     p.add_argument("--all-types", action="store_true", help="keep every record type in every module")
     p.add_argument("--no-details", action="store_true", help="skip opening each new record's detail page")
     p.add_argument("--no-summary", action="store_true", help="skip the Claude summary")
@@ -52,27 +58,40 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args(argv)
 
-    filters = {m: list(t) for m, t in DEFAULT_TYPES.items()}
-    for spec in args.types or []:
-        module, sep, texts = spec.partition("=")
-        if not sep or not module.strip():
-            p.error(f"--types expects MODULE=TEXT[,TEXT], got {spec!r}")
-        filters[module.strip()] = [t.strip() for t in texts.split(",") if t.strip()]
-    args.filters = {} if args.all_types else {m: t for m, t in filters.items() if t}
+    def per_module(specs: list[str] | None, defaults: dict[str, list[str]], flag: str) -> dict[str, list[str]]:
+        result = {m: list(t) for m, t in defaults.items()}
+        for spec in specs or []:
+            module, sep, texts = spec.partition("=")
+            if not sep or not module.strip():
+                p.error(f"{flag} expects MODULE=TEXT[,TEXT], got {spec!r}")
+            result[module.strip()] = [t.strip() for t in texts.split(",") if t.strip()]
+        return {} if args.all_types else {m: t for m, t in result.items() if t}
+
+    args.filters = per_module(args.types, DEFAULT_TYPES, "--types")
+    args.skips = per_module(args.skip_types, DEFAULT_SKIP, "--skip-types")
     if args.modules is not None:
         args.modules = [m.strip() for m in args.modules.split(",") if m.strip()]
     return args
 
 
-def keep_types(module: str, records: list[dict], needles: list[str] | None) -> list[dict]:
+def keep_types(module: str, records: list[dict], needles: list[str] | None,
+               skips: list[str] | None = None) -> list[dict]:
     types = Counter(r.get("record_type") or "(none)" for r in records)
     log.info("%s record types in window: %s", module,
              ", ".join(f"{t} ({n})" for t, n in types.most_common()) or "none")
-    if not needles:
-        return records
-    lowered = [n.lower() for n in needles]
-    kept = [r for r in records if any(n in (r.get("record_type") or "").lower() for n in lowered)]
-    log.info("%s: %d of %d records match %s", module, len(kept), len(records), " or ".join(repr(n) for n in needles))
+
+    def matches(rec: dict, texts: list[str]) -> bool:
+        rtype = (rec.get("record_type") or "").lower()
+        return any(t.lower() in rtype for t in texts)
+
+    kept = [r for r in records if (not needles or matches(r, needles)) and not (skips and matches(r, skips))]
+    if needles or skips:
+        rules = []
+        if needles:
+            rules.append("containing " + " or ".join(repr(n) for n in needles))
+        if skips:
+            rules.append("not containing " + " or ".join(repr(n) for n in skips))
+        log.info("%s: kept %d of %d records (types %s)", module, len(kept), len(records), ", ".join(rules))
     return kept
 
 
@@ -111,7 +130,7 @@ def main(argv: list[str] | None = None) -> int:
             wanted = []
             for module in cfg.modules:
                 found = client.search(start, end, module=module)
-                wanted += keep_types(module, found, args.filters.get(module))
+                wanted += keep_types(module, found, args.filters.get(module), args.skips.get(module))
             new = store.new_only(wanted)
             log.info("%d new", len(new))
             if not args.no_details:

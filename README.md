@@ -26,8 +26,11 @@ slc_permits/
    caught.
 3. Filter each tab by **Record Type**. Building keeps types containing "Commercial" (or SLC's
    misspelling "Commericial"). This catches every commercial subtype, where the portal's type
-   dropdown only allows one. Planning keeps every type unless you give it a filter. The log
-   lists every record type seen in each tab, so you can tune the filters with `--types`.
+   dropdown only allows one. Planning keeps every type except routine "Minor Alteration"
+   (historic districts) and "Zoning Verification Letter" requests. That keeps rezonings, design
+   review, subdivisions and condos, and historic new construction, plus any new types the city
+   adds. The log lists every record type seen in each tab, so you can tune the filters with
+   `--types` and `--skip-types`.
 4. Drop records already in `data/permits.jsonl`. Open each new record's detail page and expand
    "More Details" to get the job value, contractor, and so on.
 5. Claude returns a digest plus structured notes for each permit. A job value read directly off
@@ -72,7 +75,7 @@ The daily job writes to the sheet as a Google Cloud **service account**, a robot
 
 3. Under **Actions → SLC commercial permit digest**, click **Run workflow** to test it.
    After that it runs daily at 7:48am Mountain. A manual run lets you change the look-back
-   window or either tab's type filter (blank keeps all types). Tick **dry run** to see in the
+   window, either tab's type filter (blank keeps all types), or Planning's skip list. Tick **dry run** to see in the
    log what would be added, without writing the sheet or marking anything as seen.
 
 Each run also commits `reports/` and `data/permits.jsonl` and shows the digest on the run's
