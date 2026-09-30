@@ -18,6 +18,7 @@ from playwright.sync_api import Browser, Frame, Page, Playwright, TimeoutError a
 from .config import Config
 from .parse import (
     RESULTS_TABLE_SELECTOR,
+    describe_grid,
     parse_detail_record_number,
     parse_detail_text,
     parse_results,
@@ -309,7 +310,10 @@ class AccelaClient:
 
         records: dict[str, dict] = {}
         for page_no in range(1, self.cfg.max_pages + 1):
-            rows = parse_results(self.page.content(), self.page.url)
+            html = self.page.content()
+            rows = parse_results(html, self.page.url)
+            if page_no == 1 and rows and not any(r.get("record_type") or r.get("address") for r in rows):
+                log.warning("Could not read the %s grid's columns; first rows:\n%s", module, describe_grid(html))
             for row in rows:
                 records.setdefault(row["record_number"], row)
             log.info("Page %d: %d rows (%d unique so far)", page_no, len(rows), len(records))

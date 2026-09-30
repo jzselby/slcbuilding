@@ -79,6 +79,18 @@ def parse_results(html: str, page_url: str) -> list[dict]:
     return records
 
 
+def describe_grid(html: str, rows: int = 4) -> str:
+    """First few rows of the results grid (tag, class, cell texts), for the run log."""
+    table = BeautifulSoup(html, "lxml").select_one(RESULTS_TABLE_SELECTOR)
+    if table is None:
+        return "(no results grid)"
+    out = []
+    for row in table.find_all("tr")[:rows]:
+        cells = [f"{c.name}:{_clean(c.get_text(' '))[:40]!r}" for c in row.find_all(["th", "td"], recursive=False)]
+        out.append(f"  tr class={' '.join(row.get('class', []))!r}: " + " | ".join(cells))
+    return "\n".join(out)
+
+
 def parse_detail_text(html: str) -> str:
     """Readable text of a CapDetail page's main content, without scripts/nav."""
     soup = BeautifulSoup(html, "lxml")
