@@ -10,8 +10,8 @@ on:
         description: "Search records opened in the last N days"
         default: "3"
       type_contains:
-        description: "Only record types containing this text (blank = all types)"
-        default: "Commercial"
+        description: "Only record types containing this text; comma-separate several (blank = all types)"
+        default: "Commercial,Commericial"
 
 permissions:
   contents: write
@@ -45,8 +45,8 @@ jobs:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
           GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
           DAYS_BACK: ${{ inputs.days_back || '3' }}
-          # Scheduled runs have no inputs, so they use the Commercial default.
-          TYPE_CONTAINS: ${{ github.event_name == 'schedule' && 'Commercial' || inputs.type_contains }}
+          # Scheduled runs have no inputs. SLC spells one type "Commericial Demolition".
+          TYPE_CONTAINS: ${{ github.event_name == 'schedule' && 'Commercial,Commericial' || inputs.type_contains }}
         run: |
           args=(--days-back "$DAYS_BACK")
           if [ -n "$TYPE_CONTAINS" ]; then args+=(--type-contains "$TYPE_CONTAINS"); else args+=(--all-types); fi

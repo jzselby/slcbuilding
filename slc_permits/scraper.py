@@ -18,7 +18,6 @@ from playwright.sync_api import Browser, Frame, Page, Playwright, TimeoutError a
 from .config import Config
 from .parse import (
     RESULTS_TABLE_SELECTOR,
-    has_no_results_message,
     parse_detail_record_number,
     parse_detail_text,
     parse_results,
@@ -36,6 +35,10 @@ START_DATE = f"#{SEARCH_FORM}_txtGSStartDate"
 END_DATE = f"#{SEARCH_FORM}_txtGSEndDate"
 RECORD_TYPE = f"#{SEARCH_FORM}_ddlGSPermitType"
 SEARCH_BUTTON = "#ctl00_PlaceHolderMain_btnNewSearch"
+MY_RECORDS_ONLY = "#ctl00_PlaceHolderMain_chkSearch"
+# True while an ASP.NET UpdatePanel postback is in flight; null on pages without one.
+IN_POSTBACK_JS = """() => { try { return Sys.WebForms.PageRequestManager.getInstance().get_isInAsyncPostBack(); }
+                          catch (e) { return null; } }"""
 
 USERNAME_INPUTS = (
     "input[id$='txtUserId']",
@@ -220,20 +223,34 @@ class AccelaClient:
         return table.first.inner_text()
 
     def _wait_for_results(self, previous: str | None) -> str:
-        """Wait until the grid changes, a "no results" notice shows, or we land on a detail page.
+        """Wait for a search or paging postback to land.
 
-        Returns "grid", "empty" or "detail".
+        Returns "grid" (results grid present, possibly empty), "empty" (no grid
+        at all), or "detail" (ACA jumped straight to the only matching record).
         """
         deadline = time.monotonic() + self.cfg.timeout_ms / 1000
+        saw_postback = False
         while time.monotonic() < deadline:
             if "CapDetail.aspx" in self.page.url:
-                return "detail"  # ACA jumps straight to the record when there is exactly one hit
+                return "detail"
             sig = self._grid_signature()
             if sig is not None and sig != previous:
                 return "grid"
-            if sig is None and has_no_results_message(self.page.content()):
-                return "empty"
-            time.sleep(0.5)
+            try:
+                busy = self.page.evaluate(IN_POSTBACK_JS)
+            except Exception:
+                busy = None  # mid-navigation
+            if busy:
+                saw_postback = True
+            elif saw_postback and busy is False:
+                # The postback finished without changing the grid (e.g. an empty
+                # result replaced an empty result).
+                if sig is None:
+                    log.warning("Search finished without a results grid; treating as no results")
+                    log.debug("Page:\n%s", self.describe_page())
+                    return "empty"
+                return "grid"
+            time.sleep(0.25)
         self.save_debug("results-timeout")
         raise ScrapeError("Timed out waiting for search results")
 
@@ -252,6 +269,16 @@ class AccelaClient:
         except PlaywrightTimeout:
             self.save_debug("search-form-missing")
             raise ScrapeError(f"Search form not found at {self.cfg.search_url}")
+
+        # Logged-in users get a "Search my records only" box; we want everyone's records.
+        my_only = self.page.locator(MY_RECORDS_ONLY)
+        if my_only.count() and my_only.is_checked():
+            log.info("Unchecking 'Search my records only'")
+            my_only.uncheck()
+            try:
+                self.page.wait_for_load_state("networkidle", timeout=10_000)
+            except PlaywrightTimeout:
+                pass
 
         self._set_date(START_DATE, aca_date(start))
         self._set_date(END_DATE, aca_date(end))

@@ -75,13 +75,26 @@ def grid_html(rows: list[dict], page: int) -> str:
     if page < pages:
         pager.append(f'<a href="javascript:void(0)" onclick="loadPage({page + 1})">Next &gt;</a>')
     return f"""<table id="ctl00_PlaceHolderMain_dgvPermitList_gdvPermitList">
-<tr class="ACA_TabRow_Header"><th></th><th>Date</th><th>Record Number</th><th>Record Type</th>
-<th>Address</th><th>Description</th><th>Project Name</th><th>Status</th><th>Action</th></tr>
+{GRID_HEADER}
 {''.join(trs)}
 <tr class="ACA_Table_Pages"><td colspan="9">{' '.join(pager)}</td></tr></table>"""
 
 
+GRID_HEADER = """<tr class="ACA_TabRow_Header"><th></th><th>Date</th><th>Record Number</th><th>Record Type</th>
+<th>Address</th><th>Description</th><th>Project Name</th><th>Status</th><th>Action</th></tr>"""
+
+
+def empty_grid(table_id: str) -> str:
+    return f"""<table id="{table_id}">{GRID_HEADER}
+<tr><td colspan="9">No records found.</td></tr></table>"""
+
+
+# Like SLC's page: a logged-in user's (empty) "my records" grid sits above the
+# search form, and its id also ends in gdvPermitList. ASP.NET's
+# Sys.WebForms.PageRequestManager reports when a postback is in flight.
 SEARCH_PAGE = """
+<h2>Records</h2>{my_records}
+<label><input type="checkbox" id="ctl00_PlaceHolderMain_chkSearch" checked> Search my records only</label>
 <table><tr><td>Start Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate" class="watermark"></td>
 <td>End Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSEndDate"></td>
 <td>Record Type <select id="ctl00_PlaceHolderMain_generalSearchForm_ddlGSPermitType">
@@ -89,17 +102,22 @@ SEARCH_PAGE = """
 <a id="ctl00_PlaceHolderMain_btnNewSearch" href="javascript:void(0)" onclick="loadPage(1)">Search</a>
 <div id="results"></div>
 <script>
+window.__busy = false;
+window.Sys = {{WebForms: {{PageRequestManager: {{getInstance: () => ({{get_isInAsyncPostBack: () => window.__busy}})}}}}}};
 async function loadPage(p) {{
+  window.__busy = true;
   const q = new URLSearchParams({{
+    mine: document.getElementById('ctl00_PlaceHolderMain_chkSearch').checked ? '1' : '',
     start: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate').value,
     end: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_txtGSEndDate').value,
     type: document.getElementById('ctl00_PlaceHolderMain_generalSearchForm_ddlGSPermitType').value,
     page: p}});
-  await new Promise(r => setTimeout(r, 300));  // postback latency
+  await new Promise(r => setTimeout(r, 600));  // postback latency
   const res = await fetch('/Cap/Results?' + q);
   const redirect = res.headers.get('X-Redirect');
   if (redirect) {{ location.href = redirect; return; }}
   document.getElementById('results').innerHTML = await res.text();
+  window.__busy = false;
 }}
 </script>"""
 
@@ -133,15 +151,18 @@ class Handler(BaseHTTPRequestHandler):
             self._send(_page("Home", "<h1>Welcome</h1>", logged_in))
         elif url.path == "/Cap/CapHome.aspx":
             options = "".join(f'<option value="{html.escape(t)}">{html.escape(t)}</option>' for t in TYPES)
-            self._send(_page("Search", SEARCH_PAGE.format(options=options), logged_in))
+            my_records = empty_grid("ctl00_PlaceHolderMain_dgvMyPermitList_gdvPermitList") if logged_in else ""
+            self._send(_page("Search", SEARCH_PAGE.format(options=options, my_records=my_records), logged_in))
         elif url.path == "/Cap/Results":
             try:
                 rows = matching(_parse_mdY(qs["start"]), _parse_mdY(qs["end"]), qs.get("type", ""))
             except (KeyError, ValueError):
                 self._send(b'<span class="ACA_Error">Invalid date</span>')
                 return
+            if qs.get("mine"):
+                rows = []  # the test user has no records of their own
             if not rows:
-                self._send(b"<div>No records found.</div>")
+                self._send(empty_grid("ctl00_PlaceHolderMain_dgvPermitList_gdvPermitList").encode())
             elif len(rows) == 1:
                 self._send(b"", headers={"X-Redirect": f"/Cap/CapDetail.aspx?Module=Building&capID1={rows[0]['number']}"})
             else:

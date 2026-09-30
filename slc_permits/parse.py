@@ -26,8 +26,8 @@ HEADER_ALIASES = {
 }
 IGNORED_HEADERS = {"", "action", "related records"}
 
-RESULTS_TABLE_SELECTOR = "table[id$='gdvPermitList']"
-NO_RESULTS_PATTERNS = ("no records found", "your search returned no results")
+# Exact id: logged-in pages also show a "my records" grid whose id ends the same way.
+RESULTS_TABLE_SELECTOR = "#ctl00_PlaceHolderMain_dgvPermitList_gdvPermitList"
 
 
 def _clean(text: str) -> str:
@@ -77,11 +77,6 @@ def parse_results(html: str, page_url: str) -> list[dict]:
         if record.get("record_number"):
             records.append(record)
     return records
-
-
-def has_no_results_message(html: str) -> bool:
-    text = BeautifulSoup(html, "lxml").get_text(" ").lower()
-    return any(p in text for p in NO_RESULTS_PATTERNS)
 
 
 def parse_detail_text(html: str) -> str:

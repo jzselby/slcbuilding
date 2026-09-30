@@ -1,6 +1,6 @@
 """Search SLC's Accela portal for new commercial permits, summarize them, and log them to a Google Sheet.
 
-    python -m slc_permits                         # last 3 days, record types containing "Commercial"
+    python -m slc_permits                         # last 3 days, commercial record types
     python -m slc_permits --days-back 14 --dry-run
     python -m slc_permits --all-types --start 2026-09-01 --end 2026-09-15
 """
@@ -25,6 +25,8 @@ from .summarize import analyze, apply_notes, build_report
 
 log = logging.getLogger("slc_permits")
 SLC_TZ = ZoneInfo("America/Denver")
+# SLC's portal spells one type "Commericial Demolition".
+DEFAULT_TYPES = ["Commercial", "Commericial"]
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -34,7 +36,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--start", type=date.fromisoformat, help="start date YYYY-MM-DD (overrides --days-back)")
     p.add_argument("--end", type=date.fromisoformat, help="end date YYYY-MM-DD (default today)")
     p.add_argument("--type-contains", action="append", metavar="TEXT",
-                   help="keep records whose Record Type contains TEXT (repeatable; default: Commercial)")
+                   help="keep records whose Record Type contains TEXT; repeat or comma-separate for several "
+                        f"(default: {','.join(DEFAULT_TYPES)})")
     p.add_argument("--all-types", action="store_true", help="keep every record type")
     p.add_argument("--record-type", metavar="TEXT",
                    help="also narrow the portal search itself to the first Record Type option containing TEXT")
@@ -46,7 +49,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args(argv)
     if args.type_contains is None:
-        args.type_contains = ["Commercial"]
+        args.type_contains = DEFAULT_TYPES
+    else:
+        args.type_contains = [t.strip() for v in args.type_contains for t in v.split(",") if t.strip()]
     return args
 
 

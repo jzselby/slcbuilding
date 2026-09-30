@@ -63,6 +63,15 @@ def test_no_results(client):
     assert client.search(date(2025, 1, 1), date(2025, 1, 2)) == []
 
 
+def test_empty_search_after_empty_search(client):
+    # The grid looks the same before and after, so only the postback flag says it's done.
+    client.search(date(2025, 1, 1), date(2025, 1, 2))
+    client._set_date("#ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate", "01/03/2025")
+    before = client._grid_signature()
+    client.page.locator("#ctl00_PlaceHolderMain_btnNewSearch").click()
+    assert client._wait_for_results(before) == "grid"
+
+
 def test_single_result_redirects_to_detail(client):
     found = client.search(date(2026, 8, 15), date(2026, 8, 15))
     assert [r["record_number"] for r in found] == ["BLD2026-09999"]
@@ -112,6 +121,13 @@ def test_end_to_end_only_reports_new(run_env):
     assert f"**{23 - len(first_batch)} new record(s).**" in report
     assert "BLD2026-00000" not in report  # 09/01, reported in the first run
     assert len(PermitStore(tmp_path / "data" / "permits.jsonl")) == 23
+
+
+def test_type_contains_accepts_commas():
+    from slc_permits.__main__ import parse_args
+    assert parse_args([]).type_contains == ["Commercial", "Commericial"]
+    assert parse_args(["--type-contains", "Commercial, Demolition", "--type-contains", "Pool"]).type_contains == [
+        "Commercial", "Demolition", "Pool"]
 
 
 def test_default_keeps_only_commercial(run_env):
