@@ -141,7 +141,9 @@ SEARCH_PAGE = """
 <a id="ctl00_PlaceHolderMain_btnNewSearch" href="javascript:void(0)" onclick="loadPage(1)">Search</a>
 <div id="results"></div>
 <script>
-window.__busy = false;
+// Like SLC's pages, the search page runs a postback of its own right after loading.
+window.__busy = true;
+setTimeout(() => {{ window.__busy = false; }}, 700);
 window.Sys = {{WebForms: {{PageRequestManager: {{getInstance: () => ({{get_isInAsyncPostBack: () => window.__busy}})}}}}}};
 async function loadPage(p) {{
   window.__busy = true;
@@ -157,7 +159,9 @@ async function loadPage(p) {{
   const redirect = res.headers.get('X-Redirect');
   if (redirect) {{ location.href = redirect; return; }}
   document.getElementById('results').innerHTML = await res.text();
-  window.__busy = false;
+  // Like SLC's pages, the search page runs a postback of its own right after loading.
+window.__busy = true;
+setTimeout(() => {{ window.__busy = false; }}, 700);
 }}
 </script>"""
 

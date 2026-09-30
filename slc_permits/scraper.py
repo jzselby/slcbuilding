@@ -37,6 +37,8 @@ END_DATE = f"#{SEARCH_FORM}_txtGSEndDate"
 RECORD_TYPE = f"#{SEARCH_FORM}_ddlGSPermitType"
 SEARCH_BUTTON = "#ctl00_PlaceHolderMain_btnNewSearch"
 MY_RECORDS_ONLY = "#ctl00_PlaceHolderMain_chkSearch"
+# Seconds to wait for a late results grid before accepting "no results".
+EMPTY_GRACE_S = 3
 # True while an ASP.NET UpdatePanel postback is in flight; null on pages without one.
 IN_POSTBACK_JS = """() => { try { return Sys.WebForms.PageRequestManager.getInstance().get_isInAsyncPostBack(); }
                           catch (e) { return null; } }"""
@@ -223,6 +225,18 @@ class AccelaClient:
             return None
         return table.first.inner_text()
 
+    def _wait_idle(self, timeout_s: float = 20) -> None:
+        """Let any postback the page started on its own finish, so it isn't mistaken for ours."""
+        deadline = time.monotonic() + timeout_s
+        while time.monotonic() < deadline:
+            try:
+                if not self.page.evaluate(IN_POSTBACK_JS):
+                    return
+            except Exception:
+                pass  # mid-navigation
+            time.sleep(0.25)
+        log.warning("Page still busy after %ss; continuing", timeout_s)
+
     def _wait_for_results(self, previous: str | None) -> str:
         """Wait for a search or paging postback to land.
 
@@ -247,8 +261,14 @@ class AccelaClient:
                 # The postback finished without changing the grid (e.g. an empty
                 # result replaced an empty result).
                 if sig is None:
+                    # Give a late grid a moment before concluding there are no results.
+                    time.sleep(EMPTY_GRACE_S)
+                    if "CapDetail.aspx" in self.page.url:
+                        return "detail"
+                    if self._grid_signature() is not None:
+                        return "grid"
                     log.warning("Search finished without a results grid; treating as no results")
-                    log.debug("Page:\n%s", self.describe_page())
+                    log.info("Page:\n%s", self.describe_page(max_text=800))
                     return "empty"
                 return "grid"
             time.sleep(0.25)
@@ -294,6 +314,7 @@ class AccelaClient:
         if record_type:
             self._select_record_type(record_type)
 
+        self._wait_idle()
         before = self._grid_signature()
         self.page.locator(SEARCH_BUTTON).click()
         outcome = self._wait_for_results(before)
@@ -320,6 +341,7 @@ class AccelaClient:
             nxt = self._next_page_link()
             if nxt is None:
                 break
+            self._wait_idle()
             before = self._grid_signature()
             nxt.click()
             if self._wait_for_results(before) != "grid":
