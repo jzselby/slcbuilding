@@ -45,7 +45,19 @@ slc_permits/
 | First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description | Module |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 
-"Record" links to the permit's page on the portal. **Daily digests** tab: one row per run,
+"Record" links to the permit's page on the portal. The run formats the tab once and then sorts
+it newest first after every run:
+
+- **Notable** rows are highlighted yellow.
+- Job values of **$1M+** are shown in bold orange, and **$250k+** in light orange.
+- Planning applications are tinted blue, and unsubmitted drafts ("26TMP-…") are gray.
+- Every column has a filter. The header row and the Record column stay in view while scrolling.
+- The Contractor column is hidden, because SLC lists the contractor under Applicant.
+
+Values are written under their column headings, so you can reorder columns or add your own,
+such as a "Notes" column; runs leave those alone. Don't rename the headings: the run would add
+a new column with the original name. For personal sorting and filtering, use
+**Data → Filter views**, which doesn't change the view for anyone else. **Daily digests** tab: one row per run,
 with the date window, the count of new permits, and Claude's summary. The run creates both
 tabs, with frozen, bold header rows.
 

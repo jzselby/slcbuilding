@@ -8,10 +8,12 @@ from slc_permits import sheets
 
 
 class FakeWorksheet:
+    _ids = iter(range(100, 1000))
+
     def __init__(self, title, cols=26):
+        self.id = next(self._ids)
         self.title = title
         self.values = []
-        self.frozen = 0
         self.col_count = cols
 
     def row_values(self, n):
@@ -29,7 +31,7 @@ class FakeWorksheet:
     def update_title(self, title):
         self.title = title
 
-    def update(self, values, cell):
+    def update(self, values, cell, value_input_option=None):
         col, row = ord(cell[0]) - ord("A"), int(cell[1:]) - 1  # single-letter columns suffice here
         assert col + max(len(v) for v in values) <= self.col_count, "exceeds grid limits"
         for i, v in enumerate(values):
@@ -39,11 +41,11 @@ class FakeWorksheet:
             target.extend([""] * (col + len(v) - len(target)))
             target[col:col + len(v)] = v
 
-    def format(self, rng, fmt):
-        pass
-
-    def freeze(self, rows):
-        self.frozen = rows
+    def insert_row(self, values, index, value_input_option):
+        assert value_input_option == "USER_ENTERED"
+        while len(self.values) < index - 1:
+            self.values.append([])
+        self.values.insert(index - 1, list(values))
 
     def batch_update(self, data, value_input_option):
         assert value_input_option == "USER_ENTERED"
@@ -58,6 +60,23 @@ class FakeWorksheet:
 class FakeSpreadsheet:
     def __init__(self):
         self.sheets = [FakeWorksheet("Sheet1")]
+        self.requests = []  # Sheets API requests sent via batch_update
+
+    def batch_update(self, body):
+        self.requests += body["requests"]
+
+    def fetch_sheet_metadata(self, params):
+        markers = {}
+        for r in self.requests:
+            if "createDeveloperMetadata" in r:
+                dm = r["createDeveloperMetadata"]["developerMetadata"]
+                markers[dm["location"]["sheetId"]] = dm
+        return {"sheets": [{"properties": {"sheetId": ws.id},
+                            "developerMetadata": [markers[ws.id]] if ws.id in markers else []}
+                           for ws in self.sheets]}
+
+    def kinds(self, key):
+        return [r for r in self.requests if key in r]
 
     def worksheets(self):
         return self.sheets
@@ -109,7 +128,6 @@ def test_publish_sets_up_tabs_and_appends(spreadsheet):
     permits = spreadsheet.worksheet("Permits")
     assert permits is spreadsheet.sheets[0]  # took over the empty Sheet1
     assert permits.values[0] == sheets.PERMIT_HEADERS
-    assert permits.frozen == 1
     row = permits.values[1]
     assert row[0] == "2026-09-30"
     assert row[1] == '=HYPERLINK("http://x/CapDetail.aspx?id=""1""", "BLD2026-00001")'
@@ -121,11 +139,16 @@ def test_publish_sets_up_tabs_and_appends(spreadsheet):
     digests = spreadsheet.worksheet("Daily digests")
     assert digests.values == [sheets.DIGEST_HEADERS, ["2026-09-30", "09/27/2026 – 09/30/2026", 1, "summary text"]]
 
-    # A second run reuses the tabs and just appends.
+    # Formatting went on once per tab, then each run sorts newest first.
+    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 2
+    assert len(spreadsheet.kinds("sortRange")) == 1
+
+    # A second run reuses the tabs, doesn't re-format, and puts its digest on top.
     sheets.publish("sheet123", "{}", [], date(2026, 10, 1), "w", None)
     assert len(permits.values) == 2
-    assert digests.values[-1] == ["2026-10-01", "w", 0, ""]
+    assert digests.values[1] == ["2026-10-01", "w", 0, ""]
     assert len(spreadsheet.sheets) == 2
+    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 2
 
 
 def test_text_escapes_formula_prefixes():
@@ -161,3 +184,46 @@ def test_rerun_updates_rows_in_place(spreadsheet):
     assert permits.values[1][0] == "2026-09-30"  # first-seen date kept
     assert permits.values[1][5] == "Office remodel, now with notes"
     assert permits.values[2][1].endswith('"BLD2026-00002")')
+
+
+def test_columns_are_matched_by_heading(spreadsheet):
+    # A journalist reordered columns and added a Notes column of their own.
+    headers = ["Notes", "Record", "Scope", "First seen"] + [
+        h for h in sheets.PERMIT_HEADERS if h not in ("Record", "Scope", "First seen")]
+    ws = FakeWorksheet("Permits")
+    ws.values = [headers, ["call the owner", RECORD["record_number"], "old scope", "2026-09-30"]]
+    spreadsheet.sheets = [ws]
+
+    other = dict(RECORD, record_number="BLD2026-00002", scope="New scope")
+    sheets.publish("id", "{}", [dict(RECORD, scope="Updated scope"), other], date(2026, 10, 1), "w", None)
+
+    notes, record, scope, first_seen = ws.values[1][:4]
+    assert (notes, scope, first_seen) == ("call the owner", "Updated scope", "2026-09-30")
+    assert record.endswith(f'"{RECORD["record_number"]}")')  # rewritten as a link
+    assert ws.values[2][0] == "" and ws.values[2][2] == "New scope" and ws.values[2][3] == "2026-10-01"
+    assert ws.values[0] == headers  # nothing added or moved
+
+
+def test_format_requests_follow_the_headers():
+    reqs = sheets.permit_format_requests(7, sheets.PERMIT_HEADERS)
+    money = [r["repeatCell"] for r in reqs if "repeatCell" in r
+             and r["repeatCell"]["cell"]["userEnteredFormat"].get("numberFormat", {}).get("type") == "CURRENCY"]
+    assert money[0]["range"]["startColumnIndex"] == sheets.PERMIT_HEADERS.index("Job value")
+    rules = [r["addConditionalFormatRule"] for r in reqs if "addConditionalFormatRule" in r]
+    assert [r["index"] for r in rules] == list(range(len(rules)))
+    formulas = [r["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"] for r in rules]
+    assert '=$K2="Yes"' in formulas and '=$M2="Planning"' in formulas and '=LEFT($B2,5)="26TMP"' in formulas
+    frozen = next(r["updateSheetProperties"] for r in reqs if "updateSheetProperties" in r)
+    assert frozen["properties"]["gridProperties"] == {"frozenRowCount": 1, "frozenColumnCount": 2}
+    assert any("setBasicFilter" in r for r in reqs)
+
+
+def test_md_to_text():
+    md = "## Highlights\n- **BLD1**, 1 Main St: $3M\n**By the numbers**\n- 5 records\n#10 wire"
+    assert sheets.md_to_text(md) == "HIGHLIGHTS\n• BLD1, 1 Main St: $3M\nBY THE NUMBERS\n• 5 records\n#10 wire"
+
+
+def test_formatting_failure_keeps_data(spreadsheet, monkeypatch):
+    monkeypatch.setattr(spreadsheet, "fetch_sheet_metadata", lambda params: 1 / 0)
+    sheets.publish("id", "{}", [RECORD], date(2026, 9, 30), "w", "s")
+    assert spreadsheet.worksheet("Permits").values[1][6] == 125000.0
