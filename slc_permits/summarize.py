@@ -226,11 +226,18 @@ def apply_notes(records: list[dict], digest: Digest | None, rescope: bool = True
 ALWAYS_HIGH_TYPES = ("Planning Commission",)
 
 
+# Statuses for permits that won't happen as filed (a refiling arrives as a new record).
+DEAD_STATUSES = ("void", "withdrawn", "cancel")
+
+
 def apply_rules(rec: dict) -> None:
-    """Deterministic importance floors, so big items surface even without Claude."""
+    """Deterministic importance rules, so big items surface even without Claude."""
     value = rec.get("job_value") if isinstance(rec.get("job_value"), (int, float)) else 0
     rtype = (rec.get("record_type") or "").lower()
-    if value >= 1_000_000:
+    status = (rec.get("status") or "").lower()
+    if any(s in status for s in DEAD_STATUSES):
+        rec["importance"] = "low"
+    elif value >= 1_000_000:
         rec["importance"] = "high"
         rec.setdefault("category", "Major project")
     elif any(t.lower() in rtype for t in ALWAYS_HIGH_TYPES):

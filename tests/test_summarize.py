@@ -117,3 +117,10 @@ def test_rescope_false_keeps_existing_scope():
     summarize.apply_notes(records, DIGEST, rescope=False)
     assert records[0]["scope"] == "Original scope"
     assert records[0]["importance"] == "high"
+
+
+def test_void_permits_are_low_even_if_large():
+    rec = {"record_number": "A", "record_type": "Commercial Electrical", "job_value": 1_200_000.0,
+           "status": "VOID", "importance": "high"}
+    summarize.apply_notes([rec], None)
+    assert rec["importance"] == "low" and rec["notable"] is False
