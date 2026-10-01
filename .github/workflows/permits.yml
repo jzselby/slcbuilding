@@ -4,10 +4,11 @@ on:
   schedule:
     # GitHub's scheduler is best-effort: runs can be late or dropped. So there are
     # backup attempts; each skips itself if that day's digest already ran.
-    # UTC times = 7:48, 9:23 and 11:37am MDT (an hour earlier in MST).
-    - cron: "48 13 * * *"
-    - cron: "23 15 * * *"
-    - cron: "37 17 * * *"
+    # UTC times = 5:47, 6:43 and 7:37am MDT (summer); 4:47, 5:43 and 6:37am MST (winter),
+    # so all three are before 8am Mountain year-round.
+    - cron: "47 11 * * *"
+    - cron: "43 12 * * *"
+    - cron: "37 13 * * *"
   workflow_dispatch:
     inputs:
       days_back:

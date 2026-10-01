@@ -104,9 +104,10 @@ The daily job writes to the sheet as a Google Cloud **service account**, a robot
    | `GOOGLE_SERVICE_ACCOUNT_JSON` | the entire contents of the downloaded key file |
 
 3. Under **Actions → SLC commercial permit digest**, click **Run workflow** to test it.
-   After that it runs daily at 7:48am Mountain. GitHub's scheduler sometimes delays or drops runs,
-   so there are backup attempts at about 9:20 and 11:35am that skip themselves once the day's report
-   exists. Times are an hour earlier in winter, because GitHub schedules use UTC. A manual run lets you change the look-back
+   After that it runs every morning before 8am Mountain, with three attempts at 5:47, 6:43 and
+   7:37am in summer (4:47, 5:43 and 6:37am in winter; GitHub schedules use UTC). GitHub's
+   scheduler sometimes delays or drops runs, so the later attempts are backups that skip
+   themselves once the day's report exists. A manual run lets you change the look-back
    window, either tab's type filter (blank keeps all types), or Planning's skip list. Tick **dry run** to see in the
    log what would be added, without writing the sheet or marking anything as seen.
    Tick **reclassify** to re-rate every permit already in the sheet with the current checklist,
