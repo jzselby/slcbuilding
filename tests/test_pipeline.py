@@ -48,6 +48,15 @@ def test_login_and_paged_search(client):
     assert "action" not in first
 
 
+def test_ignored_next_click_is_retried(client, cfg, monkeypatch):
+    from .mock_aca import Handler
+    monkeypatch.setattr(Handler, "drop_first_next", True)
+    cfg.timeout_ms = 3_000  # don't wait long for the ignored click
+    client.page.set_default_timeout(10_000)
+    found = client.search(date(2026, 9, 1), date(2026, 9, 5))
+    assert len(found) == 23  # all three pages despite the ignored click
+
+
 def test_record_type_filter(client):
     found = client.search(date(2026, 9, 1), date(2026, 9, 5), record_type="demolition")
     expected = matching(date(2026, 9, 1), date(2026, 9, 5), "Demolition")

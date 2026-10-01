@@ -37,6 +37,8 @@ END_DATE = f"#{SEARCH_FORM}_txtGSEndDate"
 RECORD_TYPE = f"#{SEARCH_FORM}_ddlGSPermitType"
 SEARCH_BUTTON = "#ctl00_PlaceHolderMain_btnNewSearch"
 MY_RECORDS_ONLY = "#ctl00_PlaceHolderMain_chkSearch"
+# The portal occasionally ignores a click on Search or Next; try this many times.
+CLICK_ATTEMPTS = 3
 # Seconds to wait for a late results grid before accepting "no results".
 EMPTY_GRACE_S = 3
 # True while an ASP.NET UpdatePanel postback is in flight; null on pages without one.
@@ -277,8 +279,23 @@ class AccelaClient:
                     return "empty"
                 return "grid"
             time.sleep(0.25)
+        return "timeout"
+
+    def _click_for_results(self, target, what: str) -> str:
+        """Click Search or Next and wait for the grid to update, retrying a click the portal ignores.
+
+        `target` returns the element to click (looked up afresh on each attempt).
+        """
+        for attempt in range(1, CLICK_ATTEMPTS + 1):
+            self._wait_idle()
+            before = self._grid_signature()
+            target().click()
+            outcome = self._wait_for_results(before)
+            if outcome != "timeout":
+                return outcome
+            log.warning("%s got no response (attempt %d of %d)", what, attempt, CLICK_ATTEMPTS)
         self.save_debug("results-timeout")
-        raise ScrapeError("Timed out waiting for search results")
+        raise ScrapeError(f"Timed out waiting for search results after {what}")
 
     def _next_page_link(self):
         link = self.page.locator(
@@ -319,10 +336,7 @@ class AccelaClient:
         if record_type:
             self._select_record_type(record_type)
 
-        self._wait_idle()
-        before = self._grid_signature()
-        self.page.locator(SEARCH_BUTTON).click()
-        outcome = self._wait_for_results(before)
+        outcome = self._click_for_results(lambda: self.page.locator(SEARCH_BUTTON), "Search")
         if outcome == "empty":
             log.info("No records found")
             return []
@@ -343,13 +357,9 @@ class AccelaClient:
             for row in rows:
                 records.setdefault(row["record_number"], row)
             log.info("Page %d: %d rows (%d unique so far)", page_no, len(rows), len(records))
-            nxt = self._next_page_link()
-            if nxt is None:
+            if self._next_page_link() is None:
                 break
-            self._wait_idle()
-            before = self._grid_signature()
-            nxt.click()
-            if self._wait_for_results(before) != "grid":
+            if self._click_for_results(self._next_page_link, f"Next (from page {page_no})") != "grid":
                 break
         else:
             log.warning("Stopped after max_pages=%d; results may be incomplete", self.cfg.max_pages)

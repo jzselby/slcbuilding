@@ -107,7 +107,7 @@ def grid_html(rows: list[dict], page: int) -> str:
         pager.append(f'<a href="javascript:void(0)" onclick="loadPage({page - 1})">&lt; Prev</a>')
     pager.append(f"<span>{page}</span>")
     if page < pages:
-        pager.append(f'<a href="javascript:void(0)" onclick="loadPage({page + 1})">Next &gt;</a>')
+        pager.append(f'<a href="javascript:void(0)" onclick="nextPage({page + 1})">Next &gt;</a>')
     header = PLANNING_GRID_HEADER if planning else GRID_HEADER
     return f"""<table id="ctl00_PlaceHolderMain_dgvPermitList_gdvPermitList">
 <tr><td>Showing {(page - 1) * PAGE_SIZE + 1}-{(page - 1) * PAGE_SIZE + len(chunk)} of {len(rows)}</td></tr>
@@ -133,6 +133,7 @@ def empty_grid(table_id: str) -> str:
 SEARCH_PAGE = """
 <h2>Records</h2>{my_records}
 <input type="hidden" id="module" value="{module}">
+<input type="hidden" id="dropFirstNext" value="{drop_first_next}">
 <label><input type="checkbox" id="ctl00_PlaceHolderMain_chkSearch" checked> Search my records only</label>
 <table><tr><td>Start Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSStartDate" class="watermark"></td>
 <td>End Date <input id="ctl00_PlaceHolderMain_generalSearchForm_txtGSEndDate"></td>
@@ -145,6 +146,13 @@ SEARCH_PAGE = """
 window.__busy = true;
 setTimeout(() => {{ window.__busy = false; }}, 700);
 window.Sys = {{WebForms: {{PageRequestManager: {{getInstance: () => ({{get_isInAsyncPostBack: () => window.__busy}})}}}}}};
+// With Handler.drop_first_next, the first click on "Next" is ignored, as the real portal
+// occasionally does.
+let droppedNext = false;
+function nextPage(p) {{
+  if (document.getElementById('dropFirstNext').value === '1' && !droppedNext) {{ droppedNext = true; return; }}
+  loadPage(p);
+}}
 async function loadPage(p) {{
   window.__busy = true;
   const q = new URLSearchParams({{
@@ -167,6 +175,8 @@ setTimeout(() => {{ window.__busy = false; }}, 700);
 
 
 class Handler(BaseHTTPRequestHandler):
+    drop_first_next = False
+
     def log_message(self, *args):
         pass
 
@@ -204,7 +214,8 @@ setTimeout(() => { document.getElementById('panel').innerHTML =
             options = "".join(f'<option value="{html.escape(t)}">{html.escape(t)}</option>'
                               for t in MODULE_TYPES.get(module, []))
             my_records = empty_grid("ctl00_PlaceHolderMain_dgvMyPermitList_gdvPermitList") if logged_in else ""
-            self._send(_page("Search", SEARCH_PAGE.format(options=options, my_records=my_records, module=html.escape(module)), logged_in))
+            self._send(_page("Search", SEARCH_PAGE.format(options=options, my_records=my_records, module=html.escape(module),
+                                                 drop_first_next="1" if Handler.drop_first_next else ""), logged_in))
         elif url.path == "/Cap/Results":
             try:
                 rows = matching(_parse_mdY(qs["start"]), _parse_mdY(qs["end"]), qs.get("type", ""),
