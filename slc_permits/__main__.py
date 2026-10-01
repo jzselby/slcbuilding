@@ -54,6 +54,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--no-summary", action="store_true", help="skip the Claude summary")
     p.add_argument("--no-sheet", action="store_true", help="don't write to the Google Sheet")
     p.add_argument("--dry-run", action="store_true", help="don't write to the sheet or record permits as seen")
+    p.add_argument("--reclassify", action="store_true",
+                   help="re-rate the importance of every permit already on record and update the sheet "
+                        "(no portal search)")
     p.add_argument("--headful", action="store_true", help="show the browser window")
     p.add_argument("-v", "--verbose", action="store_true")
     args = p.parse_args(argv)
@@ -95,6 +98,40 @@ def keep_types(module: str, records: list[dict], needles: list[str] | None,
     return kept
 
 
+def reclassify(cfg: Config, store: PermitStore, today: date, use_sheet: bool, dry_run: bool) -> int:
+    """Re-rate stored permits with the current importance rubric, from their saved summaries."""
+    records = store.all()
+    if not records:
+        log.info("No permits on record")
+        return 0
+    for rec in records:
+        rec.setdefault("module", "Building")  # stored before the Module field existed
+    dates = sorted(r["first_seen"][:10] for r in records if r.get("first_seen"))
+    digest = analyze(records, date.fromisoformat(dates[0]) if dates else today, today, cfg.summary_model)
+    if digest is None:
+        log.error("Claude rating failed; nothing changed")
+        return 1
+    apply_notes(records, digest, rescope=False)
+    counts = Counter(r.get("importance") for r in records)
+    log.info("Re-rated %d permits: %s", len(records), ", ".join(f"{k} {v}" for k, v in counts.most_common()))
+    if dry_run:
+        for r in sorted(records, key=lambda r: r["record_number"]):
+            if r.get("importance") == "high":
+                log.info("  high: %s %s | %s", r["record_number"], r.get("category"), r.get("why_it_matters"))
+        return 0
+    if use_sheet:
+        from .sheets import publish
+
+        try:
+            publish(cfg.google_sheet_id, cfg.google_service_account_json, records, today, "", None,
+                    digest_row=False)
+        except Exception:
+            log.exception("Writing to the Google Sheet failed")
+            return 1
+    store.update(records)
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO,
@@ -120,6 +157,8 @@ def main(argv: list[str] | None = None) -> int:
 
     store = PermitStore(cfg.data_dir / "permits.jsonl")
     log.info("%d permits already on record", len(store))
+    if args.reclassify:
+        return reclassify(cfg, store, today, use_sheet, args.dry_run)
 
     with sync_playwright() as pw:
         browser = launch_browser(pw, cfg)

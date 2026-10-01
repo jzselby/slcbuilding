@@ -41,6 +41,9 @@ class FakeWorksheet:
             target.extend([""] * (col + len(v) - len(target)))
             target[col:col + len(v)] = v
 
+    def delete_rows(self, index):
+        del self.values[index - 1]
+
     def insert_row(self, values, index, value_input_option):
         assert value_input_option == "USER_ENTERED"
         while len(self.values) < index - 1:
@@ -140,15 +143,15 @@ def test_publish_sets_up_tabs_and_appends(spreadsheet):
     assert digests.values == [sheets.DIGEST_HEADERS, ["2026-09-30", "09/27/2026 – 09/30/2026", 1, "summary text"]]
 
     # Formatting went on once per tab, then each run sorts newest first.
-    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 2
-    assert len(spreadsheet.kinds("sortRange")) == 1
+    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 3
+    assert len(spreadsheet.kinds("sortRange")) == 2
 
     # A second run reuses the tabs, doesn't re-format, and puts its digest on top.
     sheets.publish("sheet123", "{}", [], date(2026, 10, 1), "w", None)
     assert len(permits.values) == 2
     assert digests.values[1] == ["2026-10-01", "w", 0, ""]
-    assert len(spreadsheet.sheets) == 2
-    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 2
+    assert len(spreadsheet.sheets) == 3
+    assert len(spreadsheet.kinds("createDeveloperMetadata")) == 3
 
 
 def test_text_escapes_formula_prefixes():
@@ -159,15 +162,24 @@ def test_text_escapes_formula_prefixes():
 
 
 def test_existing_tab_gains_module_column(spreadsheet):
-    old_headers = sheets.PERMIT_HEADERS[:-1]
+    old_headers = sheets.PERMIT_HEADERS[:12]  # the layout before the Module column
     ws = FakeWorksheet("Permits", cols=len(old_headers))
     ws.values = [list(old_headers), ["2026-09-30", "BLD-1"] + [""] * 10, ["2026-09-30", "BLD-2"] + [""] * 10]
     spreadsheet.sheets = [ws]
+    spreadsheet.requests.append({"createDeveloperMetadata": {"developerMetadata": {  # already formatted
+        "metadataKey": sheets.FORMAT_KEY, "metadataValue": sheets.FORMAT_VERSION, "location": {"sheetId": ws.id}}}})
 
     sheets.publish("id", "{}", [RECORD], date(2026, 10, 1), "w", None)
 
     assert ws.values[0] == sheets.PERMIT_HEADERS
     assert [row[12] for row in ws.values[1:]] == ["Building", "Building", "Planning"]
+    # The tab was already formatted, so only the new columns get styled.
+    widths = [r for r in spreadsheet.kinds("updateDimensionProperties")
+              if r["updateDimensionProperties"]["range"]["sheetId"] == ws.id
+              and "pixelSize" in r["updateDimensionProperties"]["properties"]]
+    assert {w["updateDimensionProperties"]["range"]["startIndex"] for w in widths} == {12, 13, 14, 15, 16}
+    assert any(r["addConditionalFormatRule"]["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"]
+               == '=$N2="Low"' for r in spreadsheet.kinds("addConditionalFormatRule"))
 
 
 def test_rerun_updates_rows_in_place(spreadsheet):
@@ -227,3 +239,27 @@ def test_formatting_failure_keeps_data(spreadsheet, monkeypatch):
     monkeypatch.setattr(spreadsheet, "fetch_sheet_metadata", lambda params: 1 / 0)
     sheets.publish("id", "{}", [RECORD], date(2026, 9, 30), "w", "s")
     assert spreadsheet.worksheet("Permits").values[1][6] == 125000.0
+
+
+def test_high_importance_tab(spreadsheet):
+    big = dict(RECORD, record_number="BLD2026-00009", importance="high", category="Major project",
+               why_it_matters="A $3M lab build-out.", business="Nuton", job_value=3_000_000.0)
+    routine = dict(RECORD, record_number="BLD2026-00010", importance="low")
+    sheets.publish("id", "{}", [big, routine], date(2026, 10, 1), "w", None)
+
+    high = spreadsheet.worksheet(sheets.HIGH_TAB)
+    assert high.values[0] == sheets.HIGH_HEADERS
+    assert len(high.values) == 2  # only the high-importance record
+    row = dict(zip(sheets.HIGH_HEADERS, high.values[1]))
+    assert (row["Category"], row["Why it matters"], row["Business"], row["Job value"]) == (
+        "Major project", "A $3M lab build-out.", "Nuton", 3_000_000.0)
+    permits = spreadsheet.worksheet("Permits")
+    assert len(permits.values) == 3  # everything stays on Permits
+    importance = sheets.PERMIT_HEADERS.index("Importance")
+    assert sorted(r[importance] for r in permits.values[1:]) == ["High", "Low"]
+
+    # Re-rated as medium later: it drops off the High tab but stays on Permits.
+    high.values[1][sheets.HIGH_HEADERS.index("Record")] = big["record_number"]  # Sheets shows the link label
+    sheets.publish("id", "{}", [dict(big, importance="medium")], date(2026, 10, 2), "w", None, digest_row=False)
+    assert len(high.values) == 1
+    assert len(spreadsheet.worksheet(sheets.DIGESTS_TAB).values) == 2  # no digest row for the re-rate

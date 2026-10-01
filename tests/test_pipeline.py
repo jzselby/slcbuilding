@@ -188,3 +188,31 @@ def test_report_table_escapes_pipes():
     report = build_report([rec], date(2026, 9, 1), date(2026, 9, 2))
     assert "a \\| b" in report
     assert "[B-1](http://x/1)" in report
+
+
+def test_reclassify_rerates_stored_permits(run_env, monkeypatch):
+    import slc_permits.__main__ as cli
+    from slc_permits.summarize import Digest, PermitNotes
+
+    store = PermitStore(run_env / "data" / "permits.jsonl")
+    store.add([{"record_number": "BLD-1", "record_type": "Commercial Roofing", "scope": "Re-roof"},
+               {"record_number": "BLD-2", "record_type": "Commercial Building Permit", "scope": "New hotel",
+                "module": "Building"}])
+
+    def fake_analyze(records, start, end, model):
+        assert all("scope" in r for r in records)
+        notes = [PermitNotes(record_number="BLD-1", scope="x", job_value=None, applicant=None, contractor=None,
+                             business=None, importance="low", category="Routine", why_it_matters="Routine."),
+                 PermitNotes(record_number="BLD-2", scope="x", job_value=None, applicant=None, contractor=None,
+                             business="Hyatt", importance="high", category="Major project",
+                             why_it_matters="A new hotel.")]
+        return Digest(summary_markdown="", permits=notes)
+
+    monkeypatch.setattr(cli, "analyze", fake_analyze)
+    assert main(["--reclassify"]) == 0
+
+    stored = PermitStore(run_env / "data" / "permits.jsonl").records
+    assert stored["BLD-2"]["importance"] == "high" and stored["BLD-2"]["business"] == "Hyatt"
+    assert stored["BLD-2"]["scope"] == "New hotel"  # existing scope kept
+    assert stored["BLD-1"]["module"] == "Building"  # filled in for records saved before Module existed
+    assert stored["BLD-1"]["first_seen"]  # first-seen date kept

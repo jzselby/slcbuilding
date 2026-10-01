@@ -10,7 +10,9 @@ RECORDS = [{"record_number": "BLD2026-00001", "record_type": "Commercial New", "
 DIGEST = Digest(
     summary_markdown="**Highlights**\n- New building at 1 Main St",
     permits=[PermitNotes(record_number="BLD2026-00001", scope="New 3-story office building",
-                         job_value=2_500_000, applicant="Acme LLC", contractor=None, notable=True)],
+                         job_value=2_500_000, applicant="Acme LLC", contractor=None, business="Acme",
+                         importance="high", category="Major project",
+                         why_it_matters="Acme is building a $2.5M, 3-story office at 1 Main St.")],
 )
 
 
@@ -87,3 +89,31 @@ def test_long_detail_pages_are_trimmed_and_batched(monkeypatch):
     assert all("x" * 6_001 not in c["messages"][0]["content"] for c in calls)
     assert digest.summary_markdown.startswith("### Part 1 of 2")
     assert len(records[0]["detail_text"]) == 50_000  # caller's records untouched
+
+
+def test_apply_notes_sets_importance_and_rules():
+    records = [dict(RECORDS[0])]
+    summarize.apply_notes(records, DIGEST)
+    rec = records[0]
+    assert (rec["importance"], rec["category"], rec["business"], rec["notable"]) == (
+        "high", "Major project", "Acme", True)
+    assert rec["why_it_matters"].startswith("Acme is building")
+
+
+def test_rules_raise_importance_without_claude():
+    big = {"record_number": "A", "record_type": "Commercial Electrical", "job_value": 1_200_000.0}
+    rezone = {"record_number": "B", "record_type": "Planning Commission - Zoning Amendment"}
+    mid = {"record_number": "C", "record_type": "Commercial Building Permit", "job_value": 400_000.0,
+           "importance": "low"}
+    small = {"record_number": "D", "record_type": "Commercial Roofing", "job_value": 9_000.0}
+    summarize.apply_notes([big, rezone, mid, small], None)
+    assert [r.get("importance") for r in (big, rezone, mid, small)] == ["high", "high", "medium", None]
+    assert big["category"] == "Major project" and rezone["category"] == "Land use / zoning"
+    assert small["notable"] is False
+
+
+def test_rescope_false_keeps_existing_scope():
+    records = [dict(RECORDS[0], scope="Original scope")]
+    summarize.apply_notes(records, DIGEST, rescope=False)
+    assert records[0]["scope"] == "Original scope"
+    assert records[0]["importance"] == "high"

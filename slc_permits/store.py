@@ -42,3 +42,18 @@ class PermitStore:
                 rec["first_seen"] = seen_at
                 self.records[rec["record_number"]] = rec
                 f.write(json.dumps(rec, sort_keys=True) + "\n")
+
+    def all(self) -> list[dict]:
+        return [dict(r) for r in self.records.values()]
+
+    def update(self, records: list[dict]) -> None:
+        """Merge new fields into stored records and rewrite the file (e.g. after re-rating)."""
+        for rec in records:
+            stored = self.records.get(rec["record_number"])
+            if stored is not None:
+                stored.update({k: v for k, v in rec.items() if k not in ("detail_text", "first_seen")})
+        tmp = self.path.with_suffix(".tmp")
+        with tmp.open("w", encoding="utf-8") as f:
+            for rec in self.records.values():
+                f.write(json.dumps(rec, sort_keys=True) + "\n")
+        tmp.replace(self.path)

@@ -40,15 +40,32 @@ slc_permits/
 
 ### The sheet
 
-**Permits** tab: one row per new permit.
+**High importance** tab: what a reporter scans first. Claude rates every permit's importance
+(High / Medium / Low) against an editor's checklist and picks a category: Major project, New
+business, Housing, Public / government, Demolition, Land use / zoning, Historic, Energy /
+infrastructure, or Routine. High covers:
 
-| First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description | Module |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
+- new buildings and additions, and projects of $1M or more
+- housing of 10+ units
+- new or relocating businesses the public would recognize
+- city, school and other public projects
+- demolitions of whole buildings
+- rezonings and other Planning Commission items
+- anything likely to draw public interest
 
-"Record" links to the permit's page on the portal. The run formats the tab once and then sorts
-it newest first after every run:
+Projects of $1M+ and Planning Commission items are always High, even without Claude. This tab
+holds only the High items, newest first, with a one-line "Why it matters" and the business
+name. Items re-rated below High are removed from it.
 
-- **Notable** rows are highlighted yellow.
+**Permits** tab: every permit, one row each.
+
+| First seen | Record | Date opened | Record type | Address | Scope | Job value | Applicant | Contractor | Status | Notable | Portal description | Module | Importance | Category | Why it matters | Business |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+
+"Record" links to the permit's page on the portal. The run formats the tabs once and then sorts
+them newest first after every run:
+
+- **High-importance** rows ("Notable") are highlighted yellow, and **Low** (routine) rows are gray.
 - Job values of **$1M+** are shown in bold orange, and **$250k+** in light orange.
 - Planning applications are tinted blue, and unsubmitted drafts ("26TMP-…") are gray.
 - Every column has a filter. The header row and the Record column stay in view while scrolling.
@@ -57,9 +74,10 @@ it newest first after every run:
 Values are written under their column headings, so you can reorder columns or add your own,
 such as a "Notes" column; runs leave those alone. Don't rename the headings: the run would add
 a new column with the original name. For personal sorting and filtering, use
-**Data → Filter views**, which doesn't change the view for anyone else. **Daily digests** tab: one row per run,
-with the date window, the count of new permits, and Claude's summary. The run creates both
-tabs, with frozen, bold header rows.
+**Data → Filter views**, which doesn't change the view for anyone else.
+
+**Daily digests** tab: one row per run, newest first, with the date window, the count of new
+permits, and Claude's summary of the highlights.
 
 ## Set up the Google Sheet
 
@@ -91,6 +109,9 @@ The daily job writes to the sheet as a Google Cloud **service account**, a robot
    exists. Times are an hour earlier in winter, because GitHub schedules use UTC. A manual run lets you change the look-back
    window, either tab's type filter (blank keeps all types), or Planning's skip list. Tick **dry run** to see in the
    log what would be added, without writing the sheet or marking anything as seen.
+   Tick **reclassify** to re-rate every permit already in the sheet with the current checklist,
+   for example after changing it in `slc_permits/summarize.py`. It doesn't search the portal and
+   costs a few cents.
 
 Each run also commits `reports/` and `data/permits.jsonl` and shows the digest on the run's
 summary page. If a run fails, download the `debug-snapshots` artifact, which has a screenshot

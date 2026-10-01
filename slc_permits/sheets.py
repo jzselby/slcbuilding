@@ -23,11 +23,18 @@ from gspread.utils import rowcol_to_a1
 log = logging.getLogger(__name__)
 
 PERMITS_TAB = "Permits"
+HIGH_TAB = "High importance"
 DIGESTS_TAB = "Daily digests"
 # Column order for a new tab; existing tabs keep whatever order they have.
 PERMIT_HEADERS = [
     "First seen", "Record", "Date opened", "Record type", "Address", "Scope",
     "Job value", "Applicant", "Contractor", "Status", "Notable", "Portal description", "Module",
+    "Importance", "Category", "Why it matters", "Business",
+]
+# The High importance tab: what a reporter scans first.
+HIGH_HEADERS = [
+    "Date opened", "Category", "Why it matters", "Address", "Job value", "Business",
+    "Record", "Record type", "Status", "Scope", "Module", "First seen",
 ]
 DIGEST_HEADERS = ["Run date", "Window", "New records", "Summary"]
 # Google Sheets' per-cell character limit.
@@ -58,7 +65,7 @@ def hyperlink(url: str | None, label: str) -> str:
 def permit_values(rec: dict, run_date: date) -> dict[str, Any]:
     job_value = rec.get("job_value")
     return {
-        "First seen": run_date.isoformat(),
+        "First seen": (rec.get("first_seen") or run_date.isoformat())[:10],
         "Record": hyperlink(rec.get("detail_url"), rec["record_number"]),
         "Date opened": text(rec.get("date")),
         "Record type": text(rec.get("record_type")),
@@ -71,6 +78,10 @@ def permit_values(rec: dict, run_date: date) -> dict[str, Any]:
         "Notable": {True: "Yes", False: ""}.get(rec.get("notable"), ""),
         "Portal description": text(rec.get("description") or rec.get("project_name")),
         "Module": text(rec.get("module")),
+        "Importance": (rec.get("importance") or "").capitalize(),
+        "Category": text(rec.get("category")),
+        "Why it matters": text(rec.get("why_it_matters")),
+        "Business": text(rec.get("business")),
     }
 
 
@@ -95,12 +106,15 @@ def _letter(index: int) -> str:
     return rowcol_to_a1(1, index + 1).rstrip("1")
 
 
-def _headers(ws: gspread.Worksheet, wanted: list[str]) -> list[str]:
-    """The tab's header row, adding any of our columns that are missing (at the end)."""
+def _headers(ws: gspread.Worksheet, wanted: list[str]) -> tuple[list[str], list[str]]:
+    """The tab's header row, adding any of our columns that are missing (at the end).
+
+    Returns (headers, the columns just added).
+    """
     current = ws.row_values(1)
     missing = [h for h in wanted if h not in current]
     if not missing:
-        return current
+        return current, []
     headers = current + missing
     if ws.col_count < len(headers):
         ws.add_cols(len(headers) - ws.col_count)
@@ -111,7 +125,7 @@ def _headers(ws: gspread.Worksheet, wanted: list[str]) -> list[str]:
         rows = len(ws.col_values(1))
         if rows > 1:
             ws.update([["Building"]] * (rows - 1), f"{_letter(_col(headers, 'Module'))}2")
-    return headers
+    return headers, missing
 
 
 def _worksheet(sh: gspread.Spreadsheet, title: str, headers: list[str]) -> gspread.Worksheet:
@@ -143,12 +157,34 @@ MILLION_BG, QUARTER_MILLION_BG = _rgb("#F9CB9C"), _rgb("#FCE5CD")
 PLANNING_BG = _rgb("#DEEAF6")
 DRAFT_FG = _rgb("#999999")
 
-PERMIT_WIDTHS = {
-    "First seen": 95, "Record": 125, "Date opened": 100, "Record type": 190, "Address": 250,
-    "Scope": 380, "Job value": 105, "Applicant": 210, "Contractor": 150, "Status": 110,
-    "Notable": 75, "Portal description": 320, "Module": 85,
+LOW_FG = _rgb("#999999")
+
+DATE_FORMAT = {"type": "DATE", "pattern": "mmm d, yyyy"}
+MONEY_FORMAT = {"type": "CURRENCY", "pattern": "$#,##0"}
+# Per-column (width in pixels, wrap strategy, number format), shared by all tabs.
+COLUMN_STYLE: dict[str, tuple[int, str | None, dict | None]] = {
+    "First seen": (95, None, DATE_FORMAT),
+    "Record": (125, None, None),
+    "Date opened": (100, None, DATE_FORMAT),
+    "Record type": (190, None, None),
+    "Address": (250, None, None),
+    "Scope": (380, "WRAP", None),
+    "Job value": (105, None, MONEY_FORMAT),
+    "Applicant": (210, None, None),
+    "Contractor": (150, None, None),
+    "Status": (110, None, None),
+    "Notable": (75, None, None),
+    "Portal description": (320, "CLIP", None),
+    "Module": (85, None, None),
+    "Importance": (95, None, None),
+    "Category": (150, None, None),
+    "Why it matters": (420, "WRAP", None),
+    "Business": (180, "WRAP", None),
+    "Run date": (95, None, DATE_FORMAT),
+    "Window": (190, None, None),
+    "New records": (95, None, None),
+    "Summary": (900, "WRAP", None),
 }
-DIGEST_WIDTHS = {"Run date": 95, "Window": 190, "New records": 95, "Summary": 900}
 
 
 def _cells(sheet_id: int, col: int | None = None, header: bool = False) -> dict:
@@ -163,7 +199,25 @@ def _repeat(rng: dict, fmt: dict, fields: str) -> dict:
     return {"repeatCell": {"range": rng, "cell": {"userEnteredFormat": fmt}, "fields": fields}}
 
 
-def _common_requests(sheet_id: int, headers: list[str], widths: dict[str, int], frozen_cols: int) -> list[dict]:
+def _column_requests(sheet_id: int, headers: list[str], names: list[str]) -> list[dict]:
+    """Width, wrapping and number format for the named columns."""
+    reqs = []
+    for name in names:
+        if name not in headers or name not in COLUMN_STYLE:
+            continue
+        i = _col(headers, name)
+        width, wrap, number = COLUMN_STYLE[name]
+        reqs.append({"updateDimensionProperties": {
+            "range": {"sheetId": sheet_id, "dimension": "COLUMNS", "startIndex": i, "endIndex": i + 1},
+            "properties": {"pixelSize": width}, "fields": "pixelSize"}})
+        if wrap:
+            reqs.append(_repeat(_cells(sheet_id, i), {"wrapStrategy": wrap}, "userEnteredFormat.wrapStrategy"))
+        if number:
+            reqs.append(_repeat(_cells(sheet_id, i), {"numberFormat": number}, "userEnteredFormat.numberFormat"))
+    return reqs
+
+
+def _common_requests(sheet_id: int, headers: list[str], frozen_cols: int) -> list[dict]:
     reqs = [
         _repeat(_cells(sheet_id, header=True),
                 {"backgroundColor": HEADER_BG, "textFormat": {"bold": True, "foregroundColor": HEADER_FG},
@@ -175,35 +229,13 @@ def _common_requests(sheet_id: int, headers: list[str], widths: dict[str, int], 
                            "gridProperties": {"frozenRowCount": 1, "frozenColumnCount": frozen_cols}},
             "fields": "gridProperties(frozenRowCount,frozenColumnCount)"}},
     ]
-    for name, px in widths.items():
-        if name in headers:
-            i = _col(headers, name)
-            reqs.append({"updateDimensionProperties": {
-                "range": {"sheetId": sheet_id, "dimension": "COLUMNS", "startIndex": i, "endIndex": i + 1},
-                "properties": {"pixelSize": px}, "fields": "pixelSize"}})
-    return reqs
+    return reqs + _column_requests(sheet_id, headers, headers)
 
 
 def permit_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     """Sheets API requests that style the Permits tab for scanning."""
     has = set(headers).__contains__
-    reqs = _common_requests(sheet_id, headers, PERMIT_WIDTHS,
-                            frozen_cols=_col(headers, "Record") + 1 if has("Record") else 0)
-    for name in ("First seen", "Date opened"):
-        if has(name):
-            reqs.append(_repeat(_cells(sheet_id, _col(headers, name)),
-                                {"numberFormat": {"type": "DATE", "pattern": "mmm d, yyyy"}},
-                                "userEnteredFormat.numberFormat"))
-    if has("Job value"):
-        reqs.append(_repeat(_cells(sheet_id, _col(headers, "Job value")),
-                            {"numberFormat": {"type": "CURRENCY", "pattern": "$#,##0"}},
-                            "userEnteredFormat.numberFormat"))
-    if has("Scope"):
-        reqs.append(_repeat(_cells(sheet_id, _col(headers, "Scope")), {"wrapStrategy": "WRAP"},
-                            "userEnteredFormat.wrapStrategy"))
-    if has("Portal description"):
-        reqs.append(_repeat(_cells(sheet_id, _col(headers, "Portal description")), {"wrapStrategy": "CLIP"},
-                            "userEnteredFormat.wrapStrategy"))
+    reqs = _common_requests(sheet_id, headers, frozen_cols=_col(headers, "Record") + 1 if has("Record") else 0)
     if has("Contractor"):  # SLC lists the contractor's company under Applicant; this is almost always empty
         i = _col(headers, "Contractor")
         reqs.append({"updateDimensionProperties": {
@@ -224,6 +256,8 @@ def permit_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     if has("Record"):  # unsubmitted drafts ("26TMP-...") are de-emphasized
         rules.append((whole_rows, _formula(f'=LEFT(${_letter(_col(headers, "Record"))}2,5)="26TMP"'),
                       {"textFormat": {"foregroundColor": DRAFT_FG}}))
+    if has("Importance"):  # so are routine permits
+        rules.append(_low_rule(sheet_id, headers))
     if has("Module"):
         planning_cols = [_cells(sheet_id, _col(headers, n)) for n in ("Module", "Record type") if has(n)]
         rules.append((planning_cols, _formula(f'=${_letter(_col(headers, "Module"))}2="Planning"'),
@@ -231,10 +265,7 @@ def permit_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     if has("Notable"):
         rules.append((whole_rows, _formula(f'=${_letter(_col(headers, "Notable"))}2="Yes"'),
                       {"backgroundColor": NOTABLE_BG}))
-    for index, (ranges, condition, fmt) in enumerate(rules):
-        reqs.append({"addConditionalFormatRule": {
-            "rule": {"ranges": ranges, "booleanRule": {"condition": condition, "format": fmt}},
-            "index": index}})
+    reqs += [_rule_request(rule, index) for index, rule in enumerate(rules)]
 
     reqs.append({"setBasicFilter": {"filter": {"range": {
         "sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0, "endColumnIndex": len(headers)}}}})
@@ -245,16 +276,39 @@ def _formula(expr: str) -> dict:
     return {"type": "CUSTOM_FORMULA", "values": [{"userEnteredValue": expr}]}
 
 
-def digest_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
-    reqs = _common_requests(sheet_id, headers, DIGEST_WIDTHS, frozen_cols=0)
-    if "Run date" in headers:
-        reqs.append(_repeat(_cells(sheet_id, _col(headers, "Run date")),
-                            {"numberFormat": {"type": "DATE", "pattern": "mmm d, yyyy"}},
-                            "userEnteredFormat.numberFormat"))
-    if "Summary" in headers:
-        reqs.append(_repeat(_cells(sheet_id, _col(headers, "Summary")), {"wrapStrategy": "WRAP"},
-                            "userEnteredFormat.wrapStrategy"))
+def _low_rule(sheet_id: int, headers: list[str]) -> tuple:
+    return ([_cells(sheet_id)], _formula(f'=${_letter(_col(headers, "Importance"))}2="Low"'),
+            {"textFormat": {"foregroundColor": LOW_FG}})
+
+
+def _rule_request(rule: tuple, index: int) -> dict:
+    ranges, condition, fmt = rule
+    return {"addConditionalFormatRule": {
+        "rule": {"ranges": ranges, "booleanRule": {"condition": condition, "format": fmt}}, "index": index}}
+
+
+def added_column_requests(sheet_id: int, headers: list[str], added: list[str]) -> list[dict]:
+    """Styling for columns added to an already-formatted Permits tab."""
+    reqs = _column_requests(sheet_id, headers, added)
+    if "Importance" in added:
+        reqs.append(_rule_request(_low_rule(sheet_id, headers), 0))
     return reqs
+
+
+def high_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
+    reqs = _common_requests(sheet_id, headers, frozen_cols=0)
+    if "Job value" in headers:
+        value_col = [_cells(sheet_id, _col(headers, "Job value"))]
+        reqs.append(_rule_request((value_col, {"type": "NUMBER_GREATER_THAN_EQ",
+                                               "values": [{"userEnteredValue": "1000000"}]},
+                                   {"backgroundColor": MILLION_BG, "textFormat": {"bold": True}}), 0))
+    reqs.append({"setBasicFilter": {"filter": {"range": {
+        "sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0, "endColumnIndex": len(headers)}}}})
+    return reqs
+
+
+def digest_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
+    return _common_requests(sheet_id, headers, frozen_cols=0)
 
 
 def _format_version(sh: gspread.Spreadsheet, sheet_id: int) -> str | None:
@@ -283,9 +337,9 @@ def _format_once(sh: gspread.Spreadsheet, ws: gspread.Worksheet, requests: list[
     return True
 
 
-def _sort_newest_first(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: list[str]) -> None:
-    specs = [{"dimensionIndex": _col(headers, n), "sortOrder": "DESCENDING"}
-             for n in ("First seen", "Date opened") if n in headers]
+def _sort_newest_first(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: list[str],
+                       keys: tuple[str, ...] = ("First seen", "Date opened")) -> None:
+    specs = [{"dimensionIndex": _col(headers, n), "sortOrder": "DESCENDING"} for n in keys if n in headers]
     if specs:
         sh.batch_update({"requests": [{"sortRange": {"range": {
             "sheetId": ws.id, "startRowIndex": 1, "startColumnIndex": 0, "endColumnIndex": len(headers)},
@@ -294,9 +348,8 @@ def _sort_newest_first(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: 
 
 # --- publishing --------------------------------------------------------------
 
-def _write_permits(ws: gspread.Worksheet, headers: list[str], records: list[dict], run_date: date) -> None:
-    # Records already in the sheet (e.g. a re-run to fill in Claude's notes) are
-    # updated in place: only our columns, and never "First seen". The rest are appended.
+def _upsert(ws: gspread.Worksheet, headers: list[str], records: list[dict], run_date: date) -> None:
+    """Update rows already in the tab (only our columns, never "First seen"); append the rest."""
     rec_col = _col(headers, "Record")
     existing = {number: i + 1 for i, number in enumerate(ws.col_values(rec_col + 1)) if i > 0 and number}
     updates, appends = [], []
@@ -318,6 +371,16 @@ def _write_permits(ws: gspread.Worksheet, headers: list[str], records: list[dict
         log.info("Appended %d rows to %r", len(appends), ws.title)
 
 
+def _remove(ws: gspread.Worksheet, headers: list[str], record_numbers: set[str]) -> None:
+    """Delete the rows for these records (e.g. no longer high importance after re-rating)."""
+    numbers = ws.col_values(_col(headers, "Record") + 1)
+    lines = [i + 1 for i, n in enumerate(numbers) if i > 0 and n in record_numbers]
+    for line in sorted(lines, reverse=True):
+        ws.delete_rows(line)
+    if lines:
+        log.info("Removed %d rows from %r", len(lines), ws.title)
+
+
 def publish(
     sheet_id: str,
     service_account_json: str,
@@ -325,29 +388,41 @@ def publish(
     run_date: date,
     window: str,
     summary: str | None,
+    digest_row: bool = True,
 ) -> None:
     gc = gspread.service_account_from_dict(json.loads(service_account_json))
     sh = gc.open_by_key(sheet_id)
 
     permits = _worksheet(sh, PERMITS_TAB, PERMIT_HEADERS)
-    headers = _headers(permits, PERMIT_HEADERS)
+    headers, added = _headers(permits, PERMIT_HEADERS)
     if records:
-        _write_permits(permits, headers, records, run_date)
+        _upsert(permits, headers, records, run_date)
+
+    high = _worksheet(sh, HIGH_TAB, HIGH_HEADERS)
+    high_headers, _ = _headers(high, HIGH_HEADERS)
+    important = [r for r in records if r.get("importance") == "high"]
+    if important:
+        _upsert(high, high_headers, important, run_date)
+    _remove(high, high_headers, {r["record_number"] for r in records if r.get("importance") != "high"})
 
     digests = _worksheet(sh, DIGESTS_TAB, DIGEST_HEADERS)
-    digest_headers = _headers(digests, DIGEST_HEADERS)
-    digest_values = {"Run date": run_date.isoformat(), "Window": text(window), "New records": len(records),
-                     "Summary": text(md_to_text(summary or "")[:MAX_CELL])}
-    # Newest first: each run's digest goes directly under the header row.
-    digests.insert_row([digest_values.get(h, "") for h in digest_headers], index=2,
-                       value_input_option="USER_ENTERED")
+    digest_headers, _ = _headers(digests, DIGEST_HEADERS)
+    if digest_row:
+        digest_values = {"Run date": run_date.isoformat(), "Window": text(window), "New records": len(records),
+                         "Summary": text(md_to_text(summary or "")[:MAX_CELL])}
+        # Newest first: each run's digest goes directly under the header row.
+        digests.insert_row([digest_values.get(h, "") for h in digest_headers], index=2,
+                           value_input_option="USER_ENTERED")
 
     # Presentation only: a failure here must not lose the data written above.
     try:
-        _format_once(sh, permits, permit_format_requests(permits.id, headers))
+        if not _format_once(sh, permits, permit_format_requests(permits.id, headers)) and added:
+            sh.batch_update({"requests": added_column_requests(permits.id, headers, added)})
+        _format_once(sh, high, high_format_requests(high.id, high_headers))
         if _format_once(sh, digests, digest_format_requests(digests.id, digest_headers)):
             _plain_text_summaries(digests, digest_headers)
         _sort_newest_first(sh, permits, headers)
+        _sort_newest_first(sh, high, high_headers, ("Date opened", "First seen"))
     except Exception:
         log.exception("Formatting the sheet failed; the data was written")
 

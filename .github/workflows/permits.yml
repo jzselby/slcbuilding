@@ -26,6 +26,10 @@ on:
         description: "Dry run: list what would be added, without writing the sheet or marking anything seen"
         type: boolean
         default: false
+      reclassify:
+        description: "Re-rate importance of every permit already on record and update the sheet (no portal search)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -77,11 +81,16 @@ jobs:
           PLANNING_TYPES: ${{ github.event_name == 'schedule' && '' || inputs.planning_types }}
           PLANNING_SKIP: ${{ github.event_name == 'schedule' && 'Minor Alteration,Zoning Verification Letter' || inputs.planning_skip }}
           DRY_RUN: ${{ inputs.dry_run }}
+          RECLASSIFY: ${{ inputs.reclassify }}
         run: |
           args=(--days-back "$DAYS_BACK" --modules Building,Planning
                 --types "Building=$BUILDING_TYPES" --types "Planning=$PLANNING_TYPES"
                 --skip-types "Planning=$PLANNING_SKIP")
-          if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run --no-details --no-summary); fi
+          if [ "$RECLASSIFY" = "true" ]; then
+            args=(--reclassify); if [ "$DRY_RUN" = "true" ]; then args+=(--dry-run); fi
+          elif [ "$DRY_RUN" = "true" ]; then
+            args+=(--dry-run --no-details --no-summary)
+          fi
           python -m slc_permits "${args[@]}"
 
       - name: Upload debug snapshots

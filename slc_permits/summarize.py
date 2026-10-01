@@ -7,6 +7,7 @@ import logging
 import os
 from collections import defaultdict
 from datetime import date
+from typing import Literal
 
 import anthropic
 from pydantic import BaseModel, Field
@@ -14,16 +15,19 @@ from pydantic import BaseModel, Field
 log = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """\
-You review new records filed with Salt Lake City, Utah, for a reader who \
-tracks local commercial construction and development.
+You are a city-desk editor screening new records filed with Salt Lake City, \
+Utah, for reporters. They want what the public would care about: big \
+projects, new businesses, housing, public projects and changes to the city. \
+Routine day-to-day permits should stay out of their way.
 
-You will receive the new records as JSON from the city's Accela Citizen \
-Access portal. `module` says which part of the portal each came from: \
-"Building" records are commercial building permits; "Planning" records are \
-land-use applications (site plans, zoning, subdivisions, design review and \
-the like), which often signal projects before building permits are filed. \
-`detail_text` (when present) is the raw text of the record's detail page and \
-may include job value, applicant, contractor, parcel and scope information.
+You will receive the records as JSON from the city's Accela Citizen Access \
+portal. `module` says which part of the portal each came from: "Building" \
+records are commercial building permits; "Planning" records are land-use \
+applications (rezonings, subdivisions, design review and the like), which \
+often signal projects before building permits are filed. `detail_text` (when \
+present) is the start of the record's detail page and may include job value, \
+applicant, contractor, parcel and scope information. `scope` (when present) \
+is an earlier one-line summary of the work.
 
 Return two things:
 
@@ -32,22 +36,49 @@ Return two things:
   "Tenant improvement for a 4,000 sq ft restaurant on the ground floor").
 - job_value: the declared job/project valuation in dollars, if stated.
 - applicant, contractor: names as written, if stated.
-- notable: true for new buildings, additions, large job values, \
-  multi-family or mixed-use, demolitions, rezonings or large site plans, or \
-  otherwise unusual scopes.
+- business: the business, tenant, institution or development that the work \
+  is for (e.g. "Postino", "University of Utah", "The Hive on 11th"), if the \
+  record names one; not the contractor or permit filer.
+- importance:
+  - "high": a reporter would want to know. New buildings or additions; \
+    projects of $1M or more; housing of 10+ units; a new or relocating \
+    business the public would recognize or notice (a named restaurant, store, \
+    employer, venue or school); city, county, state, school-district, \
+    transit or utility projects; demolition of a building; rezonings, \
+    planned developments, conditional uses, design review and other Planning \
+    Commission items; major subdivisions or condo conversions; new \
+    construction in a historic district; anything likely to draw public \
+    interest or controversy (shelters, data centers, cannabis, liquor, jails, \
+    large parking lots, billboards).
+  - "medium": possibly worth a look: mid-size tenant improvements ($250k \
+    to $1M), smaller subdivisions or lot changes, notable equipment such as \
+    large solar or battery installations, or a change of use.
+  - "low": routine trade or maintenance work: re-roofs, electrical panels, \
+    HVAC swaps, fixture replacements, sprinkler-head relocations, fire-alarm \
+    upgrades, small remodels, test or placeholder records.
+- category: the single best fit.
+- why_it_matters: for high or medium, one sentence giving the news angle \
+  (who, what, how big, where), e.g. "Postino is opening a 5,656 sq ft \
+  restaurant in the Granary District, a $1.1M build-out." For low, a few \
+  words such as "Routine electrical work."
 
 `summary_markdown` - a short GitHub-flavored Markdown digest with sections \
-**Highlights** (3-7 bullets on the most notable records across both \
-modules, each citing record number and address), **Planning pipeline** \
-(one or two sentences on the Planning applications; omit if there are \
-none), **By the numbers** (counts by module and record type), and \
-**Themes** (patterns such as geographic clusters, repeat applicants or \
-contractors, or planning applications that match building permits). Do not \
-list every record; the caller shows a full table.
+**Highlights** (the high-importance records, most newsworthy first, each \
+citing record number and address; at most 8), **Planning pipeline** (one or \
+two sentences on the Planning applications; omit if there are none), and \
+**Themes** (patterns such as geographic clusters, repeat developers, or \
+planning applications that match building permits). Do not list every \
+record; the caller shows a full table.
 
 Only state facts present in the data. Use null for anything not stated \
 rather than guessing.\
 """
+
+Importance = Literal["high", "medium", "low"]
+Category = Literal[
+    "Major project", "New business", "Housing", "Public / government", "Demolition",
+    "Land use / zoning", "Historic", "Energy / infrastructure", "Routine",
+]
 
 
 class PermitNotes(BaseModel):
@@ -56,7 +87,10 @@ class PermitNotes(BaseModel):
     job_value: float | None = Field(description="Declared job value in US dollars, or null")
     applicant: str | None
     contractor: str | None
-    notable: bool
+    business: str | None = Field(description="Business, tenant or development the work is for, or null")
+    importance: Importance
+    category: Category
+    why_it_matters: str
 
 
 class Digest(BaseModel):
@@ -165,20 +199,46 @@ def _analyze_batch(client: anthropic.Anthropic, records: list[dict], start: date
     return response.parsed_output
 
 
-def apply_notes(records: list[dict], digest: Digest | None) -> None:
-    """Merge Claude's per-permit notes into the records. Values read off the page win."""
-    if digest is None:
-        return
-    notes = digest.notes_by_record()
+def apply_notes(records: list[dict], digest: Digest | None, rescope: bool = True) -> None:
+    """Merge Claude's per-permit notes into the records. Values read off the page win.
+
+    With rescope=False (re-rating stored records) an existing scope is kept.
+    """
+    if digest is not None:
+        notes = digest.notes_by_record()
+        for rec in records:
+            note = notes.get(rec["record_number"])
+            if note is None:
+                continue
+            if rescope or not rec.get("scope"):
+                rec["scope"] = note.scope
+            rec["importance"] = note.importance
+            rec["category"] = note.category
+            rec["why_it_matters"] = note.why_it_matters
+            for field in ("job_value", "applicant", "contractor", "business"):
+                if rec.get(field) is None and getattr(note, field) is not None:
+                    rec[field] = getattr(note, field)
     for rec in records:
-        note = notes.get(rec["record_number"])
-        if note is None:
-            continue
-        rec["scope"] = note.scope
-        rec["notable"] = note.notable
-        for field in ("job_value", "applicant", "contractor"):
-            if rec.get(field) is None and getattr(note, field) is not None:
-                rec[field] = getattr(note, field)
+        apply_rules(rec)
+
+
+# Record types that are always high importance, whatever Claude says.
+ALWAYS_HIGH_TYPES = ("Planning Commission",)
+
+
+def apply_rules(rec: dict) -> None:
+    """Deterministic importance floors, so big items surface even without Claude."""
+    value = rec.get("job_value") if isinstance(rec.get("job_value"), (int, float)) else 0
+    rtype = (rec.get("record_type") or "").lower()
+    if value >= 1_000_000:
+        rec["importance"] = "high"
+        rec.setdefault("category", "Major project")
+    elif any(t.lower() in rtype for t in ALWAYS_HIGH_TYPES):
+        rec["importance"] = "high"
+        rec.setdefault("category", "Land use / zoning")
+    elif value >= 250_000 and rec.get("importance") in (None, "low"):
+        rec["importance"] = "medium"
+    rec["notable"] = rec.get("importance") == "high"
 
 
 def records_table(records: list[dict]) -> str:
