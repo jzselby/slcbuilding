@@ -9,7 +9,7 @@ on:
     - cron: "47 11 * * *"
     - cron: "43 12 * * *"
     - cron: "37 13 * * *"
-    # TEMPORARY test (remove once confirmed): checks whether GitHub fires this schedule at all.
+    # TEMPORARY test (remove once confirmed): checks whether GitHub fires this schedule at all. Testing
     # Each run skips itself because today's report already exists.
     - cron: "*/15 * * * *"
   workflow_dispatch:
