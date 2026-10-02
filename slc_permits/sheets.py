@@ -6,7 +6,7 @@ service account's email (Editor) so it can write.
 Values are written by column heading, not position, so people can reorder
 columns or add their own. Formatting is applied once per FORMAT_VERSION
 (tracked in the sheet's developer metadata), so later manual formatting
-isn't overwritten.
+isn't overwritten until the next version.
 """
 
 from __future__ import annotations
@@ -14,11 +14,11 @@ from __future__ import annotations
 import json
 import logging
 import re
-from datetime import date
+from datetime import date, timedelta
 from typing import Any
 
 import gspread
-from gspread.utils import rowcol_to_a1
+from gspread.utils import ValueRenderOption, rowcol_to_a1
 
 log = logging.getLogger(__name__)
 
@@ -33,17 +33,19 @@ PERMIT_HEADERS = [
 ]
 # The High importance tab: what a reporter scans first.
 HIGH_HEADERS = [
-    "Date opened", "Category", "Why it matters", "Address", "Job value", "Business",
-    "Record", "Record type", "Status", "Scope", "Module", "First seen",
+    "First seen", "Date opened", "Category", "Why it matters", "Address", "Job value", "Business",
+    "Record", "Record type", "Status", "Scope", "Module",
 ]
+# Permits first seen longer ago than this drop off the High importance tab (they stay on Permits).
+HIGH_TAB_DAYS = 60
 DIGEST_HEADERS = ["Run date", "Window", "New records", "Summary"]
 # Google Sheets' per-cell character limit.
 MAX_CELL = 50_000
 
 FORMAT_KEY = "slc_permits_format"
-# Bumping this re-applies the formatting on the next run. Conditional-format rules
-# are added again rather than replaced, so delete the old ones in the sheet first.
-FORMAT_VERSION = "1"
+# Bumping this re-applies the formatting on the next run, replacing the tab's
+# conditional-format rules (including any added by hand).
+FORMAT_VERSION = "2"
 
 
 def text(value) -> str:
@@ -151,13 +153,12 @@ def _rgb(hex_color: str) -> dict:
     return {"red": int(h[0:2], 16) / 255, "green": int(h[2:4], 16) / 255, "blue": int(h[4:6], 16) / 255}
 
 
+# Color means one of two things: the row is from the latest run (NEW_BG), or how
+# important it is (a High accent on the Importance cell; Low and drafts in gray).
 HEADER_BG, HEADER_FG = _rgb("#1F3864"), _rgb("#FFFFFF")
-NOTABLE_BG = _rgb("#FFF2CC")
-MILLION_BG, QUARTER_MILLION_BG = _rgb("#F9CB9C"), _rgb("#FCE5CD")
-PLANNING_BG = _rgb("#DEEAF6")
-DRAFT_FG = _rgb("#999999")
-
-LOW_FG = _rgb("#999999")
+NEW_BG = _rgb("#E8F0FE")
+HIGH_BG, HIGH_FG = _rgb("#FCE8E6"), _rgb("#A50E0E")
+MUTED_FG = _rgb("#999999")
 
 DATE_FORMAT = {"type": "DATE", "pattern": "mmm d, yyyy"}
 MONEY_FORMAT = {"type": "CURRENCY", "pattern": "$#,##0"}
@@ -232,53 +233,70 @@ def _common_requests(sheet_id: int, headers: list[str], frozen_cols: int) -> lis
     return reqs + _column_requests(sheet_id, headers, headers)
 
 
+def _hide(sheet_id: int, headers: list[str], name: str) -> list[dict]:
+    if name not in headers:
+        return []
+    i = _col(headers, name)
+    return [{"updateDimensionProperties": {
+        "range": {"sheetId": sheet_id, "dimension": "COLUMNS", "startIndex": i, "endIndex": i + 1},
+        "properties": {"hiddenByUser": True}, "fields": "hiddenByUser"}}]
+
+
+def _filter(sheet_id: int, headers: list[str]) -> dict:
+    return {"setBasicFilter": {"filter": {"range": {
+        "sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0, "endColumnIndex": len(headers)}}}}
+
+
+def _row_rules(sheet_id: int, headers: list[str]) -> list[dict]:
+    """Conditional formats shared by the Permits and High importance tabs.
+
+    Sheets applies only the first matching rule to each cell, so combinations
+    (a new row that is also Low, say) get rules of their own, ahead of the singles.
+    """
+    has = set(headers).__contains__
+    ref = {n: f"${_letter(_col(headers, n))}2" for n in headers}
+    first_seen = _letter(_col(headers, "First seen")) if has("First seen") else None
+    new = (f'AND({ref["First seen"]}<>"",{ref["First seen"]}=MAX(${first_seen}$2:${first_seen}))'
+           if first_seen else None)
+    muted_parts = []
+    if has("Importance"):
+        muted_parts.append(f'{ref["Importance"]}="Low"')
+    if has("Record"):  # unsubmitted drafts ("26TMP-...")
+        muted_parts.append(f'MID({ref["Record"]},3,3)="TMP"')
+    muted = f"OR({','.join(muted_parts)})" if muted_parts else None
+    rows = [_cells(sheet_id)]
+    rules = []
+    if has("Importance"):
+        rules.append(([_cells(sheet_id, _col(headers, "Importance"))], f'={ref["Importance"]}="High"',
+                      {"backgroundColor": HIGH_BG, "textFormat": {"bold": True, "foregroundColor": HIGH_FG}}))
+    if has("Job value"):
+        value = [_cells(sheet_id, _col(headers, "Job value"))]
+        big = f'ISNUMBER({ref["Job value"]}),{ref["Job value"]}>=1000000' + (f",NOT({muted})" if muted else "")
+        if new:
+            rules.append((value, f"=AND({big},{new})", {"backgroundColor": NEW_BG, "textFormat": {"bold": True}}))
+        rules.append((value, f"=AND({big})", {"textFormat": {"bold": True}}))
+    if new and muted:
+        rules.append((rows, f"=AND({new},{muted})",
+                      {"backgroundColor": NEW_BG, "textFormat": {"foregroundColor": MUTED_FG}}))
+    if new:
+        rules.append((rows, f"={new}", {"backgroundColor": NEW_BG}))
+    if muted:
+        rules.append((rows, f"={muted}", {"textFormat": {"foregroundColor": MUTED_FG}}))
+    return [_rule_request((ranges, _formula(expr), fmt), i) for i, (ranges, expr, fmt) in enumerate(rules)]
+
+
 def permit_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     """Sheets API requests that style the Permits tab for scanning."""
-    has = set(headers).__contains__
-    reqs = _common_requests(sheet_id, headers, frozen_cols=_col(headers, "Record") + 1 if has("Record") else 0)
-    if has("Contractor"):  # SLC lists the contractor's company under Applicant; this is almost always empty
-        i = _col(headers, "Contractor")
-        reqs.append({"updateDimensionProperties": {
-            "range": {"sheetId": sheet_id, "dimension": "COLUMNS", "startIndex": i, "endIndex": i + 1},
-            "properties": {"hiddenByUser": True}, "fields": "hiddenByUser"}})
-
-    # Conditional formats. For each cell only the first matching rule applies, so order matters.
-    whole_rows = [_cells(sheet_id)]
-    rules = []
-    if has("Job value"):
-        value_col = [_cells(sheet_id, _col(headers, "Job value"))]
-        rules += [
-            (value_col, {"type": "NUMBER_GREATER_THAN_EQ", "values": [{"userEnteredValue": "1000000"}]},
-             {"backgroundColor": MILLION_BG, "textFormat": {"bold": True}}),
-            (value_col, {"type": "NUMBER_GREATER_THAN_EQ", "values": [{"userEnteredValue": "250000"}]},
-             {"backgroundColor": QUARTER_MILLION_BG}),
-        ]
-    if has("Record"):  # unsubmitted drafts ("26TMP-...") are de-emphasized
-        rules.append((whole_rows, _formula(f'=LEFT(${_letter(_col(headers, "Record"))}2,5)="26TMP"'),
-                      {"textFormat": {"foregroundColor": DRAFT_FG}}))
-    if has("Importance"):  # so are routine permits
-        rules.append(_low_rule(sheet_id, headers))
-    if has("Module"):
-        planning_cols = [_cells(sheet_id, _col(headers, n)) for n in ("Module", "Record type") if has(n)]
-        rules.append((planning_cols, _formula(f'=${_letter(_col(headers, "Module"))}2="Planning"'),
-                      {"backgroundColor": PLANNING_BG}))
-    if has("Notable"):
-        rules.append((whole_rows, _formula(f'=${_letter(_col(headers, "Notable"))}2="Yes"'),
-                      {"backgroundColor": NOTABLE_BG}))
-    reqs += [_rule_request(rule, index) for index, rule in enumerate(rules)]
-
-    reqs.append({"setBasicFilter": {"filter": {"range": {
-        "sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0, "endColumnIndex": len(headers)}}}})
-    return reqs
+    frozen = _col(headers, "Record") + 1 if "Record" in headers else 0
+    reqs = _common_requests(sheet_id, headers, frozen_cols=frozen)
+    # SLC lists the contractor's company under Applicant, so Contractor is almost always empty;
+    # Notable is the old yes/no flag, superseded by Importance.
+    reqs += _hide(sheet_id, headers, "Contractor") + _hide(sheet_id, headers, "Notable")
+    return reqs + _row_rules(sheet_id, headers) + [_filter(sheet_id, headers)]
 
 
 def _formula(expr: str) -> dict:
     return {"type": "CUSTOM_FORMULA", "values": [{"userEnteredValue": expr}]}
-
-
-def _low_rule(sheet_id: int, headers: list[str]) -> tuple:
-    return ([_cells(sheet_id)], _formula(f'=${_letter(_col(headers, "Importance"))}2="Low"'),
-            {"textFormat": {"foregroundColor": LOW_FG}})
 
 
 def _rule_request(rule: tuple, index: int) -> dict:
@@ -287,54 +305,61 @@ def _rule_request(rule: tuple, index: int) -> dict:
         "rule": {"ranges": ranges, "booleanRule": {"condition": condition, "format": fmt}}, "index": index}}
 
 
-def added_column_requests(sheet_id: int, headers: list[str], added: list[str]) -> list[dict]:
-    """Styling for columns added to an already-formatted Permits tab."""
-    reqs = _column_requests(sheet_id, headers, added)
-    if "Importance" in added:
-        reqs.append(_rule_request(_low_rule(sheet_id, headers), 0))
-    return reqs
-
-
 def high_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     reqs = _common_requests(sheet_id, headers, frozen_cols=0)
-    if "Job value" in headers:
-        value_col = [_cells(sheet_id, _col(headers, "Job value"))]
-        reqs.append(_rule_request((value_col, {"type": "NUMBER_GREATER_THAN_EQ",
-                                               "values": [{"userEnteredValue": "1000000"}]},
-                                   {"backgroundColor": MILLION_BG, "textFormat": {"bold": True}}), 0))
-    reqs.append({"setBasicFilter": {"filter": {"range": {
-        "sheetId": sheet_id, "startRowIndex": 0, "startColumnIndex": 0, "endColumnIndex": len(headers)}}}})
-    return reqs
+    return reqs + _row_rules(sheet_id, headers) + [_filter(sheet_id, headers)]
 
 
 def digest_format_requests(sheet_id: int, headers: list[str]) -> list[dict]:
     return _common_requests(sheet_id, headers, frozen_cols=0)
 
 
-def _format_version(sh: gspread.Spreadsheet, sheet_id: int) -> str | None:
-    meta = sh.fetch_sheet_metadata({"fields": "sheets(properties(sheetId),developerMetadata)"})
+def _format_state(sh: gspread.Spreadsheet) -> dict[int, tuple[str | None, int]]:
+    """Each tab's (format version, number of conditional-format rules)."""
+    meta = sh.fetch_sheet_metadata(
+        {"fields": "sheets(properties(sheetId),developerMetadata,conditionalFormats)"})
+    state = {}
     for sheet in meta.get("sheets", []):
-        if sheet.get("properties", {}).get("sheetId") == sheet_id:
-            for dm in sheet.get("developerMetadata", []):
-                if dm.get("metadataKey") == FORMAT_KEY:
-                    return dm.get("metadataValue")
-    return None
+        version = next((dm.get("metadataValue") for dm in sheet.get("developerMetadata", [])
+                        if dm.get("metadataKey") == FORMAT_KEY), None)
+        state[sheet.get("properties", {}).get("sheetId")] = (version, len(sheet.get("conditionalFormats", [])))
+    return state
 
 
-def _format_once(sh: gspread.Spreadsheet, ws: gspread.Worksheet, requests: list[dict]) -> bool:
-    """Apply formatting unless this tab already has the current FORMAT_VERSION."""
-    version = _format_version(sh, ws.id)
-    if version == FORMAT_VERSION:
-        return False
+def _needs_format(state: dict, ws: gspread.Worksheet) -> bool:
+    return state.get(ws.id, (None, 0))[0] != FORMAT_VERSION
+
+
+def _apply_format(sh: gspread.Spreadsheet, ws: gspread.Worksheet, state: dict, requests: list[dict]) -> None:
+    """Replace the tab's formatting: old rules and version marker out, new ones in."""
+    version, rule_count = state.get(ws.id, (None, 0))
+    clear = [{"deleteConditionalFormatRule": {"sheetId": ws.id, "index": 0}}] * rule_count
+    if version is not None:
+        clear.append({"deleteDeveloperMetadata": {"dataFilter": {"developerMetadataLookup": {
+            "metadataKey": FORMAT_KEY, "metadataLocation": {"sheetId": ws.id}}}}})
     marker = {"createDeveloperMetadata": {"developerMetadata": {
         "metadataKey": FORMAT_KEY, "metadataValue": FORMAT_VERSION,
         "location": {"sheetId": ws.id}, "visibility": "DOCUMENT"}}}
-    if version is not None:  # replace the old marker when upgrading
-        requests = [{"deleteDeveloperMetadata": {"dataFilter": {"developerMetadataLookup": {
-            "metadataKey": FORMAT_KEY, "metadataLocation": {"sheetId": ws.id}}}}}] + requests
-    sh.batch_update({"requests": requests + [marker]})
+    sh.batch_update({"requests": clear + requests + [marker]})
     log.info("Formatted %r (format version %s)", ws.title, FORMAT_VERSION)
-    return True
+
+
+def _restyle_added(sh: gspread.Spreadsheet, ws: gspread.Worksheet, state: dict, headers: list[str],
+                   added: list[str]) -> None:
+    """Style columns added to an already-formatted tab, and rebuild its rules to include them."""
+    clear = [{"deleteConditionalFormatRule": {"sheetId": ws.id, "index": 0}}] * state.get(ws.id, (None, 0))[1]
+    sh.batch_update({"requests": clear + _column_requests(ws.id, headers, added) + _row_rules(ws.id, headers)})
+
+
+def _move_first(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: list[str], name: str) -> list[str]:
+    """Move a column to column A (done once, when the formatting is upgraded)."""
+    if name not in headers or headers[0] == name:
+        return headers
+    headers, i = list(headers), _col(headers, name)
+    sh.batch_update({"requests": [{"moveDimension": {
+        "source": {"sheetId": ws.id, "dimension": "COLUMNS", "startIndex": i, "endIndex": i + 1},
+        "destinationIndex": 0}}]})
+    return [name] + headers[:i] + headers[i + 1:]
 
 
 def _sort_newest_first(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: list[str],
@@ -371,13 +396,36 @@ def _upsert(ws: gspread.Worksheet, headers: list[str], records: list[dict], run_
         log.info("Appended %d rows to %r", len(appends), ws.title)
 
 
-def _remove(ws: gspread.Worksheet, headers: list[str], record_numbers: set[str]) -> None:
-    """Delete the rows for these records (e.g. no longer high importance after re-rating)."""
+def _as_date(value) -> date | None:
+    """A date cell read unformatted: a serial number, or text if it didn't parse as a date."""
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return date(1899, 12, 30) + timedelta(days=int(value))
+    text_value = str(value or "").strip()
+    try:
+        return date.fromisoformat(text_value[:10])
+    except ValueError:
+        return None
+
+
+def _remove(sh: gspread.Spreadsheet, ws: gspread.Worksheet, headers: list[str],
+            record_numbers: set[str], seen_before: date | None = None) -> None:
+    """Delete the rows for these records, and (with seen_before) rows first seen before that date."""
     numbers = ws.col_values(_col(headers, "Record") + 1)
-    lines = [i + 1 for i, n in enumerate(numbers) if i > 0 and n in record_numbers]
-    for line in sorted(lines, reverse=True):
-        ws.delete_rows(line)
-    if lines:
+    seen = (ws.col_values(_col(headers, "First seen") + 1, value_render_option=ValueRenderOption.unformatted)
+            if seen_before and "First seen" in headers else [])
+    lines = []
+    for i, number in enumerate(numbers):
+        if i == 0:
+            continue
+        first_seen = _as_date(seen[i]) if i < len(seen) else None
+        if number in record_numbers or (first_seen and first_seen < seen_before):
+            lines.append(i)
+    # Bottom up, so earlier deletions don't shift the rows still to go.
+    requests = [{"deleteDimension": {"range": {"sheetId": ws.id, "dimension": "ROWS",
+                                               "startIndex": i, "endIndex": i + 1}}}
+                for i in sorted(lines, reverse=True)]
+    if requests:
+        sh.batch_update({"requests": requests})
         log.info("Removed %d rows from %r", len(lines), ws.title)
 
 
@@ -394,16 +442,19 @@ def publish(
     sh = gc.open_by_key(sheet_id)
 
     permits = _worksheet(sh, PERMITS_TAB, PERMIT_HEADERS)
-    headers, added = _headers(permits, PERMIT_HEADERS)
+    headers, permit_added = _headers(permits, PERMIT_HEADERS)
     if records:
         _upsert(permits, headers, records, run_date)
 
     high = _worksheet(sh, HIGH_TAB, HIGH_HEADERS)
-    high_headers, _ = _headers(high, HIGH_HEADERS)
-    important = [r for r in records if r.get("importance") == "high"]
+    high_headers, high_added = _headers(high, HIGH_HEADERS)
+    cutoff = run_date - timedelta(days=HIGH_TAB_DAYS)
+    important = [r for r in records if r.get("importance") == "high"
+                 and (_as_date(r.get("first_seen")) or run_date) >= cutoff]
     if important:
         _upsert(high, high_headers, important, run_date)
-    _remove(high, high_headers, {r["record_number"] for r in records if r.get("importance") != "high"})
+    _remove(sh, high, high_headers, {r["record_number"] for r in records if r.get("importance") != "high"},
+            seen_before=cutoff)
 
     digests = _worksheet(sh, DIGESTS_TAB, DIGEST_HEADERS)
     digest_headers, _ = _headers(digests, DIGEST_HEADERS)
@@ -416,13 +467,21 @@ def publish(
 
     # Presentation only: a failure here must not lose the data written above.
     try:
-        if not _format_once(sh, permits, permit_format_requests(permits.id, headers)) and added:
-            sh.batch_update({"requests": added_column_requests(permits.id, headers, added)})
-        _format_once(sh, high, high_format_requests(high.id, high_headers))
-        if _format_once(sh, digests, digest_format_requests(digests.id, digest_headers)):
+        state = _format_state(sh)
+        if _needs_format(state, permits):
+            _apply_format(sh, permits, state, permit_format_requests(permits.id, headers))
+        elif permit_added:
+            _restyle_added(sh, permits, state, headers, permit_added)
+        if _needs_format(state, high):
+            high_headers = _move_first(sh, high, high_headers, "First seen")
+            _apply_format(sh, high, state, high_format_requests(high.id, high_headers))
+        elif high_added:
+            _restyle_added(sh, high, state, high_headers, high_added)
+        if _needs_format(state, digests):
+            _apply_format(sh, digests, state, digest_format_requests(digests.id, digest_headers))
             _plain_text_summaries(digests, digest_headers)
         _sort_newest_first(sh, permits, headers)
-        _sort_newest_first(sh, high, high_headers, ("Date opened", "First seen"))
+        _sort_newest_first(sh, high, high_headers)
     except Exception:
         log.exception("Formatting the sheet failed; the data was written")
 

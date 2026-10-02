@@ -19,7 +19,7 @@ class FakeWorksheet:
     def row_values(self, n):
         return self.values[n - 1] if len(self.values) >= n else []
 
-    def col_values(self, n):
+    def col_values(self, n, value_render_option=None):
         return [row[n - 1] if len(row) >= n else "" for row in self.values]
 
     def add_cols(self, n):
@@ -67,15 +67,32 @@ class FakeSpreadsheet:
 
     def batch_update(self, body):
         self.requests += body["requests"]
+        by_id = {ws.id: ws for ws in self.sheets}
+        for r in body["requests"]:
+            if "deleteDimension" in r and r["deleteDimension"]["range"]["dimension"] == "ROWS":
+                rng = r["deleteDimension"]["range"]
+                del by_id[rng["sheetId"]].values[rng["startIndex"]:rng["endIndex"]]
+            if "moveDimension" in r:
+                move = r["moveDimension"]
+                i, dest = move["source"]["startIndex"], move["destinationIndex"]
+                for row in by_id[move["source"]["sheetId"]].values:
+                    row.extend([""] * (i + 1 - len(row)))
+                    row.insert(dest, row.pop(i))
 
     def fetch_sheet_metadata(self, params):
-        markers = {}
+        markers, rules = {}, {}
         for r in self.requests:
             if "createDeveloperMetadata" in r:
                 dm = r["createDeveloperMetadata"]["developerMetadata"]
                 markers[dm["location"]["sheetId"]] = dm
+            if "addConditionalFormatRule" in r:
+                sheet = r["addConditionalFormatRule"]["rule"]["ranges"][0]["sheetId"]
+                rules[sheet] = rules.get(sheet, 0) + 1
+            if "deleteConditionalFormatRule" in r:
+                rules[r["deleteConditionalFormatRule"]["sheetId"]] -= 1
         return {"sheets": [{"properties": {"sheetId": ws.id},
-                            "developerMetadata": [markers[ws.id]] if ws.id in markers else []}
+                            "developerMetadata": [markers[ws.id]] if ws.id in markers else [],
+                            "conditionalFormats": [{}] * rules.get(ws.id, 0)}
                            for ws in self.sheets]}
 
     def kinds(self, key):
@@ -178,8 +195,11 @@ def test_existing_tab_gains_module_column(spreadsheet):
               if r["updateDimensionProperties"]["range"]["sheetId"] == ws.id
               and "pixelSize" in r["updateDimensionProperties"]["properties"]]
     assert {w["updateDimensionProperties"]["range"]["startIndex"] for w in widths} == {12, 13, 14, 15, 16}
-    assert any(r["addConditionalFormatRule"]["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"]
-               == '=$N2="Low"' for r in spreadsheet.kinds("addConditionalFormatRule"))
+    # The highlight rules are rebuilt to use the new Importance column.
+    formulas = [r["addConditionalFormatRule"]["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"]
+                for r in spreadsheet.kinds("addConditionalFormatRule")
+                if r["addConditionalFormatRule"]["rule"]["ranges"][0]["sheetId"] == ws.id]
+    assert '=$N2="High"' in formulas and '=OR($N2="Low",MID($B2,3,3)="TMP")' in formulas
 
 
 def test_rerun_updates_rows_in_place(spreadsheet):
@@ -224,7 +244,16 @@ def test_format_requests_follow_the_headers():
     rules = [r["addConditionalFormatRule"] for r in reqs if "addConditionalFormatRule" in r]
     assert [r["index"] for r in rules] == list(range(len(rules)))
     formulas = [r["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"] for r in rules]
-    assert '=$K2="Yes"' in formulas and '=$M2="Planning"' in formulas and '=LEFT($B2,5)="26TMP"' in formulas
+    new = 'AND($A2<>"",$A2=MAX($A$2:$A))'
+    muted = 'OR($N2="Low",MID($B2,3,3)="TMP")'
+    # Combinations come before the single conditions, since only the first matching rule applies.
+    assert formulas == ['=$N2="High"',
+                        f'=AND(ISNUMBER($G2),$G2>=1000000,NOT({muted}),{new})',
+                        f'=AND(ISNUMBER($G2),$G2>=1000000,NOT({muted}))',
+                        f'=AND({new},{muted})', f'={new}', f'={muted}']
+    hidden = [r["updateDimensionProperties"]["range"]["startIndex"] for r in reqs
+              if r.get("updateDimensionProperties", {}).get("properties", {}).get("hiddenByUser")]
+    assert hidden == [sheets.PERMIT_HEADERS.index("Contractor"), sheets.PERMIT_HEADERS.index("Notable")]
     frozen = next(r["updateSheetProperties"] for r in reqs if "updateSheetProperties" in r)
     assert frozen["properties"]["gridProperties"] == {"frozenRowCount": 1, "frozenColumnCount": 2}
     assert any("setBasicFilter" in r for r in reqs)
@@ -263,3 +292,50 @@ def test_high_importance_tab(spreadsheet):
     sheets.publish("id", "{}", [dict(big, importance="medium")], date(2026, 10, 2), "w", None, digest_row=False)
     assert len(high.values) == 1
     assert len(spreadsheet.worksheet(sheets.DIGESTS_TAB).values) == 2  # no digest row for the re-rate
+
+
+def test_high_tab_drops_permits_after_60_days(spreadsheet):
+    high = FakeWorksheet(sheets.HIGH_TAB)
+    rows = {"BLD-OLD": "2026-07-01", "BLD-EDGE": "2026-08-03", "BLD-RECENT": "2026-09-20"}
+    high.values = [list(sheets.HIGH_HEADERS)] + [
+        [seen if h == "First seen" else number if h == "Record" else "" for h in sheets.HIGH_HEADERS]
+        for number, seen in rows.items()]
+    high.values[2][0] = 46237  # Sheets returns dates unformatted as serial numbers: 2026-08-03
+    spreadsheet.sheets = [FakeWorksheet("Permits"), high]
+
+    stale = dict(RECORD, record_number="BLD-STALE", importance="high", first_seen="2026-07-15")
+    fresh = dict(RECORD, record_number="BLD-NEW", importance="high")
+    sheets.publish("id", "{}", [stale, fresh], date(2026, 10, 2), "w", None)
+
+    record = sheets.HIGH_HEADERS.index("Record")
+    assert sorted(r[record].split('"')[-2] if r[record].startswith("=") else r[record]
+                  for r in high.values[1:]) == ["BLD-EDGE", "BLD-NEW", "BLD-RECENT"]
+    permits = spreadsheet.worksheet("Permits")
+    assert len(permits.values) == 3  # Permits keeps everything
+
+
+def test_format_upgrade_replaces_old_rules_and_moves_first_seen(spreadsheet):
+    old_high = ["Date opened", "Category", "Why it matters", "Address", "Job value", "Business",
+                "Record", "Record type", "Status", "Scope", "Module", "First seen"]
+    high = FakeWorksheet(sheets.HIGH_TAB)
+    high.values = [list(old_high), ["09/30/2026", "Housing", "", "", "", "", "BLD-1", "", "", "", "", "2026-10-01"]]
+    spreadsheet.sheets = [FakeWorksheet("Permits"), high]
+    for _ in range(2):  # an old-version tab with two rules
+        spreadsheet.requests.append({"addConditionalFormatRule": {"rule": {"ranges": [{"sheetId": high.id}]}}})
+    spreadsheet.requests.append({"createDeveloperMetadata": {"developerMetadata": {
+        "metadataKey": sheets.FORMAT_KEY, "metadataValue": "1", "location": {"sheetId": high.id}}}})
+
+    sheets.publish("id", "{}", [], date(2026, 10, 2), "w", None)
+
+    assert high.values[0] == ["First seen"] + old_high[:-1]
+    assert high.values[1][0] == "2026-10-01" and high.values[1][7] == "BLD-1"
+    deletes = [r for r in spreadsheet.kinds("deleteConditionalFormatRule")
+               if r["deleteConditionalFormatRule"]["sheetId"] == high.id]
+    assert len(deletes) == 2
+    formulas = [r["addConditionalFormatRule"]["rule"]["booleanRule"]["condition"]["values"][0]["userEnteredValue"]
+                for r in spreadsheet.kinds("addConditionalFormatRule")
+                if r["addConditionalFormatRule"]["rule"]["ranges"][0]["sheetId"] == high.id
+                and "booleanRule" in r["addConditionalFormatRule"]["rule"]]
+    assert '=AND($A2<>"",$A2=MAX($A$2:$A))' in formulas  # new rows, keyed on First seen in column A
+    sort = spreadsheet.kinds("sortRange")[-1]["sortRange"]
+    assert [s["dimensionIndex"] for s in sort["sortSpecs"]] == [0, 1]  # First seen, then Date opened

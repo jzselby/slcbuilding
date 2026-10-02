@@ -54,8 +54,9 @@ infrastructure, or Routine. High covers:
 - anything likely to draw public interest
 
 Projects of $1M+ and Planning Commission items are always High, even without Claude. This tab
-holds only the High items, newest first, with a one-line "Why it matters" and the business
-name. Items re-rated below High are removed from it.
+holds only the High items, with a one-line "Why it matters" and the business name. Rows from
+the latest run are shaded blue and sorted to the top. Items re-rated below High are removed
+from it, and items drop off after 60 days (by "First seen"); they stay on the Permits tab.
 
 **Permits** tab: every permit, one row each.
 
@@ -65,11 +66,12 @@ name. Items re-rated below High are removed from it.
 "Record" links to the permit's page on the portal. The run formats the tabs once and then sorts
 them newest first after every run:
 
-- **High-importance** rows ("Notable") are highlighted yellow, and **Low** (routine) rows are gray.
-- Job values of **$1M+** are shown in bold orange, and **$250k+** in light orange.
-- Planning applications are tinted blue, and unsubmitted drafts ("26TMP-…") are gray.
+- Rows from the **latest run** are shaded light blue (on both tabs).
+- **High** importance is marked in red on the Importance cell; **Low** (routine) rows and
+  unsubmitted drafts ("26TMP-…") are gray. Job values of **$1M+** are bold.
 - Every column has a filter. The header row and the Record column stay in view while scrolling.
-- The Contractor column is hidden, because SLC lists the contractor under Applicant.
+- The Contractor column is hidden, because SLC lists the contractor under Applicant, and so is
+  the old Notable column, which Importance replaces.
 
 Values are written under their column headings, so you can reorder columns or add your own,
 such as a "Notes" column; runs leave those alone. Don't rename the headings: the run would add
