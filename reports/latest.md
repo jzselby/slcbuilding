@@ -1,75 +1,19 @@
-# New SLC commercial permits and planning applications: Sep 26 – Oct 10, 2026
+# New SLC commercial permits and planning applications: Sep 27 – Oct 11, 2026
 
-**14 new record(s).**
+**1 new record(s).**
 
 **Highlights**
 
-- **PLNINC2026-00865**, 41 N Chicago St: A new Planning Commission zoning-incentives application, now pending. The record gives no project details yet.
-- **BLD2026-08371**, 455 N 2200 W: An $864,009 electrical permit for a new University of Utah AirMed hangar on airport property. The hangar will store small aircraft and helicopters. The main building permit is BLD2026-00276.
-- **BLD2026-08342**, 7719 W 700 N: Fire protection systems for a new 60,733 sq ft concrete tilt-up office/warehouse shell building, "SLC Port GLC Bldg 2.3." The main building permit is BLD2026-02499.
-
-**Planning pipeline**
-
-One Planning record opened this period: a zoning-incentives petition before the Planning Commission at 41 N Chicago St. It has no stated project description, so it is worth a follow-up call.
+No high-importance records this period. The only new record is a routine fence permit.
 
 **Themes**
 
-- **Airport-area hangars:** Two records are on SLC International Airport land along 2200 W. One is the U of U AirMed hangar. The other is a $165,816, 131.6 kW rooftop solar array on the WPA Hangar, whose secondary address is 475 N 2200 W.
-- **Walker Center work:** Three small trade permits all tie to building permit BLD2026-06969 at the Walker Center / Walker Terrace (19 E 200 S and 175 S Main). They cover HVAC, a new electrical panel and plumbing rough-in.
-- **Northwest industrial corridor:** Warehouse activity continues there, including SLC Port GLC Bldg 2.3, Radians Phase 2 racking ($200,000) and a General Distributing fire-alarm migration in a 226,706 sq ft building.
+- A quiet window: one record, BLD2026-08378 at 163 W 200 S. It is a $20,000 steel mesh fence with gates for the Patrick Lofts condominium parking lot. The applicant says it is meant to stop the public from walking through the lot.
 
 ## All new records
 
-### Building: Commercial Building Permit (1)
+### Building: Commercial Fencing (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08352](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08198&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 781 N 6715 W, Salt Lake City UT 84116- | Warehouse racking installation for Radians Phase 2. | $200,000 |  |
-
-### Building: Commercial Electrical (3)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08344](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01692&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 19 E 200 S, Salt Lake City UT 84111-1905 | New electrical panel at Walker Terrace, tied to building permit BLD2026-06969. | $3,000 | Inspections |
-| [BLD2026-08366](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01697&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 75 E 400 S, Salt Lake City UT 84111-5143 | City electrical panel upgrade in a sidewalk vault for Urban Services. |  | Inspections |
-| [BLD2026-08371](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01699&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 455 N 2200 W, Salt Lake City UT 84116-0000 | Electrical work for a new University of Utah AirMed hangar that will store small aircraft and helicopters on airport property. | $864,009 | Inspections |
-
-### Building: Commercial Fire Alarm (3)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08353](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00293&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 5350 W AMELIA EARHART DR, Salt Lake City UT 84116 United States | Migration of fire alarm devices in the south admin area of the General Distributing building. | $54,000 | In For Review |
-| [BLD2026-08358](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00294&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 2350 W 1500 S, Salt Lake City UT 84104-4128 | Fire alarm / low-voltage work for a new mezzanine in the Clean Joule commercial warehouse. | $3,750 | Need Info |
-| [BLD2026-08376](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00295&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 1126 N WARM SPRINGS RD, Salt Lake City UT 84116-3019 | Fire alarm system for the Granite Construction office tenant improvement. | $16,700 |  |
-
-### Building: Commercial Fire Sprinkler (2)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08342](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00348&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 7719 W 700 N, Salt Lake City UT 84116- | Fire protection systems for a new 60,733 sq ft concrete tilt-up office/warehouse shell building (SLC Port GLC Bldg 2.3). |  | In For Review |
-| [BLD2026-08370](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00349&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 257 E 200 S, Salt Lake City UT 84111-2048 | Fire sprinkler work for a tenant improvement in Suite 300 of the 257 Tower. |  | In For Review |
-
-### Building: Commercial Mechanical (2)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08372](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01500&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 1207 S STATE ST, Salt Lake City UT 84111-0000 | Mini-split HVAC installation at 3D Auto Sales. |  | Inspections |
-| [BLD2026-08373](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01501&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 19 E 200 S, Salt Lake City UT 84111-1905 | Replacement HVAC split system, tied to building permit BLD2026-06969. |  | Inspections |
-
-### Building: Commercial Plumbing (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08354](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01221&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 175 S MAIN ST, Salt Lake City UT 84111-1916 | Plumbing rough-in and replacement of existing bathroom fixtures at 175 S Main, tied to building permit BLD2026-06969. |  | Inspections |
-
-### Building: Commercial SolarPV (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08368](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08204&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 369 N 2370 W, Salt Lake City UT 84116-2948 | 131.6 kW rooftop solar array on the WPA Hangar, a private aircraft hangar with offices on SLC International Airport property. | $165,816 |  |
-
-### Planning: Planning Commission - Zoning Incentives (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [PLNINC2026-00865](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26PPA&capID2=00000&capID3=00031&agencyCode=SLCREF&IsToShowInspection=) | 10/09/2026 | 41 N CHICAGO ST, Salt Lake City UT 84116-3337 | Planning Commission zoning-incentives application for the property at 41 N Chicago St. |  | Pending |
+| [BLD2026-08378](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFC&capID2=00000&capID3=00165&agencyCode=SLCREF&IsToShowInspection=) | 10/10/2026 | 163 W 200 S, Salt Lake City UT 84101-0000 | Installation of a 6-foot powder-coated steel mesh fence with vehicle and pedestrian gates around the parking lot behind the Patrick Lofts condominium building. | $20,000 |  |
