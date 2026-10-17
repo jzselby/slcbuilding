@@ -1,61 +1,34 @@
-# New SLC commercial permits and planning applications: Oct 02 – Oct 16, 2026
+# New SLC commercial permits and planning applications: Oct 03 – Oct 17, 2026
 
-**9 new record(s).**
+**4 new record(s).**
 
 **Highlights**
 
-- **PLNPCM2026-00887**, 55 S 300 W: Owner-filed zoning amendment to change the Salt Palace Convention Center property to a mixed-use development.
-- **BLD2026-08521**, 2335 W 2950 N: $1.39M high-piled storage and pallet racking installation across about 198,767 sq ft of a 305,393 sq ft building for Waverunner Phase II in the northwest industrial area.
-- **PLNINC2026-00888**, 1055 S 200 W, and **26TMP-023097**, 1049 S 200 W: Two zoning-incentives applications for neighboring parcels, both headed to the Planning Commission.
-- **26TMP-023044**, 1416 S West Temple St: Conditional use application for the Planning Commission. The use is not stated.
-
-**Planning pipeline**
-
-Four Planning Commission applications were filed on Oct. 15. The most significant is a zoning amendment proposing mixed use on the Salt Palace Convention Center parcel. The others are two zoning-incentive requests on 200 West near 1050 South and a conditional use on South West Temple. None of the records give project details beyond the type.
+- **Sunnyside Park makeover, $4.2M** (BLD2026-08570, 1735 E Sunnyside Ave): Plans call for five lighted pickleball courts, a new playground, a picnic shelter, a perimeter asphalt trail, upgraded sports-field lighting and new landscaping at the east-side park. The applicant is J-U-B Engineers.
+- **New Thai restaurant on 200 East** (BLD2026-08571, 777 S 200 E): The shop portion of an existing building is being converted to a restaurant, with the project named Suan Wasatch Thai. This filing is an electrical permit to move the panel, and the city has flagged it as needing more information.
 
 **Themes**
 
-- The two zoning-incentive filings at 1049 and 1055 S 200 W appear to be companion applications for one site.
-- Planning activity clusters downtown and in the area south of downtown (200 West and West Temple, 1000–1400 South).
-- Building permits this period were mostly routine repairs and trade work, apart from the large Waverunner racking job.
+- This was a light two-week period with no Planning applications.
+- Henkel US Operations Corp. filed an $850,000 interior addition at 3540 W 1987 S: a 2,400 sq ft mezzanine plus a 600 sq ft tank structure for detergent-pod production equipment. It signals a manufacturing expansion on the west side.
 
 ## All new records
 
-### Building: Commercial Building Permit (3)
+### Building: Commercial Building Permit (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-023064 | 10/15/2026 | 350 S 600 E, Salt Lake City UT 84102-4032 | Repair water-intrusion damage to exterior walls and a small balcony at units 131 and 231 of the Essex Apartments. |  |  |
-| [BLD2026-08521](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08382&agencyCode=SLCREF&IsToShowInspection=) | 10/15/2026 | 2335 W 2950 N, Salt Lake City UT 84116- | Installation of high-piled storage (hand stack and pallet racking) across about 198,767 sq ft of a 305,393 sq ft building for Waverunner Phase II. | $1,387,506 | Prescreen |
-| [BLD2026-08538](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08389&agencyCode=SLCREF&IsToShowInspection=) | 10/15/2026 | 335 S 200 W, Salt Lake City UT 84101-0000 | Remove and replace a damaged storefront window at Get Out Games. | $10,000 | Prescreen |
+| [BLD2026-08570](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08434&agencyCode=SLCREF&IsToShowInspection=) | 10/16/2026 | 1735 E SUNNYSIDE AVE, Salt Lake City UT 84108-1327 | Landscape and site improvements to Sunnyside Park, including five lighted pickleball courts, a new playground, a picnic shelter, a perimeter trail, upgraded sports-field lighting, and new irrigation and plantings. | $4,200,000 |  |
+| [BLD2026-08575](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08441&agencyCode=SLCREF&IsToShowInspection=) | 10/16/2026 | 3540 W 1987 S, Salt Lake City UT 84104-4940 | Addition of a 2,400 sq ft mezzanine and a 600 sq ft tank structure, with new foundations, inside an existing building to support detergent-pod manufacturing equipment. | $850,000 |  |
 
-### Building: Commercial Fire Sprinkler (1)
+### Building: Commercial Electrical (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08518](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00355&agencyCode=SLCREF&IsToShowInspection=) | 10/15/2026 | 3045 W DIRECTORS ROW, Salt Lake City UT 84104-4516 | Add six new fire sprinklers in an existing room at the Cal Plate building. |  | In For Review |
+| [BLD2026-08571](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01740&agencyCode=SLCREF&IsToShowInspection=) | 10/16/2026 | 777 S 200 E, Salt Lake City UT 84111-3803 | Relocation of an existing electrical panel as part of converting the shop portion of a building into a Thai restaurant. |  | Need Info |
 
 ### Building: Commercial Mechanical (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-023055 | 10/15/2026 | 5445 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | Commercial mechanical permit; no details provided. |  |  |
-
-### Planning: Planning Commission - Conditional Use (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-023044 | 10/15/2026 | 1416 S WEST TEMPLE ST, Salt Lake City UT 84115-5221 | Planning Commission conditional use application; proposed use not stated. |  |  |
-
-### Planning: Planning Commission - Zoning Amendment (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [PLNPCM2026-00887](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=08401&agencyCode=SLCREF&IsToShowInspection=) | 10/15/2026 | 55 S 300 W, Salt Lake City UT 84101-1301 | Zoning amendment application to change the Salt Palace Convention Center property to a mixed-use development. |  | Pending |
-
-### Planning: Planning Commission - Zoning Incentives (2)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-023097 | 10/15/2026 | 1049 S 200 W, Salt Lake City UT 84101-3006 | Planning Commission zoning-incentives application; project details not stated. |  |  |
-| [PLNINC2026-00888](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26PPA&capID2=00000&capID3=00032&agencyCode=SLCREF&IsToShowInspection=) | 10/15/2026 | 1055 S 200 W, Salt Lake City UT 84101-3006 | Planning Commission zoning-incentives application; project details not stated. |  | Pending |
+| [BLD2026-08568](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01542&agencyCode=SLCREF&IsToShowInspection=) | 10/16/2026 | 5445 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | Installation of paint booth ducting at an existing building. |  | Inspections |
