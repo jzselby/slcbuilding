@@ -1,97 +1,70 @@
-# New SLC commercial permits and planning applications: Oct 14 – Oct 28, 2026
+# New SLC commercial permits and planning applications: Oct 15 – Oct 29, 2026
 
-**26 new record(s).**
+**17 new record(s).**
 
 **Highlights**
 
-- **Core X SLC freezer warehouse addition**: a $17.8M, 66,261 sq ft freezer warehouse addition to an existing building at 3190 W Professional Cir (BLD2026-08868). It is by far the largest filing of the period.
-- **Flats at Folsom Apartments**: a $5.1M electrical permit for new apartment construction at 16 S 800 W (BLD2026-08859). The project is tied to a city development agreement covering unit mix and active uses along the Folsom Trail.
-- **"Heritage" building remodel**: a $4M remodel at 1145 W 500 S (BLD2026-08863). The work covers chapel enhancements, AV upgrades in classrooms, gym flooring, ADA updates, a roof renewal, a snow melt system and waterwise landscaping.
-- **Janey Lou's Bakery expansion**: a $2.4M electrical permit at 550 N John Glenn Rd (BLD2026-08850), with companion mechanical and plumbing permits (BLD2026-08852, BLD2026-08848).
-- **World Trade Center building, 7th floor**: a $1M alteration of 14,821 sq ft for a future tenant at 60 E South Temple St, Suite 700 (BLD2026-08839).
-- **Elder Building Salt Lake demolition**: three buildings (a building, a storage shed and a warehouse, 8,250 sq ft total) at 1032 S Redwood Rd are to be demolished and the site cleared (BLD2026-08889). Work is slated for Nov. 11-24.
-- **Soleil Sugarhouse Townhomes**: two buildings with 10 units total at 521 E 2100 S (BLD2026-08896).
-- **Beaumont Bakery & Cafe**: kitchen plumbing for a restaurant replacing existing retail space at 602 E 500 S (BLD2026-08881).
-
-**Planning pipeline**
-
-A placeholder record for an appeal of a commission decision was opened for 1800 W 800 N (26TMP-023975); no details are filed yet. A separate 2-parcel lot line adjustment at 942 N 7200 W is in prescreen (PLNSUB2026-00921).
+- **BLD2026-08924, 145 E 1300 S:** Bonneville Builders filed for temporary construction power for "1300S Townhomes," a new 12-building townhome and apartment development. This is an early sign that construction is starting. Unit count is not stated, and the record status is "Need Info."
+- **BLD2026-08920, 2319 S Highland Dr:** Sage Demolition plans to demolish the 7,015 sq ft Highland Drive Optometry building, including footings and foundation. The asphalt parking lot will stay. Work is slated for 12/14/2026 to 01/18/2027 at a declared cost of $62,400. No replacement project is named.
 
 **Themes**
 
-- **West-side industry**: most filings are for industrial and logistics properties on the west side and near the airport. Examples include Ninigret Dr, Professional Cir, 3600 W, 5350 W and 700 S near 5354 W, plus John Glenn, Billy Mitchell and Harold Gatty roads and the Delta Cargo buildout at 320 N 3700 W.
-- **Sub-permits for earlier projects**: many records are trade permits attached to building permits filed earlier (Janey Lou's, Beaumont, Flats at Folsom, Plaza 349, Delta Cargo). They signal construction is advancing rather than new proposals.
-- **Repeat applicants**: Creed Hansen filed for both Valassis (1136 S 3600 W) and Orange St 300. 911 Plumbing Heating & Air Conditioning filed two downtown-area plumbing jobs.
+- **Downtown hotels:** A new NFPA 13 fire sprinkler system was filed for "SWT Hotel" at 370 S West Temple (BLD2026-08916). Separately, the Little America Hotel at 500 S Main is getting a $291,390 re-roof of its upper north section (BLD2026-08937).
+- **Repeat addresses:** Three trade permits for "Mercury TI" at 136 S Main, Suite 1000, all tie back to building permit BLD2026-07567. Two permits are for a "Sport court" project at 5445 W Harold Gatty Dr.
+- **ARUP:** A fire sprinkler revision covers a roughly 20,000 sq ft Level 3 tenant improvement at ARUP Building 615 on Arapeen Dr in Research Park.
+- **Test record:** BLD2026-08947 is a city test record. Its $24.7M, 175-unit details are not a real project and should be ignored.
+- No Planning applications were filed this period.
 
 ## All new records
 
-### Building: Commercial Building Permit (6)
+### Building: Commercial Building Permit (4)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-023898 | 10/27/2026 | 10 W shelley, United States | Placeholder commercial building permit record with no description. |  |  |
-| [BLD2026-08839](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08740&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 60 E SOUTH TEMPLE ST, 700, Salt Lake City UT 00000-0000 | Level-2 alteration of 14,821 sq ft of existing 7th-floor space for a future tenant. | $1,000,000 | Need Info |
-| [BLD2026-08863](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08751&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1145 W 500 S, Salt Lake City UT 84104-2404 | Interior and exterior remodel of a 15,992 sq ft one-story building with a chapel, classrooms and a gym, including AV, lighting, ADA, roof, snow melt and landscaping upgrades. | $4,000,000 |  |
-| [BLD2026-08867](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08753&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 5354 W 700 S, Salt Lake City UT 84104- | Install storage racking in an existing building for Yamaha. | $14,500 |  |
-| [BLD2026-08868](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08754&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 3190 W PROFESSIONAL CIR, Salt Lake City UT 84104-0000 | A 66,261 sq ft freezer warehouse addition to an existing building. | $17,807,470 |  |
-| [BLD2026-08895](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08774&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 3955 W NINIGRET DR, 100, Salt Lake City UT 84104-0000 | Install pallet racking in Suite 100 for Alside Distribution. | $44,000 |  |
+| [BLD2026-08913](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08797&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 1920 N 2200 W, 1 and 2, Salt Lake City UT 84116-0000 | Installation of pallet racking across a 20,000 sq ft warehouse area for Fresh Pure. | $25,806 |  |
+| [BLD2026-08944](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08830&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 224 S 200 W, Salt Lake City UT 84101-1801 | Remodel of a 1,456 sq ft third-floor common area. | $200,000 |  |
+| [BLD2026-08945](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08832&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 1139 E 500 S, Salt Lake City UT 84102-3805 | Interior renovation of one unit in a six-unit apartment building in the University Historic District, relocating the kitchen and a bedroom and upgrading finishes. | $30,000 |  |
+| [BLD2026-08947](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=08833&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 349 S 200 E, ., Salt Lake City UT 84111-2811 | City staff test record for certificate display in the permit portal; not a real project. | $24,718,500 | Closed |
 
-### Building: Commercial Electrical (5)
+### Building: Commercial Electrical (6)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08850](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01793&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 550 N JOHN GLENN RD, INVALI, Salt Lake City UT 84116 United States | Electrical work for the expansion of Janey Lou's bakery. | $2,400,000 | Inspections |
-| [BLD2026-08851](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01794&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 5445 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | Install an electrical outlet for a compressor at a sport court. | $500 | Inspections |
-| [BLD2026-08859](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01797&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 16 S 800 W, Salt Lake City UT 84104-1118 | Electrical work for new construction of the Flats at Folsom apartment building. | $5,119,000 | Inspections |
-| [BLD2026-08866](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01799&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1136 S 3600 W, 500, Salt Lake City UT 84104- | Demolish and relocate an electrical panel in Suite 500. | $4,400 |  |
-| [BLD2026-08896](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01804&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 521 E 2100 S, SALT LAKE CITY UT | Electrical work for two new townhome buildings with five units each (10 units total). | $150,000 |  |
-
-### Building: Commercial Fire Alarm (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08903](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00309&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1795 S 5350 W, Salt Lake City UT 84104-0000 | Add three horn strobes to the fire alarm system as part of the Transpak tenant improvement. |  |  |
+| [BLD2026-08911](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01807&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 1148 W 500 N, Salt Lake City UT 84116 United States | Replacing and relocating lighting as part of the North Star restroom remodel. | $10,000 |  |
+| [BLD2026-08919](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01809&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 5445 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | Running power to a disconnect for a mini-split compressor at a sport court facility. | $3,500 |  |
+| [BLD2026-08923](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01810&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 1436 S EL REY ST, Salt Lake City UT 84108-2248 | Installation of overhead temporary power at a construction site. | $500 |  |
+| [BLD2026-08924](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01811&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 145 E 1300 S, Salt Lake City UT 84115-5400 | Temporary construction power for a new 12-building townhome and apartment development. | $25,000 | Need Info |
+| [BLD2026-08925](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01812&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 136 S MAIN ST, 1000, Salt Lake City UT 84101-1601 | Electrical work for the remodel of office space for the Mercury tenant improvement in Suite 1000. | $32,000 |  |
+| [BLD2026-08949](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01819&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 4128 W 600 S, 4128, Salt Lake City UT 84104-0000 | Converting an electrical service installed as temporary into a permanent service in the Bangerter Business Park. | $150 |  |
 
 ### Building: Commercial Fire Sprinkler (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08853](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00369&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 349 S 200 E, ., Salt Lake City UT 84111-2811 | Relocate five sprinklers and add three for remodels on the 1st and 6th floors of Plaza 349. |  | In For Review |
-| [BLD2026-08877](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00370&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 506 N BILLY MITCHELL RD, Salt Lake City UT 84116-2806 | Add about 19-20 sprinklers beneath new ductwork and HVAC equipment for the Albany Engineering Composites tenant improvement. |  |  |
+| [BLD2026-08914](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00371&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 615 S ARAPEEN DR, Salt Lake City UT 84108- | Fire sprinkler modification for a roughly 20,000 sq ft tenant improvement on Level 3 of ARUP Building 615. |  | In For Review |
+| [BLD2026-08916](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00372&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 370 S WEST TEMPLE ST, Salt Lake City UT 84101-1911 | Installation of a new NFPA 13 fire sprinkler system for the SWT Hotel project. |  |  |
 
-### Building: Commercial Mechanical (3)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [BLD2026-08852](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01588&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 550 N JOHN GLENN RD, INVALI, Salt Lake City UT 84116 United States | Mechanical work for the expansion of Janey Lou's bakery at 550 N John Glenn Rd. |  | Inspections |
-| [BLD2026-08886](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01594&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 369 S ORANGE ST, 300, Salt Lake City UT 84104-3544 | Mechanical work for adding office space inside an existing warehouse, Suite 300. |  |  |
-| [BLD2026-08901](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01596&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 610 S 500 W, SALT LAKE CITY UT 84101 | HVAC duct installation for eight systems plus two heat pump mini-splits, using the existing rooftop units. |  |  |
-
-### Building: Commercial Plumbing (5)
+### Building: Commercial Mechanical (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08848](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01294&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 550 N JOHN GLENN RD, Salt Lake City UT 84116 United States | Plumbing work for the expansion of Janey Lou's bakery. |  | Inspections |
-| [BLD2026-08849](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01295&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 347 S 400 E, Salt Lake City UT 84111-2904 | Plumbing and finish work including a floor drain, sinks, an ice maker, flooring and FRP wall panels. |  |  |
-| [BLD2026-08876](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01299&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 320 N 3700 W, Salt Lake City UT 84116-7000 | Upgrade plumbing and mechanical systems, including water heater, fixtures and underground work, for the Delta Cargo buildout. |  |  |
-| [BLD2026-08881](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01300&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 602 E 500 S, Salt Lake City UT 84102-2809 | Commercial kitchen plumbing for converting existing retail space into the Beaumont Bakery & Cafe restaurant. |  |  |
-| [BLD2026-08893](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01303&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1966 S 200 E, Salt Lake City UT 84115-2403 | Install 100-gallon and 60-gallon water heaters at New City Plaza. |  |  |
+| [BLD2026-08927](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01603&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 136 S MAIN ST, 1000, Salt Lake City UT 84101-1601 | Replacement and relocation of mechanical equipment for the Mercury office tenant improvement in Suite 1000. |  | In For Review |
+| [BLD2026-08950](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01606&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 5445 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | Installation of a Mitsubishi ductless mini-split system (one condenser, two indoor heads) serving two added offices at a sport court building. |  |  |
 
-### Building: Commericial Demolition (2)
+### Building: Commercial Plumbing (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-08864](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BDM&capID2=00000&capID3=00144&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1136 S 3600 W, Salt Lake City UT 84104- | Demolition permit to remove and relocate an electrical panel. | $20,000 |  |
-| [BLD2026-08889](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BDM&capID2=00000&capID3=00145&agencyCode=SLCREF&IsToShowInspection=) | 10/27/2026 | 1032 S REDWOOD RD, NFF1, Salt Lake City UT 84104-3703 | Demolition of three structures (a building, a storage shed and a warehouse, 8,250 sq ft total) and clearing of the site. | $66,000 |  |
+| [BLD2026-08929](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01306&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 136 S MAIN ST, 1000, Salt Lake City UT 84101-1601 | Relocation of existing break-room plumbing for the Mercury office tenant improvement in Suite 1000. |  |  |
 
-### Planning: Appeal Comm Decision - Planning (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-023975 | 10/27/2026 | 1800 W 800 N, Salt Lake City UT 84116 United States | Placeholder record for an appeal of a planning commission decision. |  |  |
-
-### Planning: Subdivision and Condominium - Lot Line Adjustment (1)
+### Building: Commercial Roofing (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [PLNSUB2026-00921](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=08763&agencyCode=SLCREF&IsToShowInspection=) | 10/26/2026 | 942 N 7200 W, SALT LAKE CITY UT | Lot line adjustment between two parcels. |  | Prescreen |
+| [BLD2026-08937](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BRF&capID2=00000&capID3=00463&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 500 S MAIN ST, Salt Lake City UT 84101-2405 | Tear-off and replacement of the PVC roofing system and drains on the upper north roof section of the 17-story Little America Hotel. | $291,390 | Inspections |
+
+### Building: Commericial Demolition (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [BLD2026-08920](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BDM&capID2=00000&capID3=00146&agencyCode=SLCREF&IsToShowInspection=) | 10/28/2026 | 2319 S HIGHLAND DR, INVALI, Salt Lake City UT 84106-2810 | Demolition of the entire 7,015 sq ft Highland Drive Optometry building, including footings, foundation and block and concrete walls, while keeping the asphalt parking lot. | $62,400 |  |
