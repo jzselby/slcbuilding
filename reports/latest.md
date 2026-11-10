@@ -1,53 +1,42 @@
-# New SLC commercial permits and planning applications: Oct 26 – Nov 09, 2026
+# New SLC commercial permits and planning applications: Oct 27 – Nov 10, 2026
 
-**13 new record(s).**
+**7 new record(s).**
 
 ## All new records
 
-### Building: Commercial Building Permit (5)
+### Building: Commercial Building Permit (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09246](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09114&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 2473 W 2950 N, SALT LAKE CITY UT 84116 | Light weight Shelving Units |  | Prescreen |
-| [BLD2026-09250](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09137&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 850 W 100 S, Salt Lake City UT 84104-1107 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Multifamily project with 46 units |  | Need Info |
-| [BLD2026-09255](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09142&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 2145 E 2100 S, 1, Salt Lake City UT 84109-1128 | Install Nuco2 and Co2 safety |  | Prescreen |
-| [BLD2026-09256](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09143&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 2145 E 2100 S, 4, Salt Lake City UT 84109-1128 | Nuco2 install and co2 safety |  | Prescreen |
-| [BLD2026-09258](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09146&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 719 S DELONG ST, Salt Lake City UT 84104-3914 | Construct (1) new 120' S4TL Self Support Tower. Construct new 12x15 shelter. Install power utilities and new grounding system. |  |  |
+| [BLD2026-09273](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09173&agencyCode=SLCREF&IsToShowInspection=) | 11/10/2026 | 120 S 200 W, Salt Lake City UT 84101-1328 | -Removing (12) existing antennas and Replacing with (12) new antennas. -Removing (10) existing remote radio heads and Replacing with (3) new remote radio heads -Removing (5) BBUs and Replacing with (1) new BBU |  | Prescreen |
 
-### Building: Commercial Mechanical (2)
+### Building: Commercial Fire Alarm (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09252](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01668&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 1999 W 1700 S, Salt Lake City UT 84104-4233 | Remodel |  | In For Review |
-| [BLD2026-09254](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01669&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 1999 W 1700 S, Salt Lake City UT 84104-4233 | Install new air handler, heat exchangers pumps, and chiller |  | In For Review |
+| [BLD2026-09265](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00325&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 60 E SOUTH TEMPLE ST, Salt Lake City UT 00000-0000 | Extend the existing emergency voice evacuation system to cover the new TI space. |  | In For Review |
 
-### Building: Commercial Plumbing (1)
+### Building: Commercial Parking Lot (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09249](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01360&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 1730 W 500 S, Salt Lake City UT 84104-3505 | Gas line pressure test |  | Inspections |
+| [BLD2026-09264](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPL&capID2=00000&capID3=00021&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 37 W 100 S, Salt Lake City UT 84101-1507 | New Parking Lot at Carpet Warehouse Demo Site |  |  |
 
 ### Building: Commercial Roofing (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09253](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BRF&capID2=00000&capID3=00481&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 1240 N AMERICAN BEAUTY DR, Salt Lake City UT 84116 United States | PO#43226 Remove existing flat roofing material Installing 1/2" insulation over existing deck Installing 60 MIL TPO Membrane roofing system Mechnically fastening to manufacturer specs |  | Inspections |
+| 26TMP-024903 | 11/09/2026 | 3284 W 2100 S, Salt Lake City UT 84119-1130 |  |  |  |
 
-### Planning: Planning Commission - Zoning Incentives (1)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| [PLNINC2026-00955](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26PPA&capID2=00000&capID3=00036&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 1816 S 2100 E, Salt Lake City UT 84108-3029 |  |  | Pending |
-
-### Planning: Subdivision and Condominium - Consolidation (2)
+### Planning: Subdivision and Condominium - Lot Line Adjustment (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [PLNSUB2026-00951](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=09123&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 730 W 900 S, Salt Lake City UT 84104-1449 |  |  | Pending |
-| [PLNSUB2026-00953](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=09129&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 742 W 900 S, Salt Lake City UT 84104- |  |  | Pending |
+| 26TMP-024898 | 11/10/2026 | 999 S MAIN ST, Salt Lake City UT 84111-4418 |  |  |  |
+| [PLNSUB2026-00966](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=09183&agencyCode=SLCREF&IsToShowInspection=) | 11/10/2026 | 999 S MAIN ST, Salt Lake City UT 84111-4418 |  |  | Pending |
 
-### Planning: Subdivision and Condominium - Lot Line Adjustment (1)
+### Planning: Subdivision and Condominium - Preliminary Subdiv (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [PLNSUB2026-00950](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=09118&agencyCode=SLCREF&IsToShowInspection=) | 11/09/2026 | 733 W GENESEE AVE, Salt Lake City UT 84104-1460 |  |  | Pending |
+| [PLNSUB2026-00959](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26HIS&capID2=00000&capID3=09169&agencyCode=SLCREF&IsToShowInspection=) | 11/10/2026 | 77 W 1300 S, Salt Lake City UT 00000-0000 | Fire Station 8 Subdivision |  | Active |
