@@ -1,6 +1,6 @@
-# New SLC commercial permits and planning applications: Oct 29 – Nov 12, 2026
+# New SLC commercial permits and planning applications: Oct 30 – Nov 13, 2026
 
-**16 new record(s).**
+**10 new record(s).**
 
 ## All new records
 
@@ -8,44 +8,33 @@
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09323](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09227&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 100 N MARIO CAPECCHI DR, Salt Lake City UT 84113-0000 | Project involved demolishing and relocating existing millwork. A sink is being added to one therapy room along with added electrical to prepare room for new furniture provided by Vendor. |  | Prescreen |
-| [BLD2026-09327](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09233&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 1135 S WEST TEMPLE, Salt Lake City UT 84101-3118 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//84 unit LIHTC affordable housing project with mixed use retain on street level. |  | Need Info |
+| [BLD2026-09346](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09244&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 1710 S 4490 W, Salt Lake City UT 84104-4722 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Business registration for TJ Processors after buying Majestic Meat Co. and using their facility. Inspector determined we needed a racking permit. That has been completed. |  | Need Info |
+| [BLD2026-09354](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26HIS&capID2=00000&capID3=09253&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 1320 N BECK ST, Salt Lake City UT 84116-1209 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Requesting a building permit for the installation of an exterior fuel storage tank. The tank will be located outside an existing storage garage and will be used for on site fuel storage. |  | Need Info |
 
-### Building: Commercial Electrical (5)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-025119 | 11/12/2026 | 570 S 300 W, Salt Lake City UT 84101- | New Electrical for New Tenant Space |  |  |
-| [BLD2026-09315](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01882&agencyCode=SLCREF&IsToShowInspection=) | 11/11/2026 | 220 N 3700 W, Salt Lake City UT 84116-0000 | EV CHARGING FOR AIRPLANES |  | Inspections |
-| [BLD2026-09319](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01884&agencyCode=SLCREF&IsToShowInspection=) | 11/11/2026 | 5552 W 700 S, Salt Lake City UT 84104-0000 | Install 3000A MDP |  | In For Review |
-| [BLD2026-09322](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01885&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 744 N 900 W, 101, Salt Lake City UT 84116-4064 | Installation of Washer and Dryer in Apartment 101, 201 and 301. This is for the 220 and 120 v supply. |  | Inspections |
-| [BLD2026-09329](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01888&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 1625 S GLADIOLA ST, Salt Lake City UT 84104-0000 | install 2 HVLS fans in warehouse |  | Inspections |
-
-### Building: Commercial Fire Sprinkler (3)
+### Building: Commercial Electrical (4)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09320](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00389&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 90 S 400 W, 700, Salt Lake City UT 84101-0000 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Fire Sprinkler Tenant Improvement Remodel |  | Prescreen |
-| [BLD2026-09321](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00390&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 369 S ORANGE ST, 100, Salt Lake City UT 84104-3544 | Fire sprinkler modification for tenant improvement |  | In For Review |
-| [BLD2026-09324](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BFR&capID2=00000&capID3=00391&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 2145 E 2100 S, 1101, Salt Lake City UT 84109-1128 | INSTALLATION OF A CAPTIVEAIRE TANK FIRE SUPPRESSION SYSTEM |  | In For Review |
+| [BLD2026-09347](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01892&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 570 S 300 W, 103, Salt Lake City UT 84101- | New Electrical for New Tenant Space |  | Inspections |
+| [BLD2026-09352](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01894&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 350 N JOHN GLENN RD, Salt Lake City UT 84116-0000 | up dating old service add new service. |  | Prescreen |
+| [BLD2026-09373](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01899&agencyCode=SLCREF&IsToShowInspection=) | 11/13/2026 | 1441 E SOUTH TEMPLE ST, Salt Lake City UT 84103-1844 | new meter. 120/240 Volt 400A WO#007671701 |  |  |
+| [BLD2026-09376](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BEL&capID2=00000&capID3=01900&agencyCode=SLCREF&IsToShowInspection=) | 11/13/2026 | 1441 W SOUTH TEMPLE ST, Salt Lake City UT 00000-0000 | new meter 120/240Volt 400A Larry H Miller Group WO#007671701 |  |  |
 
-### Building: Commercial Mechanical (3)
-
-| Record | Date | Address | Scope | Job value | Status |
-|---|---|---|---|---|---|
-| 26TMP-025094 | 11/12/2026 | 60 E SOUTH TEMPLE ST, 15th Floor, Salt Lake City UT 00000-0000 | Tenant Improvement |  |  |
-| [BLD2026-09331](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01683&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 5035 W HAROLD GATTY DR, Salt Lake City UT 84116 United States | 1. INSTALLATION OF 18 NEW IN-ROW COOLING FLOW VARIABLE UNITS (CRVS) 2. INSTALLATION OF 18 NEW ROOFTOP CONDENSERS 3. REFRIGERANT PIPE ROUTING FROM NEW CONDENSERS TO CRV MODULES 4. DOMESTIC COLD WATER SUPPLY TO NEW CRV MODULES FOR HUMIDIFICATION 5. CONDENSATE PIPE EXTENDED FROM NEW CRV MODULES TO EXISTING FLOOR DRAINS |  |  |
-| [BLD2026-09334](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BMC&capID2=00000&capID3=01684&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 777 S 200 E, 102, Salt Lake City UT 84111-3803 | MAKEUP AIR ON ROOF, MAKEUP DUCT RUN THROUGH SIDE OF BUILDING, DUCTED AND DUCTLESS MINISPLIT |  |  |
-
-### Building: Commercial Plumbing (2)
+### Building: Commercial Fire Alarm (2)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| 26TMP-025042 | 11/12/2026 | 60 E SOUTH TEMPLE ST, Salt Lake City UT 00000-0000 | Subrough rough and finish plumbing on World Tade Center Building |  |  |
-| [BLD2026-09310](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01367&agencyCode=SLCREF&IsToShowInspection=) | 11/11/2026 | 1030 S STATE ST, SALT LAKE CITY UT 84111 | Space Tea SLC Commercial Plumbing which includes, underground plumbing rough in and finish work. |  | Inspections |
+| [BLD2026-09356](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00326&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 300 S 600 W, Salt Lake City UT 00000-0000 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//upgrade fire alarm system. New facp and devices |  | Need Info |
+| [BLD2026-09358](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BLV&capID2=00000&capID3=00327&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 669 W 200 S, Salt Lake City UT 84104-1004 | PLEASE UPLOAD DOCUMENTS INTO PROJECT DOX FOR REVIEW//Upgrade fire alarm in UTA HQ building to bring building up to current code. |  | Need Info |
 
-### Building: Commercial Roofing (1)
+### Building: Commercial Plumbing (1)
 
 | Record | Date | Address | Scope | Job value | Status |
 |---|---|---|---|---|---|
-| [BLD2026-09339](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BRF&capID2=00000&capID3=00489&agencyCode=SLCREF&IsToShowInspection=) | 11/12/2026 | 307 E 600 S, Salt Lake City UT 84111-3542 | Tear-off and re-roof with IKO Cambridge AR asphalt shingles, 53 squares, remove 2 skylights |  |  |
+| [BLD2026-09361](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Building&TabName=Building&capID1=26BPB&capID2=00000&capID3=01371&agencyCode=SLCREF&IsToShowInspection=) | 11/13/2026 | 60 E SOUTH TEMPLE ST, Salt Lake City UT 00000-0000 | Subrough rough and finish plumbing on World Tade Center Building |  |  |
+
+### Planning: Planning Commission - Zoning Incentives (1)
+
+| Record | Date | Address | Scope | Job value | Status |
+|---|---|---|---|---|---|
+| [PLNINC2026-00980](https://aca-prod.accela.com/SLCREF/Cap/CapDetail.aspx?Module=Planning&TabName=Planning&capID1=26PPA&capID2=00000&capID3=00037&agencyCode=SLCREF&IsToShowInspection=) | 11/13/2026 | 343 S DENVER ST, United States |  |  | Pending |
